@@ -1,0 +1,19 @@
+@web = http://127.0.0.1:3000/web
+@admin = http://127.0.0.1:3000/admin
+
+@jsonType = Content-Type: application/json
+
+###
+GET {{web}}
+
+###文章管理
+POST  {{admin}}/tag/edit 
+{{jsonType}}
+
+{
+  "title":"test",
+  "count":1
+}
+
+###
+GET {{admin}}/tag/list
