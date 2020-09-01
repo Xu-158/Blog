@@ -25,7 +25,7 @@ module.exports = {
   async TagDelete(req, res) {
     const id = await req.query.id
     const data = await Tag.findByIdAndDelete(id)
-    res(res, 0, msg, data)
+    response(res, 0, '删除文章标签', data)
   },
 
   // 查询文章标签列表
@@ -43,13 +43,13 @@ module.exports = {
 
   // 编辑文章
   async ArticleEdit(req, res) {
-    const { id, title, content } = req.body
+    const { id, article } = req.body
     let data, msg;
     if (id) {
-      data = await Article.findByIdAndUpdate(id, { title, content })
+      data = await Article.findByIdAndUpdate(id, article)
       msg = '修改文章成功'
     } else {
-      data = await Article.create({ title, content })
+      data = await Article.create(article)
       msg = '创建文章成功'
     }
     response(res, 0, msg, data)

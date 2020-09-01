@@ -21,6 +21,6 @@ app.use('/web', require('./routes/web/router'));
 require('./models/db')(app)
 
 app.listen(3000, () => {
-  console.log('RUN AT http://127.0.0.1:8000')
+  console.log('RUN AT http://127.0.0.1:3000')
 })
 

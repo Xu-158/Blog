@@ -16,11 +16,11 @@
 
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-menu"></i>文章管理
+              <i class="el-icon-menu"></i>内容管理
             </template>
             <el-menu-item-group>
-              <template slot="title">文章分类</template>
-              <el-menu-item index="/article/articleTag">文章标签</el-menu-item>
+              <template slot="title">文章</template>
+              <el-menu-item index="/article/articleTag">标签管理</el-menu-item>
               <el-menu-item index="/article/articleAdd">新建文章</el-menu-item>
               <el-menu-item index="/article/articleList">文章列表</el-menu-item>
             </el-menu-item-group>
@@ -65,7 +65,8 @@
       </el-aside>
 
       <el-container>
-        <el-header style="text-align: right; font-size: 12px">
+        <el-header class="el-header" style="text-align: right; font-size: 12px">
+          <breadcrumb class="breadcrumb" />
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
@@ -86,16 +87,21 @@
 </template>
 
 <script>
+import Breadcrumb from "@/components/Breadcrumb";
 export default {
   data() {
     return {
       list: ["0"]
     };
+  },
+  components: {
+    Breadcrumb
   }
 };
 </script>
 
 <style lang="scss">
+@import "../assets/style/style.scss";
 .layout {
   .layout-container {
     height: 100vh;
@@ -108,6 +114,14 @@ export default {
 
   .el-aside {
     color: #333;
+  }
+  .el-header {
+    position: relative;
+    background-color: map-get($colors, "primary");
+    .breadcrumb {
+      position: absolute;
+      bottom: 0px;
+    }
   }
 }
 </style>

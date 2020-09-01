@@ -34,28 +34,34 @@ const routes = [
   {
     path: '/article',
     component: Layout,
-    redirect:'/',
-    children:[
+    redirect: '/article/articleTag',
+    name:'文章管理',
+    meta: { title: '文章管理' },
+    children: [
       {
-        path:'articleTag',
-        component:()=>import('@/views/article/ArticleTag'),
-        meta: { title: '创建标签' },
+        path: 'articleTag',
+        component: () => import('@/views/article/ArticleTag'),
+        name: '查看标签',
+        meta: { title: '查看标签' },
       },
       {
-        path:'ArticleAdd',
+        path: 'ArticleAdd',
         props: true,
-        component:()=>import('@/views/article/ArticleEdit'),
+        component: () => import('@/views/article/ArticleEdit'),
+        name: '新建文章',
         meta: { title: '新建文章' },
       },
       {
-        path:'ArticleUpdate/:id',
+        path: 'ArticleUpdate/:id',
         props: true,
-        component:()=>import('@/views/article/ArticleEdit'),
+        component: () => import('@/views/article/ArticleEdit'),
+        name: '修改文章',
         meta: { title: '修改文章' },
       },
       {
-        path:'ArticleList',
-        component:()=>import('@/views/article/ArticleList'),
+        path: 'ArticleList',
+        component: () => import('@/views/article/ArticleList'),
+        name: '文章列表',
         meta: { title: '文章列表' },
       }
     ]
