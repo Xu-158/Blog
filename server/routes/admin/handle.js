@@ -3,9 +3,22 @@ const Article = require('../../models/Article')
 const Tag = require('../../models/Tag')
 
 
+
 module.exports = {
   /**
-   * ::::文章管理handle
+   * 系统管理 Handle
+   */
+  // 上传文件
+  async UploadFile(req, res) {
+    let file = req.file
+    const uploadConfig = req.app.get('uploadConfig')
+    file.url = `${uploadConfig.filePath}/images/${file.filename}`
+    response(res, 0, '上传成功', file)
+  },
+
+
+  /**
+   * 文章管理 Handle
    */
   // 编辑文章标签
   async TagEdit(req, res) {
@@ -59,7 +72,14 @@ module.exports = {
   async ArticleDelete(req, res) {
     const id = req.query.id
     const data = await Article.findByIdAndDelete(id)
-    response(res, 0, msg, data)
+    response(res, 0, '删除文章成功', data)
+  },
+
+  // 获取文章详细
+  async ArticleInfo(req, res) {
+    const id = req.query.id
+    const data = await Article.findById(id)
+    response(res, 0, '获取文章成功', data)
   },
 
   // 查询文章列表
@@ -70,7 +90,7 @@ module.exports = {
     const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5
     // 跳过的条数
     const skip = (page - 1) * pageSize
-    const data = await Article.find().skip(skip).limit(pageSize)
+    const data = await Article.find().skip(skip).limit(pageSize).populate('tags')
     const totalSize = await Article.find().countDocuments()
     response(res, 0, '获取文章列表成功', { totalSize, data })
   },

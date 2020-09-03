@@ -1,5 +1,9 @@
+/**
+ * 
+ */
 import httpUtil from '@/utils/httpUtil'
 
+// 文章标签API
 export function addTag(data) {
   return httpUtil({
     url: '/tag/edit',
@@ -28,6 +32,47 @@ export function deleteTag(params) {
 export function getTagList(params) {
   return httpUtil({
     url: '/tag/list',
+    method: 'get',
+    params
+  })
+}
+
+// 文章API
+export function addArticle(data) {
+  return httpUtil({
+    url: '/article/edit',
+    method: 'post',
+    data
+  })
+}
+
+export function updateArticle(data) {
+  return httpUtil({
+    url: '/article/update',
+    method: 'put',
+    data
+  })
+}
+
+export function deleteArticle(params) {
+  return httpUtil({
+    url: '/article/delete',
+    method: 'delete',
+    params
+  })
+}
+
+export function getArticleInfo(params) {
+  return httpUtil({
+    url: '/article/info',
+    method: 'get',
+    params
+  })
+}
+
+export function getArticleList(params) {
+  return httpUtil({
+    url: '/article/list',
     method: 'get',
     params
   })

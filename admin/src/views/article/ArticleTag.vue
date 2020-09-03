@@ -13,7 +13,7 @@
           <el-tag type="info">{{scope.row.count}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="180" class="option">
+      <el-table-column label="操作" width="150" class="option">
         <template slot-scope="scope">
           <div class="option-content">
             <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
