@@ -58,13 +58,28 @@ module.exports = {
   async ArticleEdit(req, res) {
     const { id, article } = req.body
     let data, msg;
+    let newArticleTags = article.tags; //新文章 tags[](_id)
     if (id) {
+      let tag, oldArticleTag
+      oldArticleTag = await Article.findById(id) //旧文章 tags[](_id)
+      // 删除旧Tag 的 selectArticles 中文章id
+      oldArticleTag.tags.map(async old => {
+        tag = await Tag.findById(old)
+        tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1)
+        await tag.save()
+      })
       data = await Article.findByIdAndUpdate(id, article)
       msg = '修改文章成功'
     } else {
       data = await Article.create(article)
       msg = '创建文章成功'
     }
+    let tag, newSelectArticles
+    newArticleTags.map(async tagId => {
+      tag = await Tag.findById(tagId)
+      newSelectArticles = tag.selectArticles.push(data._id)
+      await tag.save()
+    })
     response(res, 0, msg, data)
   },
 
@@ -72,6 +87,12 @@ module.exports = {
   async ArticleDelete(req, res) {
     const id = req.query.id
     const data = await Article.findByIdAndDelete(id)
+    let tag;
+    data.tags.map(async tagId => {
+      tag = await Tag.findById(tagId)
+      tag.selectArticles.splice(tag.selectArticles.indexOf(tagId), 1)
+      await tag.save()
+    })
     response(res, 0, '删除文章成功', data)
   },
 
@@ -90,7 +111,7 @@ module.exports = {
     const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5
     // 跳过的条数
     const skip = (page - 1) * pageSize
-    const data = await Article.find().skip(skip).limit(pageSize).populate('tags')
+    const data = (await (Article.find().skip(skip).limit(pageSize).populate('tags'))).reverse()
     const totalSize = await Article.find().countDocuments()
     response(res, 0, '获取文章列表成功', { totalSize, data })
   },

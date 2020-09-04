@@ -2,25 +2,23 @@
   <div class="articleTag">
     <el-button type="primary" plain @click="createTag">新建标签</el-button>
     <el-table class="table" :data="tableData" v-if="tableData">
-      <el-table-column prop="_id" label="编号" width="300"></el-table-column>
-      <el-table-column prop="title" label="标签名" width="250">
+      <el-table-column prop="_id" label="编号" width="350"></el-table-column>
+      <el-table-column prop="title" label="标签名" width="350">
         <template slot-scope="scope">
           <el-tag>{{scope.row.title}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="count" label="文章数量" width="200">
+      <el-table-column prop="selectArticles" label="文章数量">
         <template slot-scope="scope">
-          <el-tag type="info">{{scope.row.count}}</el-tag>
+          <el-tag type="info">{{scope.row.selectArticles.length}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150" class="option">
+      <el-table-column label="操作" class="option" width="250">
         <template slot-scope="scope">
-          <div class="option-content">
-            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-popconfirm title="确定删除这个标签吗？" @onConfirm="handleDelete(scope.row._id)">
-              <el-button slot="reference" size="mini" type="danger">删除</el-button>
-            </el-popconfirm>
-          </div>
+          <el-button class="option-1" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-popconfirm title="确定删除这个标签吗？" @onConfirm="handleDelete(scope.row._id)">
+            <el-button slot="reference" size="mini" type="danger">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -125,12 +123,10 @@ export default {
 .articleTag {
   .table {
     padding: 20px;
-    width: 100vw;
     height: 70vh;
   }
-}
-.option-content {
-  display: flex;
-  justify-content: space-between;
+  .option-1{
+    margin-right: 10px;
+  }
 }
 </style>

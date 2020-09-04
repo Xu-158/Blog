@@ -55,8 +55,8 @@ const routes = [
         path: 'ArticleUpdate/:id',
         props: true,
         component: () => import('@/views/article/ArticleEdit'),
-        name: '修改文章',
-        meta: { title: '修改文章' },
+        name: '编辑文章',
+        meta: { title: '编辑文章' },
       },
       {
         path: 'ArticleList',

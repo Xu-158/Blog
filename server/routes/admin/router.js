@@ -11,12 +11,13 @@ router.use('/uploads/images', express.static(path.join(__dirname, '../../uploads
 // 上传文件
 router.post('/uploads/images', handleMulter.single('file'), handle.UploadFile)
 
-// 文章管理
+// 文章标签
 router.post('/tag/edit', handle.TagEdit)
 router.delete('/tag/delete', handle.TagDelete)
 router.put('/tag/update', handle.TagEdit)
 router.get('/tag/list', handle.TagList)
 
+// 文章管理 标签
 router.post('/article/edit', handle.ArticleEdit);
 router.delete('/article/delete', handle.ArticleDelete)
 router.put('/article/update', handle.ArticleEdit)

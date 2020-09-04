@@ -77,3 +77,12 @@ export function getArticleList(params) {
     params
   })
 }
+
+export function upload(data) {
+  return httpUtil({
+    url: '/uploads/images',
+    method: 'post',
+    data,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}

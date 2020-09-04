@@ -1,11 +1,12 @@
 <template>
-  <!-- <mavon-editor
+  <mavon-editor
     class="me-editor"
     ref="md"
     v-model="editor.value"
     @imgAdd="imgAdd"
-  v-bind="editor">-->
-  <mavon-editor class="me-editor" ref="md" v-model="editor.value" v-bind="editor"></mavon-editor>
+    v-bind="editor"
+    @change="change"
+  />
 </template>
 
 
@@ -14,7 +15,7 @@
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 
-// import {upload} from '@/api/upload'
+import { upload } from "@/api/article";
 
 export default {
   name: "MarkdownEditor",
@@ -28,21 +29,21 @@ export default {
     this.$set(this.editor, "ref", this.$refs.md);
   },
   methods: {
-    // imgAdd(pos, $file) {
-    // let that = this
-    // let formdata = new FormData();
-    // formdata.append('image', $file);
-    // upload(formdata).then(data => {
-    //   // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
-    //   if (data.code == 0) {
-    //     that.$refs.md.$img2Url(pos, data.data.url);
-    //   } else {
-    //     that.$message({message: data.msg, type: 'error', showClose: true})
-    //   }
-    // }).catch(err => {
-    //   that.$message({message: err, type: 'error', showClose: true});
-    // })
-    // }
+    async imgAdd(pos, $file) {
+      let formdata = new FormData();
+      formdata.append("file", $file);
+      const res = await upload(formdata);
+      if (res.status == 0) {
+        this.$message({ message: res.msg, type: "success" });
+      } else {
+        this.$message({ message: "error", type: "error" });
+      }
+      let _res = res.data;
+      this.$refs.md.$img2Url(pos, _res.url);
+    },
+    change() {
+      this.$emit("changeEdit", this.$refs.md.d_render, this.$refs.md.d_value);
+    }
   },
   components: {
     mavonEditor

@@ -1,22 +1,28 @@
 <template>
   <div>
     <h2 class="title">{{id?'编辑':'新建'}}文章</h2>
-    <el-form label-width="80px" @submit.native.prevent="saveArticle">
-      <el-form-item label="文章标题 :">
+    <el-form
+      :model="articleForm"
+      ref="articleForm"
+      :rules="rules"
+      label-width="100px"
+      @submit.native.prevent="saveArticle"
+    >
+      <el-form-item label="文章标题 :" prop="title">
         <el-input v-model="articleForm.title"></el-input>
       </el-form-item>
-      <el-form-item label="文章类型 :">
+      <el-form-item label="文章类型 :" prop="tags">
         <el-checkbox-group v-if="tagList" v-model="articleForm.tags" size="medium">
           <el-checkbox-button v-for="tag in tagList" :label="tag._id" :key="tag._id">{{tag.title}}</el-checkbox-button>
         </el-checkbox-group>
       </el-form-item>
 
-      <el-form-item label="设置热门 :">
-        <el-switch v-model="articleForm.isHot" active-color="#13ce66" inactive-color="#666"></el-switch>
+      <el-form-item label="设置置顶 :">
+        <el-switch v-model="articleForm.isTop" active-color="#13ce66" inactive-color="#666"></el-switch>
         <span style="padding-left:40px;color:#606266">设置可见 :&nbsp;</span>
         <el-switch v-model="articleForm.isShow" active-color="#13ce66" inactive-color="#666"></el-switch>
       </el-form-item>
-      <el-form-item label="图 片 :">
+      <el-form-item label="封 面 :">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -28,8 +34,8 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="文章内容 :">
-        <markdown-editor :editor="editor" class="me-write-editor"></markdown-editor>
+      <el-form-item label="文章内容 :" prop="contentMd">
+        <markdown-editor :editor="editor" class="me-write-editor" @changeEdit="changeEdit"></markdown-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -60,9 +66,10 @@ export default {
         title: "",
         tags: [],
         thumbnail: "",
-        isHot: false,
+        isTop: false,
         isShow: false,
-        content: ""
+        contentMd: "",
+        contentHtml: ""
       },
       editor: {
         value: "",
@@ -87,11 +94,24 @@ export default {
           help: true, // 帮助
           undo: true, // 上一步
           redo: true, // 下一步
-          trash: true, // 清空
+          trash: false, // 清空
+          ishljs: true,
           navigation: true, // 导航目录
           // subfield: true, // 单双栏模式
           preview: true // 预览
         }
+      },
+      rules: {
+        title: [
+          { required: true, message: "请输入文章标题", trigger: "blur" },
+          { min: 3, max: 25, message: "长度在 3 到 25 个字符", trigger: "blur" }
+        ],
+        tags: [
+          { required: true, message: "请选择文章标签", trigger: "change" }
+        ],
+        contentMd: [
+          { required: true, message: "请输入文章内容", trigger: "blur" }
+        ]
       }
     };
   },
@@ -99,13 +119,14 @@ export default {
     this.getTag();
     this.id && this.getArticle();
   },
-  watch: {
-    // 属性侦听
-    "editor.value": function(o) {
-      this.articleForm.content = o;
-    },
-    deep: true //侦听对象的属性
-  },
+  // watch: {
+  //   // 属性侦听
+  //   'editor.value': function(o) {
+  //     this.articleForm.contentMd = o;
+  //   },
+  //   deep: true //侦听对象的属性
+  // },
+  computed: {},
   methods: {
     async getTag() {
       const res = await getTagList({ page: 1, pageSize: 999 });
@@ -115,31 +136,43 @@ export default {
     async getArticle() {
       const res = await getArticleInfo({ id: this.id });
       this.articleForm = res.data;
-      this.editor.value = res.data.content;
+      this.editor.value = res.data.contentMd;
+    },
+
+    saveArticle() {
+      let id, res;
+      id = this.id;
+      this.$refs.articleForm.validate(async valid => {
+        if (!valid) {
+          this.$message.error("填写错误，请检查!");
+          return;
+        } else {
+          if (id) {
+            res = await updateArticle({
+              id: this.id,
+              article: this.articleForm
+            });
+          } else {
+            res = await addArticle({ article: this.articleForm });
+          }
+
+          if (res.status === 0) {
+            this.$message.success(`${res.msg}`);
+            this.$router.push("/article/ArticleList");
+          } else {
+            this.$message.error(`${res.msg}错误!`);
+          }
+        }
+      });
     },
 
     handleThumbnailSuccess(res) {
       this.articleForm.thumbnail = res.data.url;
     },
 
-    async saveArticle() {
-      let id, res;
-      id = this.id;
-      if (id) {
-        res = await updateArticle({
-          id: this.id,
-          article: this.articleForm
-        });
-      } else {
-        res = await addArticle({ article: this.articleForm });
-      }
-
-      if (res.status === 0) {
-        this.$message.success(`${res.msg}`);
-        this.$router.push("/article/ArticleList");
-      } else {
-        this.$message.error(`${res.msg}错误!`);
-      }
+    changeEdit(html, md) {
+      this.articleForm.contentMd = md;
+      this.articleForm.contentHtml = html;
     }
   }
 };
