@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 app.use(require('cors')())
+app.set('secret', 'xxuujjjfff158')
 
 // app.use(express.urlencoded({ extended: false }));
 

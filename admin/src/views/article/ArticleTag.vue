@@ -5,20 +5,22 @@
       <el-table-column prop="_id" label="编号" width="350"></el-table-column>
       <el-table-column prop="title" label="标签名" width="350">
         <template slot-scope="scope">
-          <el-tag>{{scope.row.title}}</el-tag>
+          <el-tag>{{ scope.row.title }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="selectArticles" label="文章数量">
         <template slot-scope="scope">
-          <el-tag type="info">{{scope.row.selectArticles.length}}</el-tag>
+          <el-tag type="info">{{ scope.row.selectArticles.length }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" class="option" width="250">
         <template slot-scope="scope">
-          <el-button class="option-1" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-popconfirm title="确定删除这个标签吗？" @onConfirm="handleDelete(scope.row._id)">
-            <el-button slot="reference" size="mini" type="danger">删除</el-button>
-          </el-popconfirm>
+          <div>
+            <el-button class="option-1" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-popconfirm title="确定删除这个标签吗？" @onConfirm="handleDelete(scope.row._id)">
+              <el-button slot="reference" size="mini" type="danger">删除</el-button>
+            </el-popconfirm>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -26,7 +28,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="itemTotal"
+        :total="totalSize"
         :page-size="pageSize"
         :current-page="page"
         @current-change="pageChange"
@@ -43,7 +45,7 @@ export default {
       tableData: [],
       page: 1,
       pageSize: 8,
-      itemTotal: 1 // 装备总数量
+      totalSize: 1
     };
   },
   created() {
@@ -54,7 +56,7 @@ export default {
       const { page, pageSize } = this;
       const res = await getTagList({ page, pageSize });
       this.tableData = res.data.tagList;
-      this.itemTotal = res.data.totalSize;
+      this.totalSize = res.data.totalSize;
     },
     createTag() {
       let title;
@@ -65,12 +67,8 @@ export default {
         .then(async ({ value }) => {
           if (!value) throw new Error("标签名不能为空");
           title = value;
-          await addTag({ title });
-          this.initTagList();
-          this.$message({
-            type: "success",
-            message: "成功创建标签: "
-          });
+          const res = await addTag({ title });
+          if (res.status == 0) this.initTagList();
         })
         .catch(err => {
           this.$message({
@@ -87,12 +85,12 @@ export default {
       })
         .then(async ({ value }) => {
           if (!value) throw new Error("标签名不能为空");
-          await updateTag({ id: row._id, title: value, count: row.count });
-          this.initTagList();
-          this.$message({
-            type: "success",
-            message: "成功修改标签: " + value
+          const res = await updateTag({
+            id: row._id,
+            title: value,
+            count: row.count
           });
+          if (res.status == 0) this.initTagList();
         })
         .catch(() => {
           this.$message({
@@ -102,12 +100,8 @@ export default {
         });
     },
     async handleDelete(id) {
-      await deleteTag({ id });
-      this.initTagList();
-      this.$message({
-        type: "success",
-        message: "删除成功!"
-      });
+      const res = await deleteTag({ id });
+      if (res.status == 0) this.initTagList();
     },
     // 页数改变
     pageChange(currentPage) {
@@ -125,7 +119,7 @@ export default {
     padding: 20px;
     height: 70vh;
   }
-  .option-1{
+  .option-1 {
     margin-right: 10px;
   }
 }

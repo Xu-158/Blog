@@ -105,7 +105,6 @@ export default {
         .then(async () => {
           const res = await deleteArticle({ id: row._id });
           if (res.status === 0) {
-            this.$message.success(`${res.msg}`);
             // 如果当前不是第一页且当前页只有一条数据
             if (page != 1 && tableData.length == 1) {
               this.page--;

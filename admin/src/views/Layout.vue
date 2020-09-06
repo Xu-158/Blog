@@ -28,20 +28,11 @@
 
           <el-submenu index="3">
             <template slot="title">
-              <i class="el-icon-setting"></i>链接管理
+              <i class="el-icon-setting"></i>友链管理
             </template>
             <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="3-1">选项1</el-menu-item>
-              <el-menu-item index="3-2">选项2</el-menu-item>
+              <el-menu-item index="/link/friendLink">友情链接</el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="3-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="3-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-            </el-submenu>
           </el-submenu>
 
           <el-submenu index="4">
@@ -49,9 +40,8 @@
               <i class="el-icon-setting"></i>系统管理
             </template>
             <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="3-1">选项1</el-menu-item>
-              <el-menu-item index="3-2">选项2</el-menu-item>
+              <template slot="title">管理员</template>
+              <el-menu-item index="/system/adminList">管理员列表</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="分组2">
               <el-menu-item index="3-3">选项3</el-menu-item>
@@ -65,17 +55,16 @@
       </el-aside>
 
       <el-container>
-        <el-header class="el-header" style="text-align: right; font-size: 12px">
+        <el-header style="text-align: right; font-size: 12px">
           <breadcrumb class="breadcrumb" />
-          <el-dropdown>
+          <span style="margin-right: 15px">{{account}}</span>
+          <el-dropdown @command="handleCommand">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <el-dropdown-item command="homepage">首页</el-dropdown-item>
+              <el-dropdown-item :divided="true" command="logout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <span>王小虎</span>
         </el-header>
 
         <el-main>
@@ -91,8 +80,28 @@ import Breadcrumb from "@/components/Breadcrumb";
 export default {
   data() {
     return {
-      list: ["0"]
+      list: ["0"],
+      account: ""
     };
+  },
+  beforeMount() {
+    this.account = localStorage.username;
+  },
+  methods: {
+    handleCommand(command) {
+      switch (command) {
+        case "homepage":
+          this.$router.push("/home");
+          break;
+        case "logout":
+          localStorage.removeItem("token");
+          this.$router.push("/login");
+          break;
+
+        default:
+          break;
+      }
+    }
   },
   components: {
     Breadcrumb

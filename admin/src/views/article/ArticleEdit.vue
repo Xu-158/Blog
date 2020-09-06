@@ -155,19 +155,18 @@ export default {
           } else {
             res = await addArticle({ article: this.articleForm });
           }
-
-          if (res.status === 0) {
-            this.$message.success(`${res.msg}`);
-            this.$router.push("/article/ArticleList");
-          } else {
-            this.$message.error(`${res.msg}错误!`);
-          }
+          if (res.status === 0) this.$router.push("/article/ArticleList");
         }
       });
     },
 
     handleThumbnailSuccess(res) {
-      this.articleForm.thumbnail = res.data.url;
+      if (res.status == 0) {
+        this.$message.success(`${res.msg}`);
+        this.articleForm.thumbnail = res.data.url;
+      } else {
+        this.$message.error(`${res.msg}`);
+      }
     },
 
     changeEdit(html, md) {
