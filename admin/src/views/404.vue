@@ -1,13 +1,19 @@
 <template>
-  <h2>404</h2>
+  <div class="not-found">
+    <img src="@/assets/images/404.gif" alt />
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
+<style lang="scss">
+.not-found{
+  img{
+    padding: 0px;
+    margin: 0px;
+    height: 80vh;
+  }
+}
 </style>

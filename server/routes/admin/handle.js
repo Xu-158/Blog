@@ -52,7 +52,7 @@ module.exports = {
 
   // 游客登陆
   async touristLogin(req, res) {
-    const tourist = { role: 'Tourist', account: '123456', password: '123456' }
+    const tourist = { role: 'Tourist', account: '无名游客', password: '123456' }
     const token = jwt.sign({
       role: String(tourist.role),
     }, req.app.get('secret'))
@@ -217,7 +217,7 @@ module.exports = {
       return
     }
     const adminSize = await Admin.find().countDocuments()
-    if (adminSize > 1) {
+    if (adminSize >= 1) {
       response(res, 1, '管理员已达到上限')
       return
     }
@@ -248,6 +248,11 @@ module.exports = {
   // 获取管理员列表
   async adminList(req, res) {
     const totalUser = await Admin.find().populate('role')
+    const roleCount = await Role.find().countDocuments()
+    if (roleCount < 1) {
+      const roles = [{ type: "Tourist" }, { type: "Admin" }]
+      await Role.create(roles)
+    }
     response(res, 0, '获取管理员列表成功', totalUser)
   },
 
@@ -263,12 +268,12 @@ module.exports = {
     response(res, 0, '创建角色成功!')
   },
 
-  // 删除角色
-  async deleteRole(req, res) {
-    const id = req.query.id
-    await findByIdAndDelete(id)
-    response(res, 0, '删除角色成功!')
-  },
+  // // 删除角色
+  // async deleteRole(req, res) {
+  //   const id = req.query.id
+  //   await findByIdAndDelete(id)
+  //   response(res, 0, '删除角色成功!')
+  // },
 
   // 角色列表
   async roleList(req, res) {

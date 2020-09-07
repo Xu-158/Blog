@@ -11,13 +11,18 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login'),
-    meta: { isPublic: true, title: '登录' }
+    meta: { title: '登录' }
   },
   {
     path: "*",
     name: "404",
-    component: () => import("@/views/404"),
-    meta: { title: "404" }
+    component: Layout,
+    redirect: "/404",
+    children: [{
+      path: '404',
+      component: () => import("@/views/404"),
+      meta: { title: '失踪了啊！' }
+    }]
   },
   {
     path: "/",

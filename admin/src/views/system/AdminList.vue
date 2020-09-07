@@ -54,9 +54,13 @@
 </template>
 
 <script>
-import { getAdminList, addAdmin, updateAdmin, deleteAdmin } from "@/api/admin";
-import { addRole, getRoleList } from "@/api/role";
-//  deleteRole addRole,
+import {
+  getAdminList,
+  addAdmin,
+  updateAdmin,
+  deleteAdmin,
+  getRoleList
+} from "@/api/admin";
 export default {
   data() {
     return {
@@ -81,16 +85,6 @@ export default {
     async initAdminList() {
       const res = await getAdminList();
       this.tableData = res.data;
-      if (this.roleList == 0) {
-        await addRole([
-          {
-            type: "Tourist"
-          },
-          {
-            type: "Admin"
-          }
-        ]);
-      }
     },
     async initRoleList() {
       const res = await getRoleList();

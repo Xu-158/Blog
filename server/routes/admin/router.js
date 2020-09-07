@@ -43,7 +43,7 @@ router.get('/admin/list', handle.auth, handle.adminList)
 
 // 角色
 router.post('/role/add', handle.auth, handle.addRole)
-router.delete('/role/delete', handle.auth, handle.deleteRole)
+// router.delete('/role/delete', handle.auth, handle.deleteRole)
 router.get('/role/list', handle.auth, handle.roleList)
 
 

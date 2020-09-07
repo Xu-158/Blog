@@ -8,9 +8,9 @@ const schema = new mongoose.Schema({
   isShow: { type: Boolean, default: false },
   contentMd: { type: String, default: '' },
   contentHtml: { type: String, default: '' },
-  directory: { type: String, default: '' },
   hitCount: { type: Number, default: 0 },
   likeCount: { type: Number, default: 0 },
+  catalog: { type: Array }, //目录
   comments: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Comment' }],
 }, {
   timestamps: true

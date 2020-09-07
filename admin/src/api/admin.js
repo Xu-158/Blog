@@ -35,3 +35,12 @@ export function getAdminList(params) {
     params
   })
 }
+
+// 获取角色列表
+export function getRoleList(params) {
+  return httpUtil({
+    url: '/role/list',
+    method: 'get',
+    params
+  })
+}

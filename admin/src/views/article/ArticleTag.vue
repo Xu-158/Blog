@@ -10,7 +10,7 @@
       </el-table-column>
       <el-table-column prop="selectArticles" label="文章数量">
         <template slot-scope="scope">
-          <el-tag type="info">{{ scope.row.selectArticles.length }}</el-tag>
+          <el-tag type="success">{{ scope.row.selectArticles.length }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" class="option" width="250">

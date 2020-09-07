@@ -97,7 +97,6 @@ export default {
           trash: false, // 清空
           ishljs: true,
           navigation: true, // 导航目录
-          // subfield: true, // 单双栏模式
           preview: true // 预览
         }
       },

@@ -85,7 +85,7 @@ export default {
     };
   },
   beforeMount() {
-    this.account = localStorage.username;
+    this.account = localStorage.account;
   },
   methods: {
     handleCommand(command) {

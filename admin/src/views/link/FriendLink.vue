@@ -96,9 +96,9 @@ export default {
       const formData = this.formData;
       let res;
       if (formData.id) {
-        await updateLink(formData);
+        res = await updateLink(formData);
       } else {
-        await addLink(this.formData);
+        res = await addLink(this.formData);
       }
       this.formData = {};
       if (res.status == 0) this.initFriendLink();
