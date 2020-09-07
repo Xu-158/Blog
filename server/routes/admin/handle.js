@@ -5,6 +5,7 @@ const FriendshipLinks = require('../../models/FriendshipLinks')
 const Admin = require('../../models/Admin')
 const Role = require('../../models/Role')
 const TimeLine = require('../../models/TimeLine')
+const About = require('../../models/About')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -104,7 +105,7 @@ module.exports = {
     const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 5
     // 跳过的条数
     const skip = (page - 1) * pageSize
-    const tagList = await Tag.find().skip(skip).limit(pageSize)
+    const tagList = await Tag.find().skip(skip).limit(pageSize).sort({ _id: -1 })
     const totalSize = await Tag.find().countDocuments()
     response(res, 0, '查找标签列表', { tagList, totalSize })
   },
@@ -301,6 +302,28 @@ module.exports = {
   async timeLineList(req, res) {
     const timeLineList = await TimeLine.find()
     response(res, 0, '获取时间线列表成功', timeLineList)
+  },
+
+  /**
+   * 关于我
+   */
+  async aboutEdit(req, res) {
+    const { id, about } = req.body
+    let data, msg
+    // await About.deleteMany({})
+    if (id) {
+      data = await About.findByIdAndUpdate(id, about)
+      msg = "修改关于我成功！"
+    } else {
+      data = await About.create(about)
+      msg = "创建关于我成功！"
+    }
+    response(res, 0, msg, data)
+  },
+
+  async aboutInfo(req, res) {
+    const data = await About.findOne()
+    response(res, 0, '获取关于我成功', data)
   }
 
 }

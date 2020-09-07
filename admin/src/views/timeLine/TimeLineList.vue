@@ -3,19 +3,21 @@
     <router-view></router-view>
   </div>
   <div v-else>
-    <el-button type="primary" @click="createTimeLine" v-if="!showEdit">创建时间线</el-button>
+    <el-button type="primary" @click="createTimeLine" v-if="!showEdit">
+      <span>创建时间线</span>
+    </el-button>
     <el-timeline class="timeline" reverse>
       <el-timeline-item
         v-for="item in timeLineList"
         :key="item._id"
-        :timestamp="item.time|Time"
+        :timestamp="item.time | Time"
         color="#409eff"
         placement="bottom"
       >
         <div @click="editTimeLine(item)">
           <el-card>
-            <h4>{{item.title}}</h4>
-            <p>{{item.content}}</p>
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.content }}</p>
           </el-card>
         </div>
       </el-timeline-item>

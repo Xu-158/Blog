@@ -22,7 +22,7 @@ router.delete('/tag/delete', handle.auth, handle.tagDelete)
 router.put('/tag/update', handle.auth, handle.tagEdit)
 router.get('/tag/list', handle.auth, handle.tagList)
 
-// 文章管理 标签
+// 文章管理
 router.post('/article/edit', handle.auth, handle.articleEdit);
 router.delete('/article/delete', handle.auth, handle.articleDelete)
 router.put('/article/update', handle.auth, handle.articleEdit)
@@ -49,6 +49,11 @@ router.post('/timeLine/edit', handle.auth, handle.timeLineEdit)
 router.delete('/timeLine/delete', handle.auth, handle.timeLineDelete)
 router.put('/timeLine/update', handle.auth, handle.timeLineEdit)
 router.get('/timeLine/list', handle.auth, handle.timeLineList)
+
+// 关于我
+// router.post('/about/edit', handle.auth, handle.aboutEdit)
+router.put('/about/update', handle.auth, handle.aboutEdit)
+router.get('/about/info', handle.auth, handle.aboutInfo)
 
 
 module.exports = router;

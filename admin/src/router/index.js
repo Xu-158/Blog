@@ -8,21 +8,23 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/Login'),
-    meta: { title: '登录' }
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/Login"),
+    meta: { title: "登录" }
   },
   {
     path: "*",
     name: "404",
     component: Layout,
     redirect: "/404",
-    children: [{
-      path: '404',
-      component: () => import("@/views/404"),
-      meta: { title: '失踪了啊！' }
-    }]
+    children: [
+      {
+        path: "404",
+        component: () => import("@/views/404"),
+        meta: { title: "失踪了啊！" }
+      }
+    ]
   },
   {
     path: "/",
@@ -99,6 +101,12 @@ const routes = [
         component: () => import("../views/system/AdminList.vue"),
         name: "管理员列表",
         meta: { title: "管理员列表" }
+      },
+      {
+        path: "aboutMe",
+        component: () => import("../views/system/AboutMe.vue"),
+        name: "关于我",
+        meta: { title: "关于我" }
       }
     ]
   },
@@ -121,7 +129,7 @@ const routes = [
             name: "编辑时间线",
             props: true,
             meta: { title: "编辑时间线" }
-          },
+          }
         ]
       }
     ]
@@ -137,24 +145,23 @@ router.beforeEach(async (to, from, next) => {
 
   document.title = to.meta.title ? to.meta.title : "admin";
 
-  const token = await existToken()
+  const token = await existToken();
   if (token) {
-    if (to.path === '/login') {
-      next({ path: '/' })
-      NProgress.done()
+    if (to.path === "/login") {
+      next({ path: "/" });
+      NProgress.done();
     } else {
-      next()
+      next();
     }
   } else {
-    if ('/login'.indexOf(to.path) != -1) {
-      next()
+    if ("/login".indexOf(to.path) != -1) {
+      next();
     } else {
-      console.log('aaa');
-      next(`/login?redirect=${to.path}`)
-      NProgress.done()
+      console.log("aaa");
+      next(`/login?redirect=${to.path}`);
+      NProgress.done();
     }
   }
-
 });
 
 router.afterEach(() => {

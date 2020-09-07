@@ -2,7 +2,12 @@
   <div class="layout">
     <el-container class="layout-container" style="border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu router :default-openeds="list" unique-opened :default-active="$route.path">
+        <el-menu
+          router
+          :default-openeds="list"
+          unique-opened
+          :default-active="$route.path"
+        >
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-message"></i>首页
@@ -10,7 +15,9 @@
             <el-menu-item-group>
               <template slot="title">首页内容</template>
               <!-- <el-menu-item index="/timeLine/timeLineEdit">编辑时间线</el-menu-item> -->
-              <el-menu-item index="/timeLine/timeLineList">时间线列表</el-menu-item>
+              <el-menu-item index="/timeLine/timeLineList"
+                >时间线列表</el-menu-item
+              >
             </el-menu-item-group>
           </el-submenu>
 
@@ -19,8 +26,11 @@
               <i class="el-icon-menu"></i>内容管理
             </template>
             <el-menu-item-group>
-              <template slot="title">文章</template>
+              <template slot="title">标签</template>
               <el-menu-item index="/article/articleTag">标签管理</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <template slot="title">文章</template>
               <el-menu-item index="/article/articleAdd">新建文章</el-menu-item>
               <el-menu-item index="/article/articleList">文章列表</el-menu-item>
             </el-menu-item-group>
@@ -31,6 +41,7 @@
               <i class="el-icon-setting"></i>友链管理
             </template>
             <el-menu-item-group>
+              <template slot="title">链接</template>
               <el-menu-item index="/link/friendLink">友情链接</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -42,14 +53,8 @@
             <el-menu-item-group>
               <template slot="title">管理员</template>
               <el-menu-item index="/system/adminList">管理员列表</el-menu-item>
+              <el-menu-item index="/system/aboutMe">关于我</el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="3-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="3-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-            </el-submenu>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -57,12 +62,14 @@
       <el-container>
         <el-header style="text-align: right; font-size: 12px">
           <breadcrumb class="breadcrumb" />
-          <span style="margin-right: 15px">{{account}}</span>
+          <span style="margin-right: 15px">{{ account }}</span>
           <el-dropdown @command="handleCommand">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="homepage">首页</el-dropdown-item>
-              <el-dropdown-item :divided="true" command="logout">退出</el-dropdown-item>
+              <el-dropdown-item :divided="true" command="logout"
+                >退出</el-dropdown-item
+              >
             </el-dropdown-menu>
           </el-dropdown>
         </el-header>

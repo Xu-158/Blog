@@ -31,17 +31,24 @@
       <el-table-column prop="url" label="链接地址">
         <template slot-scope="scope">
           <div>
-            <a :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
+            <a :href="scope.row.url" target="_blank">{{ scope.row.url }}</a>
           </div>
         </template>
       </el-table-column>
       <el-table-column label="操作" class="option" width="250">
         <template slot-scope="scope">
           <div>
-            <el-button class="option-1" size="mini" @click="handleEdit(scope.row)">
+            <el-button
+              class="option-1"
+              size="mini"
+              @click="handleEdit(scope.row)"
+            >
               <div>编辑</div>
             </el-button>
-            <el-popconfirm title="确定删除这个标签吗？" @onConfirm="handleDelete(scope.row._id)">
+            <el-popconfirm
+              title="确定删除这个标签吗？"
+              @onConfirm="handleDelete(scope.row._id)"
+            >
               <el-button slot="reference" size="mini" type="danger">
                 <div>删除</div>
               </el-button>
