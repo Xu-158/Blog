@@ -1,7 +1,7 @@
 <template>
   <div class="AdminList">
     <el-button type="primary" plain @click="openDialog = true">
-      <div>新建管理员</div>
+      <div>管理员列表</div>
     </el-button>
 
     <el-dialog title="信息添加" :visible.sync="openDialog">

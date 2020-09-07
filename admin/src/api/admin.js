@@ -3,7 +3,7 @@ import httpUtil from '@/utils/httpUtil'
 // 添加管理员
 export function addAdmin(data) {
   return httpUtil({
-    url: '/admin/add',
+    url: '/admin/edit',
     method: 'post',
     data
   })

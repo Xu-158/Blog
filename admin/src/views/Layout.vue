@@ -9,8 +9,8 @@
             </template>
             <el-menu-item-group>
               <template slot="title">首页内容</template>
-              <el-menu-item index="/home/404">选项1</el-menu-item>
-              <el-menu-item index="/home/404">选项2</el-menu-item>
+              <!-- <el-menu-item index="/timeLine/timeLineEdit">编辑时间线</el-menu-item> -->
+              <el-menu-item index="/timeLine/timeLineList">时间线列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
 

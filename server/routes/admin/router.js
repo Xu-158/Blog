@@ -36,15 +36,19 @@ router.put('/link/update', handle.auth, handle.linkEdit)
 router.get('/link/list', handle.auth, handle.linkList);
 
 // 管理员
-router.post('/admin/add', handle.auth, handle.adminEdit)
+router.post('/admin/edit', handle.auth, handle.adminEdit)
 router.delete('/admin/delete', handle.auth, handle.adminDelete)
 router.put('/admin/update', handle.auth, handle.adminEdit)
 router.get('/admin/list', handle.auth, handle.adminList)
 
 // 角色
-router.post('/role/add', handle.auth, handle.addRole)
-// router.delete('/role/delete', handle.auth, handle.deleteRole)
 router.get('/role/list', handle.auth, handle.roleList)
+
+// 时间线
+router.post('/timeLine/edit', handle.auth, handle.timeLineEdit)
+router.delete('/timeLine/delete', handle.auth, handle.timeLineDelete)
+router.put('/timeLine/update', handle.auth, handle.timeLineEdit)
+router.get('/timeLine/list', handle.auth, handle.timeLineList)
 
 
 module.exports = router;

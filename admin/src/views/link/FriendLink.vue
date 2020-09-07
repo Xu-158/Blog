@@ -1,7 +1,7 @@
 <template>
   <div class="FriendLink">
     <el-button type="primary" plain @click="openDialog = true">
-      <div>新建友情链接</div>
+      <div>友情链接列表</div>
     </el-button>
 
     <el-dialog title="信息添加" :visible.sync="openDialog">

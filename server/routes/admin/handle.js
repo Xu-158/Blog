@@ -4,6 +4,7 @@ const Tag = require('../../models/Tag')
 const FriendshipLinks = require('../../models/FriendshipLinks')
 const Admin = require('../../models/Admin')
 const Role = require('../../models/Role')
+const TimeLine = require('../../models/TimeLine')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -265,20 +266,41 @@ module.exports = {
       return
     }
     const data = await Role.create(role)
-    response(res, 0, '创建角色成功!')
+    response(res, 0, '创建角色成功!', data)
   },
-
-  // // 删除角色
-  // async deleteRole(req, res) {
-  //   const id = req.query.id
-  //   await findByIdAndDelete(id)
-  //   response(res, 0, '删除角色成功!')
-  // },
 
   // 角色列表
   async roleList(req, res) {
     const totalList = await Role.find()
     response(res, 0, '获取角色列表成功!', totalList)
   },
+
+  /**
+   * 时间线
+   */
+  // 编辑时间线
+  async timeLineEdit(req, res) {
+    const { id, title, content, time } = req.body
+    let msg, data
+    if (id) {
+      data = await TimeLine.findByIdAndUpdate(id, { title, content, time })
+      msg = '修改时间线成功'
+    } else {
+      data = await TimeLine.create({ title, content, time })
+      msg = '添加时间线成功'
+    }
+    response(res, 0, msg, data)
+  },
+
+  async timeLineDelete(req, res) {
+    const id = req.query.id
+    const data = await TimeLine.findOneAndDelete(id)
+    response(res, 0, '删除时间线', data)
+  },
+
+  async timeLineList(req, res) {
+    const timeLineList = await TimeLine.find()
+    response(res, 0, '获取时间线列表成功', timeLineList)
+  }
 
 }

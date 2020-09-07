@@ -101,6 +101,30 @@ const routes = [
         meta: { title: "管理员列表" }
       }
     ]
+  },
+  {
+    path: "/timeLine",
+    component: Layout,
+    redirect: "/timeLine/timeLineEdit",
+    name: "时间线管理",
+    meta: { title: "时间线管理" },
+    children: [
+      {
+        path: "/timeLine/timeLineList",
+        component: () => import("../views/timeLine/TimeLineList.vue"),
+        name: "时间线管理列表",
+        meta: { title: "时间线管理列表" },
+        children: [
+          {
+            path: "/timeLine/timeLineList/timeLineEdit",
+            component: () => import("../views/timeLine/TimeLineEdit.vue"),
+            name: "编辑时间线",
+            props: true,
+            meta: { title: "编辑时间线" }
+          },
+        ]
+      }
+    ]
   }
 ];
 
