@@ -5,7 +5,7 @@ module.exports = app =>{
     useNewUrlParser:true,
     useCreateIndex:true,
     useUnifiedTopology:true,
-    useFindAndModify:true
+    useFindAndModify:false
   })
 
   require('require-all')(__dirname + '/../models')

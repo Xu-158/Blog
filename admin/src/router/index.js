@@ -43,8 +43,8 @@ const routes = [
     path: "/article",
     component: Layout,
     redirect: "/article/articleTag",
-    name: "文章管理",
-    meta: { title: "文章管理" },
+    name: "标签管理",
+    meta: { title: "标签管理" },
     children: [
       {
         path: "articleTag",
@@ -113,15 +113,15 @@ const routes = [
   {
     path: "/timeLine",
     component: Layout,
-    redirect: "/timeLine/timeLineEdit",
-    name: "时间线管理",
-    meta: { title: "时间线管理" },
+    redirect: "/home",
+    name: "首页",
+    meta: { title: "首页" },
     children: [
       {
         path: "/timeLine/timeLineList",
         component: () => import("../views/timeLine/TimeLineList.vue"),
-        name: "时间线管理列表",
-        meta: { title: "时间线管理列表" },
+        name: "时间线列表",
+        meta: { title: "时间线列表" },
         children: [
           {
             path: "/timeLine/timeLineList/timeLineEdit",

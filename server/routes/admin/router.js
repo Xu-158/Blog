@@ -51,7 +51,6 @@ router.put('/timeLine/update', handle.auth, handle.timeLineEdit)
 router.get('/timeLine/list', handle.auth, handle.timeLineList)
 
 // 关于我
-// router.post('/about/edit', handle.auth, handle.aboutEdit)
 router.put('/about/update', handle.auth, handle.aboutEdit)
 router.get('/about/info', handle.auth, handle.aboutInfo)
 

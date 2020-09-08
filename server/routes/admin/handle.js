@@ -58,7 +58,7 @@ module.exports = {
     const token = jwt.sign({
       role: String(tourist.role),
     }, req.app.get('secret'))
-    response(res, 0, '登陆成功', { account: '游客' }, token)
+    response(res, 0, '登陆成功', { account: '无名游客' }, token)
   },
 
   /**
@@ -119,11 +119,13 @@ module.exports = {
       let tag, oldArticleTag
       oldArticleTag = await Article.findById(id) //旧文章 tags[](_id)
       // 删除旧Tag 的 selectArticles 中文章id
-      oldArticleTag.tags.map(async old => {
-        tag = await Tag.findById(old)
-        tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1)
-        await tag.save()
-      })
+      if (oldArticleTag.tags) {
+        oldArticleTag.tags.map(async old => {
+          tag = await Tag.findById(old)
+          tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1)
+          await tag.save()
+        })
+      }
       data = await Article.findByIdAndUpdate(id, article)
       msg = '修改文章成功'
     } else {
@@ -131,11 +133,13 @@ module.exports = {
       msg = '创建文章成功'
     }
     let tag, newSelectArticles
-    newArticleTags.map(async tagId => {
-      tag = await Tag.findById(tagId)
-      newSelectArticles = tag.selectArticles.push(data._id)
-      await tag.save()
-    })
+    if (newArticleTags) {
+      newArticleTags.map(async tagId => {
+        tag = await Tag.findById(tagId)
+        newSelectArticles = tag.selectArticles.push(data._id)
+        await tag.save()
+      })
+    }
     response(res, 0, msg, data)
   },
 
@@ -281,13 +285,13 @@ module.exports = {
    */
   // 编辑时间线
   async timeLineEdit(req, res) {
-    const { id, title, content, time } = req.body
+    const { id, timeLine } = req.body
     let msg, data
     if (id) {
-      data = await TimeLine.findByIdAndUpdate(id, { title, content, time })
+      data = await TimeLine.findByIdAndUpdate(id, timeLine)
       msg = '修改时间线成功'
     } else {
-      data = await TimeLine.create({ title, content, time })
+      data = await TimeLine.create(timeLine)
       msg = '添加时间线成功'
     }
     response(res, 0, msg, data)
@@ -295,7 +299,7 @@ module.exports = {
 
   async timeLineDelete(req, res) {
     const id = req.query.id
-    const data = await TimeLine.findOneAndDelete(id)
+    const data = await TimeLine.findByIdAndDelete(id)
     response(res, 0, '删除时间线', data)
   },
 

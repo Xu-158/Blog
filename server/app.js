@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(require('cors')())
 app.set('secret', 'xxuujjjfff158')
 
-// app.use(express.urlencoded({ extended: false }));
+app.use('/admin', express.static(__dirname + '/admin'))
 
 app.use('/admin', require('./routes/admin/router'));
 app.use('/web', require('./routes/web/router'));
