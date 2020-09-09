@@ -1,7 +1,7 @@
 export default {
   computed: {
     uploadUrl() {
-      return process.env.VUE_APP_BASE_API + '/uploads/images'
+      return process.env.VUE_APP_BASE_API ? process.env.VUE_APP_BASE_API + '/uploads/images':'/admin/uploads/images'
     },
     // 文件上传时的请求头
     uploadHeaders() {

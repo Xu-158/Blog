@@ -68,10 +68,9 @@ module.exports = {
   async uploadFile(req, res) {
     let file = req.file
     const uploadConfig = req.app.get('uploadConfig')
-    file.url = `${uploadConfig.filePath}/images/${file.filename}`
+    file.url = `${uploadConfig.filePath}/${file.childFloder}/${file.filename}`
     response(res, 0, '上传成功', file)
   },
-
 
   /**
    * 文章管理 Handle
