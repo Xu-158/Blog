@@ -5,7 +5,7 @@ const FriendshipLinks = require('../../models/FriendshipLinks')
 const Admin = require('../../models/Admin')
 const Role = require('../../models/Role')
 const About = require('../../models/About')
-const TimeLine = require('../../models/TimeLine')
+const TimeLine = require('../../models/Timeline')
 const jwt = require('jsonwebtoken')
 
 module.exports = {

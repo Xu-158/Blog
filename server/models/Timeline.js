@@ -6,4 +6,4 @@ const schema = new mongoose.Schema({
   time: { type: String, default: '' }
 })
 
-module.exports = mongoose.model('TimeLine', schema)
+module.exports = mongoose.model('Timeline', schema)
