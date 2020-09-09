@@ -4,8 +4,8 @@ const Tag = require('../../models/Tag')
 const FriendshipLinks = require('../../models/FriendshipLinks')
 const Admin = require('../../models/Admin')
 const Role = require('../../models/Role')
-const TimeLine = require('../../models/TimeLine')
 const About = require('../../models/About')
+const TimeLine = require('../../models/TimeLine')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
