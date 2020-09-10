@@ -41,7 +41,6 @@ build/Release
 node_modules/
 jspm_packages/
 uploads/
-server/admin
 server/utils/qiniuConfig.js
 
 # TypeScript v1 declaration files

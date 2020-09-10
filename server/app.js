@@ -59,6 +59,6 @@ require('./utils/uploadConfig')(app)
 
 const baseConfig = app.get('baseConfig')
 app.listen(baseConfig.host, () => {
-  console.log('RUN AT http://127.0.0.1:' + baseConfig.host)
+  console.log('RUN AT http://localhost:' + baseConfig.host)
 })
 
