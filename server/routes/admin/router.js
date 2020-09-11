@@ -5,16 +5,16 @@ const path = require('path')
 const handle = require('./handle')
 const handleMulter = require('../../utils/multer')()
 
+// 上传文件
+router.post('/uploads/images', handle.auth, handleMulter.single('file'), handle.uploadFile)
+
 // 托管静态文件
-router.use('/uploads/images', express.static(path.join(__dirname, '../../uploads/images')))
+router.use('/uploads', express.static(path.join(__dirname, '../../uploads/')))
 
 // 登陆
 router.get('/auth', handle.auth, handle.authHandle)
 router.post('/login', handle.login)
 router.post('/touris/login', handle.touristLogin)
-
-// 上传文件
-router.post('/uploads/images', handle.auth, handleMulter.single('file'), handle.uploadFile)
 
 // 文章标签
 router.post('/tag/edit', handle.auth, handle.tagEdit)

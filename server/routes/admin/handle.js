@@ -121,7 +121,7 @@ module.exports = {
       if (oldArticleTag.tags) {
         oldArticleTag.tags.map(async old => {
           tag = await Tag.findById(old)
-          tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1)
+          tag.selectArticles && tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1)
           await tag.save()
         })
       }

@@ -7,7 +7,6 @@ app.use(require('cors')())
 app.set('secret', 'xxuujjjfff158')
 
 app.use('/admin', express.static(__dirname + '/admin'))
-router.use('/uploads/images', express.static(path.join(__dirname, './uploads/images')))
 
 app.use('/admin', require('./routes/admin/router'));
 app.use('/web', require('./routes/web/router'));
