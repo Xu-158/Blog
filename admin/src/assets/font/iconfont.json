@@ -1,0 +1,37 @@
+{
+  "id": "2084226",
+  "name": "blog",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8732323",
+      "name": "人力资源",
+      "font_class": "renliziyuan",
+      "unicode": "e8b7",
+      "unicode_decimal": 59575
+    },
+    {
+      "icon_id": "3176645",
+      "name": "GitHub",
+      "font_class": "GitHub",
+      "unicode": "ea0a",
+      "unicode_decimal": 59914
+    },
+    {
+      "icon_id": "3897523",
+      "name": "动物园",
+      "font_class": "dongwuyuan",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "5482901",
+      "name": "动物",
+      "font_class": "dongwu",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    }
+  ]
+}

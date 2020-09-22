@@ -2,7 +2,6 @@
   <div>
     <h2>文章列表</h2>
     <el-table :data="tableData" class="table">
-      <!-- <el-table-column prop="_id" label="编号" width="220"></el-table-column> -->
       <el-table-column prop="title" label="标题" width="350">
         <template slot-scope="scope">
           <div class="title">{{scope.row.title}}</div>
@@ -38,7 +37,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column  label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="goEdit(scope.row._id)" type="primary" size="small">编辑</el-button>
           <el-button @click="toDelete(scope.row)" type="danger" size="small">删除</el-button>

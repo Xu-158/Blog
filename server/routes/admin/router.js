@@ -15,6 +15,10 @@ router.use('/uploads', express.static(path.join(__dirname, '../../uploads/')))
 router.get('/auth', handle.auth, handle.authHandle)
 router.post('/login', handle.login)
 router.post('/touris/login', handle.touristLogin)
+// Github认证
+router.get('/github',handle.githubOAuth)
+router.get('/checkoAuth',handle.checkoAuth)
+
 
 // 文章标签
 router.post('/tag/edit', handle.auth, handle.tagEdit)
@@ -37,7 +41,7 @@ router.get('/link/list', handle.auth, handle.linkList);
 
 // 管理员
 router.post('/admin/edit', handle.auth, handle.adminEdit)
-router.delete('/admin/delete', handle.auth, handle.adminDelete)
+// router.delete('/admin/delete', handle.auth, handle.adminDelete)
 router.put('/admin/update', handle.auth, handle.adminEdit)
 router.get('/admin/list', handle.auth, handle.adminList)
 
@@ -53,6 +57,8 @@ router.get('/timeLine/list', handle.auth, handle.timeLineList)
 // 关于我
 router.put('/about/update', handle.auth, handle.aboutEdit)
 router.get('/about/info', handle.auth, handle.aboutInfo)
+
+
 
 
 module.exports = router;

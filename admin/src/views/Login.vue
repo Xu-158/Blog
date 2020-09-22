@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <el-card header="请先登录" class="login-card">
+    <el-card header="账号登录" class="login-card">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item label="账号" prop="account">
           <el-input v-model="ruleForm.account" placeholder="请输入账号"></el-input>
@@ -9,9 +9,18 @@
           <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item class="btn-row">
-          <el-button type="primary" @click="submitForm" :loading="loading">登陆</el-button>
-          <el-button type="info" @click="resetForm">重置</el-button>
-          <el-button type="warning" @click="tourisLogin">游客登录</el-button>
+          <el-button type="primary" @click="submitForm" :loading="loading">
+            <span style="color:white;font-weight:600">账号&nbsp;</span>
+            <span class="iconfont" style="color:white;font-size:20px">&#xe8b7;</span>
+          </el-button>
+          <el-button type="info" @click="githubLogin">
+            <span style="color:black;font-weight:600">Github&nbsp;</span>
+            <span class="iconfont" style="color:black;font-size:20px">&#xea0a;</span>
+          </el-button>
+          <el-button type="warning" @click="tourisLogin">
+            <span style="color:#752;font-weight:600">游客&nbsp;</span>
+            <span class="iconfont" style="color:#863;font-size:20px">&#xe679;</span>
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -19,7 +28,7 @@
 </template>
 
 <script>
-import { login, tourisLogin } from "@/api/login";
+import { login, tourisLogin, githubLogin, checkoAuth } from "@/api/login";
 
 export default {
   name: "Login",
@@ -27,7 +36,7 @@ export default {
     return {
       loading: false,
       ruleForm: {
-        account: "admin",
+        account: "",
         password: ""
       },
       rules: {
@@ -37,15 +46,9 @@ export default {
     };
   },
   methods: {
-    resetForm() {
-      this.$refs.ruleForm.resetFields();
-    },
-
     submitForm() {
       this.$refs.ruleForm.validate(valid => {
-        if (valid) {
-          this.loginF();
-        }
+        if (valid) this.loginF();
       });
     },
 
@@ -57,7 +60,6 @@ export default {
       if (res.status == 1) return;
       localStorage.setItem("token", res.token);
       localStorage.setItem("account", res.data.account);
-
       this.$router.push("/");
     },
 
@@ -66,12 +68,52 @@ export default {
       localStorage.setItem("token", res.token);
       localStorage.setItem("account", res.data.account);
       this.$router.push("/");
+    },
+
+    async githubLogin() {
+      const res = await githubLogin();
+      if (!res) return;
+      const url = res.data.attestUrl + res.data.client_id;
+      let code = window.location.search || "";
+      if (code) {
+        code = code.split("=").pop();
+        this.checkoAuth(code);
+      } else {
+        window.location.href = url;
+      }
+    },
+
+    async checkoAuth(code) {
+      const res = await checkoAuth({ code: code });
+      this.$message.error(res.msg);
+      if (res.status == 1) return;
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("account", res.data.name);
+      this.$router.push("/");
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@font-face {
+  font-family: "iconfont";
+  src: url("../assets/font/iconfont.eot");
+  src: url("../assets/font/iconfont.eot?#iefix") format("embedded-opentype"),
+    url("../assets/font/iconfont.woff2") format("woff2"),
+    url("../assets/font/iconfont.woff") format("woff"),
+    url("../assets/font/iconfont.ttf") format("truetype"),
+    url("../assets/font/iconfont.svg#iconfont") format("svg");
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .login-card {
   width: 30%;
   margin: 10rem auto;

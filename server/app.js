@@ -13,6 +13,7 @@ app.use('/web', require('./routes/web/router'));
 require('./models/db')(app)
 require('./utils/base')(app)
 require('./utils/uploadConfig')(app)
+require('./utils/oAuth_github')(app)
 
 
 

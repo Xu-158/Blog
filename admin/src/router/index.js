@@ -27,6 +27,19 @@ const routes = [
     ]
   },
   {
+    path: "https://github.com/login/oauth/authorize",
+    name: "github",
+    component: Layout,
+    redirect: "/404",
+    children: [
+      {
+        path: "github",
+        component: () => import("@/views/404"),
+        meta: { title: "github！" }
+      }
+    ]
+  },
+  {
     path: "/",
     component: Layout,
     redirect: "/home",
@@ -154,10 +167,13 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   } else {
-    if ("/login".indexOf(to.path) != -1) {
+    if ("/github".indexOf(to.path) == 1) {
+      console.log('!token');
+      next();
+    }
+    else if ("/login".indexOf(to.path) != -1) {
       next();
     } else {
-      console.log("aaa");
       next(`/login?redirect=${to.path}`);
       NProgress.done();
     }

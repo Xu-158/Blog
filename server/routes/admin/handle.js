@@ -7,6 +7,7 @@ const Role = require('../../models/Role')
 const About = require('../../models/About')
 const TimeLine = require('../../models/Timeline')
 const jwt = require('jsonwebtoken')
+const request = require('request');
 
 module.exports = {
   // 验证token的中间件函数
@@ -14,8 +15,9 @@ module.exports = {
     const token = String(req.headers.authorization).split(' ').pop()
     const { role } = await jwt.verify(token, req.app.get('secret'), async (err, token) => {
       if (err) {
+        console.log(`${err}=============`);
         response(res, 1, '未登录')
-        return err
+        return 
       }
       return token
     })
@@ -36,15 +38,11 @@ module.exports = {
   async login(req, res) {
     const { account, password } = req.body
     const isAdmin = await Admin.findOne({ account }).select('+password')
-    if (!isAdmin) {
-      response(res, 1, '用户不存在')
+    if (!isAdmin && !user) {
+      response(res, 1, '账号或密码不正确！')
       return
     }
     const user = require('bcryptjs').compareSync(password, isAdmin.password)
-    if (!user) {
-      response(res, 1, '密码错误')
-      return
-    }
 
     const token = jwt.sign({
       id: String(isAdmin.id),
@@ -60,6 +58,60 @@ module.exports = {
     }, req.app.get('secret'))
     response(res, 0, '登陆成功', { account: '无名游客' }, token)
   },
+
+  // GitHub登陆
+  async githubOAuth(req, res) {
+    const { client_id, attestUrl } = req.app.get('githubClient')
+    response(res, 0, '', { "client_id": client_id, "attestUrl": attestUrl })
+  },
+
+  // 使用用户的访问令牌获取 access_token
+  async checkoAuth(req, res) {
+    const { client_id, client_secret, url, headers } = req.app.get('githubClient')
+    var code = req.query.code
+    const body = {
+      "client_id": client_id,
+      "client_secret": client_secret,
+      "code": code
+    }
+    request({
+      url,
+      method: 'POST',
+      json: true,
+      headers,
+      body
+    }, function (error, resp, body) {
+      if (!error && resp.statusCode == 200) {
+        const { url, userAgent } = req.app.get('githubInfo')
+        // 获取github用户信息
+        request({
+          url,
+          method: 'get',
+          headers: {
+            'User-Agent': userAgent,
+            accept: 'application/json',
+            Authorization: `bearer ${body.access_token}`
+          }
+        }, function (error, resp, body) {
+          console.log(body);
+          console.log(error);
+          let token, data, flag;
+          if (body) data = JSON.parse(body)
+          if (!error && resp.statusCode == 200 && data.login == '15889280255') {
+            // 签发token 
+            token = jwt.sign({
+              id: String(data),
+              role: 'Github',
+            }, req.app.get('secret'))
+            flag = true
+          }
+          response(res, flag ? 0 : 1, flag ? '登陆成功' : '登录失败', data, token)
+        })
+      }
+    })
+  },
+
+
 
   /**
    * 系统管理 Handle
@@ -243,12 +295,12 @@ module.exports = {
     response(res, 0, msg)
   },
 
-  // 删除管理员
-  async adminDelete(req, res) {
-    const id = req.query.id
-    const user = await Admin.findByIdAndDelete(id)
-    response(res, 0, '删除管理员成功')
-  },
+  // // 删除管理员
+  // async adminDelete(req, res) {
+  //   const id = req.query.id
+  //   const user = await Admin.findByIdAndDelete(id)
+  //   response(res, 0, '删除管理员成功')
+  // },
 
   // 获取管理员列表
   async adminList(req, res) {
@@ -327,6 +379,6 @@ module.exports = {
   async aboutInfo(req, res) {
     const data = await About.findOne()
     response(res, 0, '获取关于我成功', data)
-  }
+  },
 
 }

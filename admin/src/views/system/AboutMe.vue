@@ -108,9 +108,11 @@ export default {
       const res = await getAboutInfo();
       //使用 Object.assign目的 防止 res.data 值为空 导致 aboutForm = null
       //使用 Object.assign 合并两个对象
-      this.aboutForm = Object.assign(this.aboutForm, res.data);
-      this.aboutForm._id = res.data;
-      this.editor.value = res.data.contentMd;
+      if(res.data){
+        this.aboutForm = Object.assign(this.aboutForm, res.data);
+        this.aboutForm._id = res.data;
+        this.editor.value = res.data.contentMd 
+      }
     },
 
     async saveAbout() {
