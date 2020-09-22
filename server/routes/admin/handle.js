@@ -15,7 +15,6 @@ module.exports = {
     const token = String(req.headers.authorization).split(' ').pop()
     const { role } = await jwt.verify(token, req.app.get('secret'), async (err, token) => {
       if (err) {
-        console.log(`${err}=============`);
         response(res, 1, '未登录')
         return 
       }
@@ -93,8 +92,6 @@ module.exports = {
             Authorization: `bearer ${body.access_token}`
           }
         }, function (error, resp, body) {
-          console.log(body);
-          console.log(error);
           let token, data, flag;
           if (body) data = JSON.parse(body)
           if (!error && resp.statusCode == 200 && data.login == '15889280255') {

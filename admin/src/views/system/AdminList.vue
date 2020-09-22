@@ -37,11 +37,18 @@
     <el-table class="table" :data="tableData" v-if="tableData">
       <el-table-column prop="_id" label="编号" width="350"></el-table-column>
       <el-table-column prop="name" label="名称" width="250"></el-table-column>
-      <el-table-column prop="role.type" label="类型" width="250"></el-table-column>
+      <el-table-column
+        prop="role.type"
+        label="类型"
+        width="250"
+      ></el-table-column>
       <el-table-column label="操作" class="option" width="250">
         <template slot-scope="scope">
           <div>
-            <el-popconfirm title="确定删除这个标签吗？" @onConfirm="handleDelete(scope.row._id)">
+            <el-popconfirm
+              title="确定删除这个标签吗?"
+              @onConfirm="handleDelete(scope.row._id)"
+            >
               <el-button slot="reference" size="mini" type="danger">
                 <div>删除</div>
               </el-button>

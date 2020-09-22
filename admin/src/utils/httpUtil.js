@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 
 const httpUtil = axios.create({
   baseURL: process.env.VUE_APP_BASE_API || '/admin',
-  timeout: 5000
+  timeout: 15000 
 })
 
 httpUtil.interceptors.request.use(

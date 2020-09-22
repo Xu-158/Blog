@@ -85,8 +85,10 @@ export default {
 
     async checkoAuth(code) {
       const res = await checkoAuth({ code: code });
-      this.$message.error(res.msg);
-      if (res.status == 1) return;
+      if (res.status == 1) {
+        this.$message.error(res.msg);
+        return;
+      }
       localStorage.setItem("token", res.token);
       localStorage.setItem("account", res.data.name);
       this.$router.push("/");

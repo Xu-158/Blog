@@ -67,7 +67,7 @@ export default {
         e_mail: "",
         github: "",
         contentHtml: "",
-        contentMd: ""
+        contentMd: "",
       },
       editor: {
         value: "",
@@ -95,9 +95,9 @@ export default {
           trash: false, // 清空
           ishljs: true,
           navigation: true, // 导航目录
-          preview: true // 预览
-        }
-      }
+          preview: true, // 预览
+        },
+      },
     };
   },
   beforeMount() {
@@ -108,10 +108,10 @@ export default {
       const res = await getAboutInfo();
       //使用 Object.assign目的 防止 res.data 值为空 导致 aboutForm = null
       //使用 Object.assign 合并两个对象
-      if(res.data){
+      if (res.data) {
         this.aboutForm = Object.assign(this.aboutForm, res.data);
         this.aboutForm._id = res.data;
-        this.editor.value = res.data.contentMd 
+        this.editor.value = res.data.contentMd;
       }
     },
 
@@ -136,8 +136,8 @@ export default {
     changeEdit(html, md) {
       this.aboutForm.contentMd = md;
       this.aboutForm.contentHtml = html;
-    }
-  }
+    },
+  },
 };
 </script>
 
