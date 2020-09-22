@@ -92,9 +92,11 @@ module.exports = {
             Authorization: `bearer ${body.access_token}`
           }
         }, function (error, resp, body) {
+          console.log(error);
+          console.log(body);
           let token, data, flag;
           if (body) data = JSON.parse(body)
-          if (!error && resp.statusCode == 200 && data.login == '15889280255') {
+          if (!error && resp.statusCode == 200 && data.login === '15889280255') {
             // 签发token 
             token = jwt.sign({
               id: String(data),

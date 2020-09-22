@@ -102,7 +102,13 @@ export default {
           break;
         case "logout":
           localStorage.removeItem("token");
-          this.$router.push("/login");
+          localStorage.removeItem("account");
+          
+          // const url  = ;
+          window.location.replace(`${window.location.protocol}//${window.location.host}`)
+          // window.history.pushState(url);
+          // console.log(`${window.location.protocol}//${window.location.host}/login`);
+          // this.$router.push(`${window.location.protocol}//${window.location.host}/login`)
           break;
 
         default:

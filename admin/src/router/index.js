@@ -167,11 +167,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   } else {
-    if ("/github".indexOf(to.path) == 1) {
-      console.log('!token');
-      next();
-    }
-    else if ("/login".indexOf(to.path) != -1) {
+    if ("/login".indexOf(to.path) != -1) {
       next();
     } else {
       next(`/login?redirect=${to.path}`);

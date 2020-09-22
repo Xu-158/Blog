@@ -3,23 +3,36 @@
     <el-card header="账号登录" class="login-card">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item label="账号" prop="account">
-          <el-input v-model="ruleForm.account" placeholder="请输入账号"></el-input>
+          <el-input
+            v-model="ruleForm.account"
+            placeholder="请输入账号"
+          ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码"></el-input>
+          <el-input
+            type="password"
+            v-model="ruleForm.password"
+            placeholder="请输入密码"
+          ></el-input>
         </el-form-item>
         <el-form-item class="btn-row">
           <el-button type="primary" @click="submitForm" :loading="loading">
             <span style="color:white;font-weight:600">账号&nbsp;</span>
-            <span class="iconfont" style="color:white;font-size:20px">&#xe8b7;</span>
+            <span class="iconfont" style="color:white;font-size:20px"
+              >&#xe8b7;</span
+            >
           </el-button>
           <el-button type="info" @click="githubLogin">
             <span style="color:black;font-weight:600">Github&nbsp;</span>
-            <span class="iconfont" style="color:black;font-size:20px">&#xea0a;</span>
+            <span class="iconfont" style="color:black;font-size:20px"
+              >&#xea0a;</span
+            >
           </el-button>
           <el-button type="warning" @click="tourisLogin">
             <span style="color:#752;font-weight:600">游客&nbsp;</span>
-            <span class="iconfont" style="color:#863;font-size:20px">&#xe679;</span>
+            <span class="iconfont" style="color:#863;font-size:20px"
+              >&#xe679;</span
+            >
           </el-button>
         </el-form-item>
       </el-form>
@@ -76,10 +89,11 @@ export default {
       const url = res.data.attestUrl + res.data.client_id;
       let code = window.location.search || "";
       if (code) {
-        code = code.split("=").pop();
-        this.checkoAuth(code);
+        code = code.split("=").pop(); //?code=88680366fd3e8fc28767 截取Code
+        await this.checkoAuth(code);
       } else {
         window.location.href = url;
+        alert('请在次点击 Github 登陆')//BUG 需点击两次登陆
       }
     },
 
