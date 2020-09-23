@@ -1,7 +1,7 @@
 module.exports = app => {
     const githubClient = {
-        client_id: "9dea12e41f52fccf8ee9",
-        client_secret: "b56a1f20ab895611f4592ad3cd3e8f1883b953e2",
+        client_id: "19a82025eb4214511c99",
+        client_secret: "06911dab4defe1e3eed3ceacd967441cc11e7c78",
         url: "https://github.com/login/oauth/access_token",
         attestUrl:'https://github.com/login/oauth/authorize?client_id=',
         headers: { accept: 'application/json' }

@@ -42,7 +42,6 @@
 
 <script>
 import { login, tourisLogin, githubLogin, checkoAuth } from "@/api/login";
-
 export default {
   name: "Login",
   data() {
@@ -50,17 +49,22 @@ export default {
       loading: false,
       ruleForm: {
         account: "",
-        password: ""
+        password: "",
       },
       rules: {
         account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
-      }
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      },
+      code: "", //git认证code
     };
+  },
+  created() {
+    this.code = window.location.search || "";
+    if (this.code) this.checkoAuth(this.code);
   },
   methods: {
     submitForm() {
-      this.$refs.ruleForm.validate(valid => {
+      this.$refs.ruleForm.validate((valid) => {
         if (valid) this.loginF();
       });
     },
@@ -77,28 +81,27 @@ export default {
     },
 
     async tourisLogin() {
+      this.$loading.show();
       const res = await tourisLogin();
       localStorage.setItem("token", res.token);
       localStorage.setItem("account", res.data.account);
+      this.$loading.hide();
       this.$router.push("/");
     },
 
+    //  获取 github 认证 code
     async githubLogin() {
+      this.$loading.show();
       const res = await githubLogin();
       if (!res) return;
       const url = res.data.attestUrl + res.data.client_id;
-      let code = window.location.search || "";
-      if (code) {
-        code = code.split("=").pop(); //?code=88680366fd3e8fc28767 截取Code
-        await this.checkoAuth(code);
-      } else {
-        window.location.href = url;
-        alert('请在次点击 Github 登陆')//BUG 需点击两次登陆
-      }
+      window.location.href = url;
     },
 
+    // 把 code 发到服务端获取 token 及用户信息
     async checkoAuth(code) {
       const res = await checkoAuth({ code: code });
+      this.$loading.hide();
       if (res.status == 1) {
         this.$message.error(res.msg);
         return;
@@ -106,8 +109,8 @@ export default {
       localStorage.setItem("token", res.token);
       localStorage.setItem("account", res.data.name);
       this.$router.push("/");
-    }
-  }
+    },
+  },
 };
 </script>
 
