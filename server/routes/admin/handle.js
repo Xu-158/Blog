@@ -285,13 +285,17 @@ module.exports = {
    */
   // 添加友情链接
   async linkEdit(req, res) {
-    const { id, name, url } = req.body;
+    const { id, name, url, description } = req.body;
     let data, msg;
     if (id) {
-      data = await FriendshipLinks.findByIdAndUpdate(id, { name, url });
+      data = await FriendshipLinks.findByIdAndUpdate(id, {
+        name,
+        url,
+        description,
+      });
       msg = "修改链接成功";
     } else {
-      data = await FriendshipLinks.create({ name, url });
+      data = await FriendshipLinks.create({ name, url, description });
       msg = "创建链接成功";
     }
     response(res, 0, msg, data);
@@ -359,12 +363,12 @@ module.exports = {
     response(res, 0, msg);
   },
 
-  // // 删除管理员
-  // async adminDelete(req, res) {
-  //   const id = req.query.id
-  //   const user = await Admin.findByIdAndDelete(id)
-  //   response(res, 0, '删除管理员成功')
-  // },
+  // 删除管理员
+  async adminDelete(req, res) {
+    const id = req.query.id
+    await Admin.findByIdAndDelete(id)
+    response(res, 0, '删除管理员成功')
+  },
 
   // 获取管理员列表
   async adminList(req, res) {

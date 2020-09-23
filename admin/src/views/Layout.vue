@@ -7,39 +7,50 @@
           :default-openeds="list"
           unique-opened
           :default-active="$route.path"
+          @open="handleOpen"
+          @close="handleClose"
+          :collapse="isCollapse"
         >
+          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+            <el-radio-button :label="false">展开</el-radio-button>
+            <el-radio-button :label="true">收起</el-radio-button>
+          </el-radio-group>
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-message"></i>首页
+              <i class="el-icon-s-grid"></i>首页
             </template>
             <el-menu-item-group>
               <template slot="title">首页内容</template>
-              <!-- <el-menu-item index="/timeLine/timeLineEdit">编辑时间线</el-menu-item> -->
-              <el-menu-item index="/timeLine/timeLineList"
-                >时间线列表</el-menu-item
-              >
             </el-menu-item-group>
           </el-submenu>
 
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-menu"></i>内容管理
+              <i class="el-icon-date"></i>内容管理
             </template>
+
             <el-menu-item-group>
               <template slot="title">标签</template>
               <el-menu-item index="/article/articleTag">标签管理</el-menu-item>
             </el-menu-item-group>
+
             <el-menu-item-group>
               <template slot="title">文章</template>
               <el-menu-item index="/article/articleAdd">新建文章</el-menu-item>
               <el-menu-item index="/article/articleList">文章列表</el-menu-item>
             </el-menu-item-group>
+
+            <el-menu-item-group>
+              <template slot="title">时间线</template>
+              <el-menu-item index="/timeLine/timeLineList">时间线</el-menu-item>
+            </el-menu-item-group>
           </el-submenu>
 
           <el-submenu index="3">
             <template slot="title">
-              <i class="el-icon-setting"></i>友链管理
+              <i class="el-icon-user-solid"></i>友链管理
             </template>
+
             <el-menu-item-group>
               <template slot="title">链接</template>
               <el-menu-item index="/link/friendLink">友情链接</el-menu-item>
@@ -98,6 +109,7 @@ export default {
     return {
       list: ["0"],
       account: "",
+      isCollapse: true
     };
   },
   created() {
@@ -120,12 +132,18 @@ export default {
           window.location.replace(
             `${window.location.protocol}//${window.location.host}`
           );
-          
+
           break;
 
         default:
           break;
       }
+    },
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     },
   },
   components: {

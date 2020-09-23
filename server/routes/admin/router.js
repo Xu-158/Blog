@@ -41,7 +41,7 @@ router.get('/link/list', handle.auth, handle.linkList);
 
 // 管理员
 router.post('/admin/edit', handle.auth, handle.adminEdit)
-// router.delete('/admin/delete', handle.auth, handle.adminDelete)
+router.delete('/admin/delete', handle.auth, handle.adminDelete)
 router.put('/admin/update', handle.auth, handle.adminEdit)
 router.get('/admin/list', handle.auth, handle.adminList)
 
