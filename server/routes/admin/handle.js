@@ -41,10 +41,12 @@ module.exports = {
   async login(req, res) {
     const { account, password } = req.body;
     const isAdmin = await Admin.findOne({ account }).select("+password");
+
     if (!isAdmin && !user) {
       response(res, 1, "账号或密码不正确！");
       return;
     }
+
     const user = require("bcryptjs").compareSync(password, isAdmin.password);
 
     const token = jwt.sign(
@@ -53,6 +55,7 @@ module.exports = {
       },
       req.app.get("secret")
     );
+
     response(res, 0, "登陆成功", { account }, token);
   },
 
@@ -63,18 +66,21 @@ module.exports = {
       account: "无名游客",
       password: "123456",
     };
+
     const token = jwt.sign(
       {
         role: String(tourist.role),
       },
       req.app.get("secret")
     );
+
     response(res, 0, "登陆成功", { account: "无名游客" }, token);
   },
 
   // GitHub登陆
   async githubOAuth(req, res) {
     const { client_id, attestUrl } = req.app.get("githubClient");
+
     response(res, 0, "", { client_id: client_id, attestUrl: attestUrl });
   },
 
@@ -83,15 +89,19 @@ module.exports = {
     const { client_id, client_secret, url, headers } = req.app.get(
       "githubClient"
     );
+
     if (!req.query.code) {
       response(res, 1, "缺少code");
+      return;
     }
+
     let code = req.query.code.split("=").pop(); //?code=88680366fd3e8fc28767 截取Code
     const body = {
       client_id: client_id,
       client_secret: client_secret,
       code: code,
     };
+
     request(
       {
         url,
@@ -115,10 +125,9 @@ module.exports = {
               },
             },
             function (error, resp, body) {
-              console.log(body);
-              console.log(error);
               let token, data, flag;
               if (body) data = JSON.parse(body);
+
               if (
                 !error &&
                 resp.statusCode == 200 &&
@@ -134,6 +143,7 @@ module.exports = {
                 );
                 flag = true;
               }
+
               response(
                 res,
                 flag ? 0 : 1,
@@ -419,7 +429,6 @@ module.exports = {
   async aboutEdit(req, res) {
     const { id, about } = req.body;
     let data, msg;
-    // await About.deleteMany({})
     if (id) {
       data = await About.findByIdAndUpdate(id, about);
       msg = "修改关于我成功！";

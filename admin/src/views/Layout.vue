@@ -62,7 +62,16 @@
       <el-container>
         <el-header style="text-align: right; font-size: 12px">
           <breadcrumb class="breadcrumb" />
-          <span style="margin-right: 15px">{{ account }}</span>
+          <div class="info">
+            <span style="margin-right: 15px">{{ account }}</span>
+            <el-avatar
+              v-if="info"
+              shape="square"
+              size="small"
+              :src="info.avatar_url"
+              class="avatar"
+            ></el-avatar>
+          </div>
           <el-dropdown @command="handleCommand">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
@@ -88,10 +97,13 @@ export default {
   data() {
     return {
       list: ["0"],
-      account: ""
+      account: "",
     };
   },
-  beforeMount() {
+  created() {
+    this.info = JSON.parse(localStorage.getItem("info"));
+  },
+  mounted() {
     this.account = localStorage.account;
   },
   methods: {
@@ -103,22 +115,22 @@ export default {
         case "logout":
           localStorage.removeItem("token");
           localStorage.removeItem("account");
+          localStorage.removeItem("info");
+
+          window.location.replace(
+            `${window.location.protocol}//${window.location.host}`
+          );
           
-          // const url  = ;
-          window.location.replace(`${window.location.protocol}//${window.location.host}`)
-          // window.history.pushState(url);
-          // console.log(`${window.location.protocol}//${window.location.host}/login`);
-          // this.$router.push(`${window.location.protocol}//${window.location.host}/login`)
           break;
 
         default:
           break;
       }
-    }
+    },
   },
   components: {
-    Breadcrumb
-  }
+    Breadcrumb,
+  },
 };
 </script>
 
@@ -144,6 +156,12 @@ export default {
       position: absolute;
       bottom: 0px;
     }
+  }
+  .info {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
   }
 }
 </style>

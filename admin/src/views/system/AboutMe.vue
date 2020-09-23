@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       aboutForm: {
-        _id: "",
+        id: "",
         logo: "",
         qq: "",
         e_mail: "",
@@ -100,27 +100,25 @@ export default {
       },
     };
   },
-  beforeMount() {
+  mounted() {
     this.initAboutInfo();
   },
   methods: {
     async initAboutInfo() {
       const res = await getAboutInfo();
-      //使用 Object.assign目的 防止 res.data 值为空 导致 aboutForm = null
-      //使用 Object.assign 合并两个对象
+      //使用 Object.assign 合并两个对象 目的 防止 res.data 值为空 导致 aboutForm = null
       if (res.data) {
         this.aboutForm = Object.assign(this.aboutForm, res.data);
-        this.aboutForm._id = res.data;
+        this.aboutForm.id = res.data._id;
         this.editor.value = res.data.contentMd;
       }
     },
 
     async saveAbout() {
-      let id, data, about;
-      if (this.aboutForm._id) id = this.aboutForm._id;
-      about = this.aboutForm;
-      console.log(id, about);
-      data = await updateAbout({ id: id, about: about });
+      let id;
+      if (this.aboutForm.id) id = this.aboutForm.id;
+      const data = await updateAbout({ id: id, about: this.aboutForm });
+
       if (data.status == 0) this.initAboutInfo();
     },
 

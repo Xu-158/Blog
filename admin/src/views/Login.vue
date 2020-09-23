@@ -101,13 +101,15 @@ export default {
     // 把 code 发到服务端获取 token 及用户信息
     async checkoAuth(code) {
       const res = await checkoAuth({ code: code });
-      this.$loading.hide();
       if (res.status == 1) {
         this.$message.error(res.msg);
+        this.$loading.hide();
         return;
       }
+      localStorage.setItem("info", JSON.stringify(res.data));
       localStorage.setItem("token", res.token);
       localStorage.setItem("account", res.data.name);
+      this.$loading.hide();
       this.$router.push("/");
     },
   },

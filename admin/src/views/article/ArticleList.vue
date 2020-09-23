@@ -12,8 +12,8 @@
           <el-tag>{{scope.row.tagNames.join(' - ')}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createdAt" label="创建日期" width="150"></el-table-column>
-      <el-table-column prop="isTop" label="是否置顶" width="80">
+      <el-table-column prop="createdAt" label="创建日期" width="200"></el-table-column>
+      <el-table-column prop="isTop" label="是否置顶" width="100">
         <template slot-scope="scope">
           <div>
             <i
@@ -25,7 +25,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="isShow" label="是否可见" width="80">
+      <el-table-column prop="isShow" label="是否可见" >
         <template slot-scope="scope">
           <div>
             <i
