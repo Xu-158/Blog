@@ -3,36 +3,23 @@
     <el-card header="账号登录" class="login-card">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
         <el-form-item label="账号" prop="account">
-          <el-input
-            v-model="ruleForm.account"
-            placeholder="请输入账号"
-          ></el-input>
+          <el-input v-model="ruleForm.account" placeholder="请输入账号"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input
-            type="password"
-            v-model="ruleForm.password"
-            placeholder="请输入密码"
-          ></el-input>
+          <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item class="btn-row">
           <el-button type="primary" @click="submitForm" :loading="loading">
             <span style="color:white;font-weight:600">账号&nbsp;</span>
-            <span class="iconfont" style="color:white;font-size:20px"
-              >&#xe8b7;</span
-            >
+            <span class="iconfont" style="color:white;font-size:20px">&#xe8b7;</span>
           </el-button>
-          <el-button type="info" @click="githubLogin">
+          <el-button type="info" @click="githubLogin" :loading="githubLoading">
             <span style="color:black;font-weight:600">Github&nbsp;</span>
-            <span class="iconfont" style="color:black;font-size:20px"
-              >&#xea0a;</span
-            >
+            <span class="iconfont" style="color:black;font-size:20px">&#xea0a;</span>
           </el-button>
           <el-button type="warning" @click="tourisLogin">
             <span style="color:#752;font-weight:600">游客&nbsp;</span>
-            <span class="iconfont" style="color:#863;font-size:20px"
-              >&#xe679;</span
-            >
+            <span class="iconfont" style="color:#863;font-size:20px">&#xe679;</span>
           </el-button>
         </el-form-item>
       </el-form>
@@ -49,22 +36,26 @@ export default {
       loading: false,
       ruleForm: {
         account: "",
-        password: "",
+        password: ""
       },
       rules: {
         account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
       code: "", //git认证code
+      githubLoading: false
     };
   },
   created() {
     this.code = window.location.search || "";
-    if (this.code) this.checkoAuth(this.code);
+    if (this.code) {
+      this.githubLoading = true;
+      this.checkoAuth(this.code);
+    }
   },
   methods: {
     submitForm() {
-      this.$refs.ruleForm.validate((valid) => {
+      this.$refs.ruleForm.validate(valid => {
         if (valid) this.loginF();
       });
     },
@@ -91,6 +82,7 @@ export default {
 
     //  获取 github 认证 code
     async githubLogin() {
+      this.githubLoading = true;
       this.$loading.show();
       const res = await githubLogin();
       if (!res) return;
@@ -111,8 +103,8 @@ export default {
       localStorage.setItem("account", res.data.name);
       this.$loading.hide();
       this.$router.push("/");
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <el-container class="layout-container" style="border: 1px solid #eee">
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+      <el-aside :width="asideWidth" style="background-color: #f7f7f7">
         <el-menu
           router
           :default-openeds="list"
@@ -10,14 +10,18 @@
           @open="handleOpen"
           @close="handleClose"
           :collapse="isCollapse"
+          collapse-transition
         >
-          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+          <div class="changeBtnGroup">
+            <el-radio-group v-model="isCollapse" style="margin: 10px 0px">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
           </el-radio-group>
+          </div>
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-s-grid"></i>首页
+              <i class="el-icon-s-grid"></i>
+              <span>首页</span>
             </template>
             <el-menu-item-group>
               <template slot="title">首页内容</template>
@@ -26,7 +30,8 @@
 
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-date"></i>内容管理
+              <i class="el-icon-date"></i>
+              <span>内容管理</span>
             </template>
 
             <el-menu-item-group>
@@ -48,7 +53,8 @@
 
           <el-submenu index="3">
             <template slot="title">
-              <i class="el-icon-user-solid"></i>友链管理
+              <i class="el-icon-user-solid"></i>
+              <span>友链管理</span>
             </template>
 
             <el-menu-item-group>
@@ -59,7 +65,8 @@
 
           <el-submenu index="4">
             <template slot="title">
-              <i class="el-icon-setting"></i>系统管理
+              <i class="el-icon-setting"></i>
+              <span>系统管理</span>
             </template>
             <el-menu-item-group>
               <template slot="title">管理员</template>
@@ -70,7 +77,7 @@
         </el-menu>
       </el-aside>
 
-      <el-container>
+      <el-container class="el-container" style="width:100%">
         <el-header style="text-align: right; font-size: 12px">
           <breadcrumb class="breadcrumb" />
           <div class="info">
@@ -87,9 +94,7 @@
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="homepage">首页</el-dropdown-item>
-              <el-dropdown-item :divided="true" command="logout"
-                >退出</el-dropdown-item
-              >
+              <el-dropdown-item :divided="true" command="logout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-header>
@@ -109,7 +114,7 @@ export default {
     return {
       list: ["0"],
       account: "",
-      isCollapse: true
+      isCollapse: false
     };
   },
   created() {
@@ -117,6 +122,11 @@ export default {
   },
   mounted() {
     this.account = localStorage.account;
+  },
+  computed: {
+    asideWidth(){
+      return this.isCollapse?'70px':'200px'
+    }
   },
   methods: {
     handleCommand(command) {
@@ -144,11 +154,11 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    },
+    }
   },
   components: {
-    Breadcrumb,
-  },
+    Breadcrumb
+  }
 };
 </script>
 
@@ -157,6 +167,11 @@ export default {
 .layout {
   .layout-container {
     height: 100vh;
+    .changeBtnGroup{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
   .el-header {
     background-color: #b3c0d1;
