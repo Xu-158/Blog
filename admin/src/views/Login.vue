@@ -49,13 +49,13 @@ export default {
       loading: false,
       ruleForm: {
         account: "",
-        password: "",
+        password: ""
       },
       rules: {
         account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
-      code: "", //git认证code
+      code: "" //git认证code
     };
   },
   created() {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     submitForm() {
-      this.$refs.ruleForm.validate((valid) => {
+      this.$refs.ruleForm.validate(valid => {
         if (valid) this.loginF();
       });
     },
@@ -111,8 +111,8 @@ export default {
       localStorage.setItem("account", res.data.name);
       this.$loading.hide();
       this.$router.push("/");
-    },
-  },
+    }
+  }
 };
 </script>
 

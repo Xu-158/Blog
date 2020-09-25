@@ -127,7 +127,6 @@ module.exports = {
             function (error, resp, body) {
               let token, data, flag;
               if (body) data = JSON.parse(body);
-
               if (
                 !error &&
                 resp.statusCode == 200 &&
@@ -365,9 +364,9 @@ module.exports = {
 
   // 删除管理员
   async adminDelete(req, res) {
-    const id = req.query.id
-    await Admin.findByIdAndDelete(id)
-    response(res, 0, '删除管理员成功')
+    const id = req.query.id;
+    await Admin.findByIdAndDelete(id);
+    response(res, 0, "删除管理员成功");
   },
 
   // 获取管理员列表
