@@ -1,0 +1,71 @@
+$colors: (
+  "primary": #666666,
+  "grey": #999,
+  "dark": #222,
+  "nav":rgb(102, 79, 79),
+  "white":#fff,
+  "bg":rgb(199, 194, 194),
+);
+
+// 参考 bootstrap栅栏系统css中的col-xs-*、col-sm-*、col-md-* 的意义
+// .col-xs- 超小屏幕 手机 (<768px)
+// .col-sm- 小屏幕 平板 (≥768px)
+// .col-md- 中等屏幕 桌面显示器 (≥992px)
+// .col-lg- 大屏幕 大桌面显示器 (≥1200px)
+$base-font-size: 7rem;
+$font-sizes: (
+  xxs: 0.1067,
+  //8px
+    xs: 0.1333,
+  //10px
+    sm: 0.16,
+  //12px
+    md: 0.1733,
+  //13px
+    lg: 0.1867,
+  //14px
+    xl: 0.2133,
+  //16px
+);
+
+$flex-jc: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+);
+
+$flex-ai: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  baseline: baseline,
+  stretch: stretch,
+);
+
+$spacing-types: (
+  m: margin,
+  p: padding,
+);
+
+$spacing-directions: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left,
+);
+
+$spacing-base-size: 1rem;
+
+$spacing-sizes: (
+  0: 0,
+  1: 0.1,
+  2: 0.15,
+  3: 0.2,
+  4: 0.25,
+  5: 0.3,
+  6: 0.4,
+  7: 0.6,
+  8: 1,
+);
