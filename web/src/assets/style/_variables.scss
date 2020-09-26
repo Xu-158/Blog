@@ -2,9 +2,11 @@ $colors: (
   "primary": #666666,
   "grey": #999,
   "dark": #222,
-  "nav":rgb(102, 79, 79),
-  "white":#fff,
+  "nav":rgba(148, 143, 143, 0.356),
+  "footer":rgba(148, 143, 143, 0.438),
+  "white":rgba(255, 255, 255, 0.76),
   "bg":rgb(199, 194, 194),
+  "test":rgb(250, 0, 0)
 );
 
 // 参考 bootstrap栅栏系统css中的col-xs-*、col-sm-*、col-md-* 的意义

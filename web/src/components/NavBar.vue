@@ -1,11 +1,25 @@
 <template>
   <nav class="fs-xs bg-nav text-white d-flex ai-center jc-between">
-    <ul>
-      <div class="nav-item p-x-7" v-for="itemName in itemList" :key="itemName">
-        <li @click="itemClick(itemName)">{{ itemName }}</li>
+    <ul
+      :class="{
+        hiddNavItem: isMobile,
+        showMobileNavItem: showMobileNavItem
+      }"
+    >
+      <div
+        class="nav-item p-x-7"
+        v-for="(item, index) in navItemObj"
+        :key="item.navRoute"
+      >
+        <li
+          @click="navItemClick(item.navRoute, index)"
+          :class="{ navActive: index == currIndex }"
+        >
+          {{ item.navName }}
+        </li>
       </div>
     </ul>
-    <div class="userInfo p-8">
+    <div class="userInfo p-8" v-if="!isMobile">
       <span>{{ userName }}</span>
       <img
         class="m-x-8"
@@ -13,17 +27,30 @@
         alt=""
       />
     </div>
+    <div v-else>
+      <div
+        @click="showNavItem"
+        class="menuBtn m-y-7 m-x-8 bg-dark p-6 text-white p-x-8 fs-xl"
+      >
+        ☰
+      </div>
+    </div>
   </nav>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      isMobile: false,
+      showMobileNavItem: false,
+      currIndex: 0
+    };
+  },
   props: {
-    itemList: {
+    navItemObj: {
       type: Array,
-      default() {
-        return ["首页"];
-      }
+      required: true
     },
     userName: {
       type: String,
@@ -32,9 +59,23 @@ export default {
       }
     }
   },
+  mounted() {
+    this._isMobile();
+    window.addEventListener("resize", this._isMobile);
+  },
   methods: {
-    itemClick(name) {
-      this.$emit("navItemClick", name);
+    navItemClick(routeName, index) {
+      console.log(routeName);
+      this.showMobileNavItem = false;
+      this.currIndex = index;
+      this.$router.push(routeName);
+    },
+    _isMobile() {
+      this.isMobile = window.innerWidth < 800 ? true : false;
+      if (this.isMobile) this.showMobileNavItem = false;
+    },
+    showNavItem() {
+      this.showMobileNavItem = !this.showMobileNavItem;
     }
   }
 };
@@ -52,6 +93,20 @@ nav {
       color: rgb(226, 186, 112);
       font-size: 1rem;
     }
+  }
+  .hiddNavItem {
+    display: none;
+  }
+  .showMobileNavItem {
+    display: block;
+    .nav-item {
+      line-height: 2.2rem;
+      font-size: 1.3rem;
+      display: block;
+    }
+  }
+  .navActive {
+    color: rgb(253, 255, 133);
   }
 }
 .userInfo {
