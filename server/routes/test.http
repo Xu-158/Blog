@@ -4,7 +4,7 @@
 @jsonType = Content-Type: application/json
 
 ###
-GET {{web}}
+GET {{web}}/getArticle
 
 ###文章管理
 POST  {{admin}}/tag/edit 

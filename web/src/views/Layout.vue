@@ -8,7 +8,9 @@
         <router-view></router-view>
       </div>
     </article>
-    <footer class="m-t-8"></footer>
+    <footer class="m-t-8">
+      <h2>我是页脚</h2>
+    </footer>
   </div>
 </template>
 
@@ -52,7 +54,6 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/style/_variables.scss";
 .homepage {
-  background: url("../assets/images/bgImage.png");
   header {
     position: sticky;
     top: 0;
@@ -62,10 +63,9 @@ export default {
     margin-top: 5rem;
     .content {
       width: 60%;
-      height: 100vh;
       margin: 0 auto;
-      // border: 1px solid rgb(236, 221, 221);
       box-shadow: 0 0 10px 10px rgb(194, 194, 194);
+      padding: 1rem;
     }
     @media (max-width: 1024px) {
       .content {

@@ -7,23 +7,34 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    meta: { title: "首页" },
-    component: () => import("@/views/HomePage"),
+    redirect: "/home",
+    component: () => import("@/views/Layout.vue"),
     children: [
+      {
+        path: "/home",
+        meta: { title: "首页" },
+        component: () => import("../views/ArticleListPage.vue")
+      },
+      {
+        path: "/article",
+        meta: { title: "文章" },
+        props: true,
+        component: () => import("../views/ArticlePage.vue")
+      },
       {
         path: "/category",
         meta: { title: "分类" },
-        component: () => import("../views/Category.vue")
+        component: () => import("../views/CategoryPage.vue")
       },
       {
         path: "/timeLine",
         meta: { title: "时光机" },
-        component: () => import("../views/TimeLine.vue")
+        component: () => import("../views/TimeLinePage.vue")
       },
       {
         path: "/friend",
         meta: { title: "友链" },
-        component: () => import("../views/Friend.vue")
+        component: () => import("../views/FriendPage.vue")
       },
       {
         path: "about",
@@ -36,7 +47,7 @@ const routes = [
     path: "*",
     name: "404",
     meta: { title: "失踪了哦！" },
-    component: () => import("@/views/HomePage"),
+    component: () => import("@/views/Layout"),
     children: [
       {
         path: "*",

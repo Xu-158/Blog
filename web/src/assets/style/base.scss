@@ -117,5 +117,6 @@ a {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  // white-space: nowrap;
+  -webkit-line-clamp: 3;
 }
