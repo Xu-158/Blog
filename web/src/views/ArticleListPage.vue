@@ -1,21 +1,34 @@
 <template>
   <div>
-    <articleItem @pushArticlePage="pushArticlePage"></articleItem>
-    <articleItem @pushArticlePage="pushArticlePage"></articleItem>
-    <articleItem @pushArticlePage="pushArticlePage"></articleItem>
+    <articleItem
+      v-for="article in articleList"
+      :key="article._id"
+      :articleObj="article"
+    ></articleItem>
   </div>
 </template>
 
 <script>
 import articleItem from "@/components/ArticleItem.vue";
+import { getArticleList } from "@/api/api";
 export default {
-  components: {
-    articleItem
+  data() {
+    return {
+      articleList: []
+    };
+  },
+  created() {
+    this.initArticle();
   },
   methods: {
-    pushArticlePage(data) {
-      console.log(data);
+    async initArticle() {
+      const res = await getArticleList();
+      this.articleList = res.data;
+      console.log(this.articleList);
     }
+  },
+  components: {
+    articleItem
   }
 };
 </script>

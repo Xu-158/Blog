@@ -16,7 +16,7 @@ const routes = [
         component: () => import("../views/ArticleListPage.vue")
       },
       {
-        path: "/article",
+        path: "/article/:id",
         meta: { title: "文章" },
         props: true,
         component: () => import("../views/ArticlePage.vue")

@@ -1,45 +1,24 @@
 <template>
   <div>
-    <div class="articleBox" @click="boxClick">
+    <div class="articleBox" @click="boxClick(articleObj._id)">
       <div class="article">
         <div class="title fs-xl p-7 m-b-3 text-title">
           <span>∵</span>
-          标题啊啊啊啊啊啊啊啊啊啊
+          {{ articleObj.title }}
         </div>
-        <div class="articleContnet text-font">
-          1.创建虚拟桌面: Win+Ctrl+D 2.虚拟桌面间切换: Win+Ctrl+(←/→)
-          关闭虚拟桌面: Win+Ctrl+F4 3.全部窗口最小化: Win+M 查看桌面: Win+［,］
-          4.打开任务栏应用: Win+(1~9) 5.应用窗口半屏化: Win+(←/→)
-          6.显示运行应用: Ctrl+Alt+Tab 打开任务窗: Win+Tab 直接切换程序: Alt+Tab
-          7.打开任务管理器: Ctrl+Shift+Esc 8.打开管理视窗: Win+E 9.放大镜:
-          Win+(+/-) 10截屏: Win+PrintScreen6.显示运行应用: Ctrl+Alt+Tab
-          打开任务窗: Win+Tab 直接切换程序: Alt+Tab 7.打开任务管理器:
-          Ctrl+Shift+Esc 8.打开管理视窗: Win+E 9.放大镜: Win+(+/-) 10截屏:
-          Win+PrintScreen6.显示运行应用: Ctrl+Alt+Tab 打开任务窗: Win+Tab
-          直接切换程序: Alt+Tab 7.打开任务管理器: Ctrl+Shift+Esc 8.打开管理视窗:
-          Win+E 9.放大镜: Win+(+/-) 10截屏: Win+PrintScreen6.显示运行应用:
-          Ctrl+Alt+Tab 打开任务窗: Win+Tab 直接切换程序: Alt+Tab
-          7.打开任务管理器: Ctrl+Shift+Esc 8.打开管理视窗: Win+E 9.放大镜:
-          Win+(+/-) 10截屏: Win+PrintScreenv6.显示运行应用: Ctrl+Alt+Tab
-          打开任务窗: Win+Tab 直接切换程序: Alt+Tab 7.打开任务管理器:
-          Ctrl+Shift+Esc 8.打开管理视窗: Win+E 9.放大镜: Win+(+/-) 10截屏:
-          Win+PrintScreen
-        </div>
+        <div
+          class="articleContnet text-font"
+          v-html="articleObj.contentHtml"
+        ></div>
       </div>
       <div class="flex-1"></div>
-      <img
-        src="http://47.115.5.115/admin/uploads/images/1599793409318-test.jpg"
-        alt="图裂开了"
-      />
+      <img :src="articleObj.thumbnail" alt="图裂开了" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   props: {
     articleObj: {
       type: Object,
@@ -47,8 +26,8 @@ export default {
     }
   },
   methods: {
-    boxClick() {
-      this.$router.push("/article");
+    boxClick(id) {
+      this.$router.push(`/article/${id}`);
     }
   }
 };
