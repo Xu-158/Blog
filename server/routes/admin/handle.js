@@ -112,7 +112,7 @@ module.exports = {
       },
       function (error, resp, body) {
         if (!error && resp.statusCode == 200) {
-          const { url, userAgent } = req.app.get("githubInfo");
+          const { url, userAgent, loginAccount } = req.app.get("githubInfo");
           // 获取github用户信息
           request(
             {
@@ -130,7 +130,7 @@ module.exports = {
               if (
                 !error &&
                 resp.statusCode == 200 &&
-                data.login === "15889280255"
+                data.login === loginAccount
               ) {
                 // 签发token
                 token = jwt.sign(
