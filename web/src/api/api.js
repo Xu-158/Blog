@@ -14,3 +14,18 @@ export function getArticleInfo(params) {
     params
   });
 }
+
+export function getTagList() {
+  return httpUtil({
+    method: "get",
+    url: "/getTagList"
+  });
+}
+
+export function getTagArticle(params) {
+  return httpUtil({
+    method: "get",
+    url: "/getTagArticle",
+    params
+  });
+}

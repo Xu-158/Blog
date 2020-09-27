@@ -7,7 +7,7 @@ const TimeLine = require("../../models/Timeline");
 
 module.exports = {
   async getArticleList(req,res){
-    const data = await Article.find()
+    const data = await Article.find().sort({ _id: -1 });
     response(res, 0, "获取文章列表成功",  data );
   },
 
@@ -17,8 +17,15 @@ module.exports = {
     response(res, 0, "获取文章详细成功",  data );
   },
 
-  async getTag(req,res){
-    const data = await Tag.find()
+  async getTagList(req,res){
+    const data = await Tag.find().sort({ _id: -1 });
+    response(res, 0, "获取标签列表成功",  data );
+  },
+
+  // 通过 Tag_id 查找文章
+  async getTagArticle(req,res){
+    const id = req.query.id
+    const data = await Article.find({'tags':{$in:[id]}})
     response(res, 0, "获取标签列表成功",  data );
   },
 

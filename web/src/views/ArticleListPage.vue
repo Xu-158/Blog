@@ -1,16 +1,12 @@
 <template>
   <div>
-    <articleItem
-      v-for="article in articleList"
-      :key="article._id"
-      :articleObj="article"
-    ></articleItem>
+    <articleList :articleList="articleList"></articleList>
   </div>
 </template>
 
 <script>
-import articleItem from "@/components/ArticleItem.vue";
 import { getArticleList } from "@/api/api";
+import articleList from "@/components/ArticleList.vue";
 export default {
   data() {
     return {
@@ -28,10 +24,10 @@ export default {
     }
   },
   components: {
-    articleItem
+    articleList
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
 </style>

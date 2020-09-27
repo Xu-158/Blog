@@ -61,6 +61,7 @@ export default {
   article {
     width: 100%;
     margin-top: 5rem;
+    min-height: 60vh;
     .content {
       width: 60%;
       margin: 0 auto;

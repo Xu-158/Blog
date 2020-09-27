@@ -66,13 +66,13 @@ export default {
   img {
     flex: 4;
     width: 10vw;
-    height: 20vh;
+    max-height: 25vh;
   }
   @media (max-width: 1024px) {
     img {
-      flex: 4;
-      width: 25vw;
-      height: 20vh;
+      flex: 7;
+      width: 15vw;
+      height: 15vh;
     }
   }
 }
