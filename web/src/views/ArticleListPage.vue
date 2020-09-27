@@ -7,7 +7,9 @@
 <script>
 import { getArticleList } from "@/api/api";
 import articleList from "@/components/ArticleList.vue";
+import articleTopMixin from "@/utils/articleTopMixin";
 export default {
+  mixins: [articleTopMixin],
   data() {
     return {
       articleList: []
@@ -20,7 +22,7 @@ export default {
     async initArticle() {
       const res = await getArticleList();
       this.articleList = res.data;
-      console.log(this.articleList);
+      this.articleTopMixin(this.articleList);
     }
   },
   components: {

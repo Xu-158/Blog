@@ -17,6 +17,7 @@ export default {
       required: true
     }
   },
+
   components: {
     articleItem
   }

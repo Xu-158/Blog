@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div v-if="articleObj">
     <div class="articleBox" @click="boxClick(articleObj._id)">
       <div class="article">
         <div class="title fs-xl p-7 m-b-3 text-title">
-          <span>∵</span>
+          <span>∵</span><span class="itemTop text-red fs-xxs p-x-7" v-if="articleObj.isTop">TOP</span>
           {{ articleObj.title }}
         </div>
         <div
@@ -57,6 +57,11 @@ export default {
       letter-spacing: 0.3rem;
       line-height: 2rem;
       font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      .itemTop{
+        display: inline-block;
+        border: 1px solid map-get($colors, 'red');
+        border-radius: 1rem;
+      }
     }
     .articleContnet {
       text-indent: 2rem;

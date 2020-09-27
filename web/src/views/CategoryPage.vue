@@ -10,8 +10,10 @@
 <script>
 import categoryItem from "@/components/CategoryItem.vue";
 import articleList from "@/components/ArticleList.vue";
+import articleTopMixin from "@/utils/articleTopMixin";
 import { getTagList, getTagArticle } from "@/api/api";
 export default {
+  mixins:[articleTopMixin],
   data() {
     return {
       tagList: [],
@@ -29,6 +31,7 @@ export default {
     async tagItemClick(id) {
       const res = await getTagArticle({ id });
       this.articleList = res.data;
+      this.articleTopMixin(this.articleList);
     }
   },
   components: { categoryItem, articleList }
