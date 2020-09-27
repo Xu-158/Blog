@@ -59,13 +59,19 @@ export default {
       }
     }
   },
+  created() {
+    // 保证页面刷新后 navItem 任然是 active 状态
+    let navRouteList = [];
+    this.navItemObj.filter(curr => navRouteList.push(Object.values(curr)[1]));
+    let index = navRouteList.indexOf(this.$route.fullPath);
+    this.currIndex = index == -1 ? 0 : index;
+  },
   mounted() {
     this._isMobile();
     window.addEventListener("resize", this._isMobile);
   },
   methods: {
     navItemClick(routeName, index) {
-      console.log(routeName);
       this.showMobileNavItem = false;
       this.currIndex = index;
       this.$router.push(routeName);

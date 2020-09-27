@@ -29,3 +29,10 @@ export function getTagArticle(params) {
     params
   });
 }
+
+export function getTimeLineList() {
+  return httpUtil({
+    method: "get",
+    url: "/getTimeLineList"
+  });
+}

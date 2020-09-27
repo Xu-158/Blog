@@ -10,10 +10,11 @@ router.get('/getArticleInfo', handle.getArticleInfo);
 router.get('/getTagList', handle.getTagList);
 router.get('/getTagArticle', handle.getTagArticle);
 
+router.get('/getTimeLineList', handle.getTimeLineList);
+
 router.get('/getFriendshipLinks', handle.getFriendshipLinks);
 
 router.get('/getAbout', handle.getAbout);
 
-router.get('/getTimeLine', handle.getTimeLine);
 
 module.exports = router;

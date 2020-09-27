@@ -39,8 +39,8 @@ module.exports = {
     response(res, 0, "获取关于我成功",  data );
   },
 
-  async getTimeLine(req,res){
-    const data = await TimeLine.find()
+  async getTimeLineList(req,res){
+    const data = await TimeLine.find().sort({_id:-1})
     response(res, 0, "获取时间线成功",  data );
   }
 

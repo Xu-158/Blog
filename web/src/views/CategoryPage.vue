@@ -13,7 +13,7 @@ import articleList from "@/components/ArticleList.vue";
 import articleTopMixin from "@/utils/articleTopMixin";
 import { getTagList, getTagArticle } from "@/api/api";
 export default {
-  mixins:[articleTopMixin],
+  mixins: [articleTopMixin],
   data() {
     return {
       tagList: [],
