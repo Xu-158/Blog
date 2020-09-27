@@ -9,13 +9,24 @@
       </div>
     </article>
     <footer class="m-t-8">
-      <h2>我是页脚</h2>
+      <div class="footerContent d-flex jc-start ai-center">
+        <div class="friend" v-if="friendList">
+          <div class="m-b-6 text-title">友情链接：</div>
+          <div class="m-b-5" v-for="friend in friendList" :key="friend._id">
+            <a class="text-title" :href="friend.url"
+              >{{ friend.name }}<span>--{{ friend.description }}</span></a
+            >
+          </div>
+        </div>
+        <div class="data">datadata</div>
+      </div>
     </footer>
   </div>
 </template>
 
 <script>
 import navbar from "@/components/NavBar";
+import { getFriendList } from "@/api/api";
 export default {
   name: "Home",
   data() {
@@ -34,17 +45,27 @@ export default {
           navRoute: "/timeLine"
         },
         {
-          navName: "友链",
-          navRoute: "/friend"
+          navName: "音乐盒",
+          navRoute: "/music"
         },
         {
           navName: "关于我",
           navRoute: "/about"
         }
-      ]
+      ],
+      friendList: []
     };
   },
-  methods: {},
+  created() {
+    this.getFriendList();
+  },
+  methods: {
+    async getFriendList() {
+      const res = await getFriendList();
+      this.friendList = res.data;
+      console.log(this.friendList);
+    }
+  },
   components: {
     navbar
   }
@@ -79,6 +100,25 @@ export default {
     width: 100%;
     height: 25vh;
     background-color: map-get($colors, "footer");
+    .footerContent {
+      width: 60%;
+      margin: 0 auto;
+      height: 25vh;
+      text-align: center;
+      .friend {
+        flex: 1;
+        padding: 2rem;
+      }
+      .data {
+        flex: 1;
+        padding: 2rem;
+      }
+    }
+    @media (max-width: 1024px) {
+      .footerContent {
+        width: 90%;
+      }
+    }
   }
 }
 </style>

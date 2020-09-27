@@ -2,6 +2,32 @@
   <div class="FriendLink">
     <el-tabs type="border-card">
       <el-tab-pane label="友情链接列表">
+        <el-button type="primary" plain @click="openDialog = true">
+          <div>添加友情链接</div>
+        </el-button>
+
+        <el-dialog title="信息添加" :visible.sync="openDialog">
+          <el-form :model="formData">
+            <el-form-item label="链接名称" :label-width="formLabelWidth">
+              <el-input v-model="formData.name" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="链接地址" :label-width="formLabelWidth">
+              <el-input v-model="formData.url" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="链接描述" :label-width="formLabelWidth">
+              <el-input
+                v-model="formData.description"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="openDialog = false">取 消</el-button>
+            <el-button type="primary" @click="createLink">
+              <div>确 定</div>
+            </el-button>
+          </div>
+        </el-dialog>
         <el-table class="table" :data="tableData" v-if="tableData">
           <el-table-column
             prop="_id"
@@ -61,34 +87,6 @@
           ></el-pagination>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="添加友情链接">
-        <el-button type="primary" plain @click="openDialog = true">
-          <div>友情链接列表</div>
-        </el-button>
-
-        <el-dialog title="信息添加" :visible.sync="openDialog">
-          <el-form :model="formData">
-            <el-form-item label="链接名称" :label-width="formLabelWidth">
-              <el-input v-model="formData.name" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="链接地址" :label-width="formLabelWidth">
-              <el-input v-model="formData.url" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="链接描述" :label-width="formLabelWidth">
-              <el-input
-                v-model="formData.description"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="openDialog = false">取 消</el-button>
-            <el-button type="primary" @click="createLink">
-              <div>确 定</div>
-            </el-button>
-          </div>
-        </el-dialog>
-      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -107,9 +105,9 @@ export default {
         id: "",
         name: "",
         url: "",
-        description: "",
+        description: ""
       },
-      formLabelWidth: "120px",
+      formLabelWidth: "120px"
     };
   },
   created() {
@@ -149,8 +147,8 @@ export default {
     pageChange(currentPage) {
       this.page = currentPage;
       this.initTagList();
-    },
-  },
+    }
+  }
 };
 </script>
 

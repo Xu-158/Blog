@@ -12,7 +12,7 @@ router.get('/getTagArticle', handle.getTagArticle);
 
 router.get('/getTimeLineList', handle.getTimeLineList);
 
-router.get('/getFriendshipLinks', handle.getFriendshipLinks);
+router.get('/getFriendList', handle.getFriendshipLinks);
 
 router.get('/getAbout', handle.getAbout);
 

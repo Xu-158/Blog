@@ -32,9 +32,9 @@ const routes = [
         component: () => import("../views/TimeLinePage.vue")
       },
       {
-        path: "/friend",
-        meta: { title: "友链" },
-        component: () => import("../views/FriendPage.vue")
+        path: "/music",
+        meta: { title: "音乐盒" },
+        component: () => import("../views/MusicPage.vue")
       },
       {
         path: "about",

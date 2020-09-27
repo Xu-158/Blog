@@ -36,3 +36,11 @@ export function getTimeLineList() {
     url: "/getTimeLineList"
   });
 }
+
+export function getFriendList() {
+  return httpUtil({
+    method: "get",
+    url: "/getFriendList"
+  });
+}
+
