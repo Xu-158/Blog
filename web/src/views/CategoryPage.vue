@@ -42,8 +42,7 @@ export default {
 .categoryPage {
   padding: 2rem;
   .cateBox {
-    padding: 2rem;
-    border: 1px solid rgb(151, 151, 151);
+    padding: 2.5rem;
   }
 }
 </style>

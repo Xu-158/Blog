@@ -50,7 +50,6 @@ export default {
   }
   .card {
     width: 80vw;
-    border: 1px dashed #666;
     .time {
       flex: 1;
       font-size: 0.9rem;

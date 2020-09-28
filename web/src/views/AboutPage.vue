@@ -1,12 +1,12 @@
 <template>
   <div class="aboutPage p-8">
-    <div class="content p-8">
+    <div class="content p-8 m-8">
       <div class="header d-flex p-8">
         <img :src="data.logo" alt="图裂了" />
         <div class="info">
           <p>QQ:{{ data.qq }}</p>
           <p>{{ data.e_mail }}</p>
-          <p><a :href="data.github" class="text-dark">Github</a></p>
+          <p><a :href="data.github" class="text-dark" target="_blank">Github</a></p>
         </div>
       </div>
       <div class="body p-8 text-font" v-html="data.contentHtml"></div>

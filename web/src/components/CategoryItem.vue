@@ -1,13 +1,13 @@
 <template>
   <div v-if="tagList">
     <div
-      class="cateItem p-x-6 p-y-3 m-r-8 m-b-8"
+      class="cateItem p-x-6 p-y-3 m-r-8 m-b-8 m-t-3"
       v-for="(tagItem, index) in tagList"
       :key="tagItem._id"
       @click="tagClick(tagItem._id)"
     >
       {{ tagItem.title }}
-      <i class="cateItemCount p-x-3 fs-xxs">{{ getArticleCount(index) }}</i>
+      <i class="cateItemCount p-x-3 fs-xxs text-font">{{ getArticleCount(index) }}</i>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     tagClick(id) {
-      this.$emit('tagClick',id)
+      this.$emit("tagClick", id);
     }
   },
   computed: {
@@ -40,12 +40,13 @@ export default {
   position: relative;
   display: inline-block;
   border: 1px solid #999;
-}
-.cateItemCount {
-  position: absolute;
-  display: inline-block;
-  border: 1px solid #999;
-  border-radius: 50%;
-  bottom: -1rem;
+  border-radius: 5px;
+  .cateItemCount {
+    position: absolute;
+    display: inline-block;
+    border: 1px solid #999;
+    border-radius: 50%;
+    bottom: -1rem;
+  }
 }
 </style>
