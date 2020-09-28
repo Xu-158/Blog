@@ -13,8 +13,8 @@
         <div class="friend" v-if="friendList">
           <div class="m-b-6 text-title">友情链接：</div>
           <div class="m-b-5" v-for="friend in friendList" :key="friend._id">
-            <a class="text-title" :href="friend.url"
-              >{{ friend.name }}<span>--{{ friend.description }}</span></a
+            <a class="text-title fs-xs" :href="friend.url" target="_blank"
+              >{{ friend.name }}<span class="fs-xxs">：{{ friend.description }}</span></a
             >
           </div>
         </div>
@@ -63,7 +63,6 @@ export default {
     async getFriendList() {
       const res = await getFriendList();
       this.friendList = res.data;
-      console.log(this.friendList);
     }
   },
   components: {

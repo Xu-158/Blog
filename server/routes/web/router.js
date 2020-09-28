@@ -14,7 +14,7 @@ router.get('/getTimeLineList', handle.getTimeLineList);
 
 router.get('/getFriendList', handle.getFriendshipLinks);
 
-router.get('/getAbout', handle.getAbout);
+router.get('/getAboutMe', handle.getAboutMe);
 
 
 module.exports = router;

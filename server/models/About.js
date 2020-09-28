@@ -8,7 +8,6 @@ const schema = new mongoose.Schema(
     qq: { type: String, default: "" },
     e_mail: { type: String, default: "" },
     github: { type: String, default: "" },
-    comments: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Comment" }],
   },
   {
     timestamps: true,

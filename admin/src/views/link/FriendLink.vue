@@ -137,7 +137,13 @@ export default {
     },
     async handleEdit(row) {
       this.openDialog = true;
-      if (row) this.formData = { id: row._id, name: row.name, url: row.url };
+      if (row)
+        this.formData = {
+          id: row._id,
+          name: row.name,
+          url: row.url,
+          description: row.description
+        };
     },
     async handleDelete(id) {
       const res = await deleteLink({ id });

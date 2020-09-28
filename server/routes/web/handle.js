@@ -29,19 +29,19 @@ module.exports = {
     response(res, 0, "获取标签列表成功",  data );
   },
 
+  async getTimeLineList(req,res){
+    const data = await TimeLine.find().sort({_id:-1})
+    response(res, 0, "获取时间线成功",  data );
+  },
+
   async getFriendshipLinks(req,res){
     const data = await FriendshipLinks.find()
     response(res, 0, "获取友链列表成功",  data );
   },
 
-  async getAbout(req,res){
-    const data = await About.find()
+  async getAboutMe(req,res){
+    const data = await About.findOne()
     response(res, 0, "获取关于我成功",  data );
   },
-
-  async getTimeLineList(req,res){
-    const data = await TimeLine.find().sort({_id:-1})
-    response(res, 0, "获取时间线成功",  data );
-  }
 
 }

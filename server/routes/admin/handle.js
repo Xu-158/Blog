@@ -443,7 +443,7 @@ module.exports = {
   },
 
   async aboutInfo(req, res) {
-    const data = await About.findOne();
+    const data = await About.findOne()
     response(res, 0, "获取关于我成功", data);
   },
 };

@@ -44,3 +44,11 @@ export function getFriendList() {
   });
 }
 
+export function getAboutMe() {
+  return httpUtil({
+    method: "get",
+    url: "/getAboutMe"
+  });
+}
+
+
