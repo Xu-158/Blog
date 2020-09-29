@@ -6,6 +6,6 @@
 
 <style lang="scss">
 #app {
-  background: url("./assets/images/bgImage.png");
+  background: url("./assets/images/bgImage.png") fixed center top;
 }
 </style>

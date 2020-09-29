@@ -13,17 +13,19 @@ module.exports = {
   // 验证token的中间件函数
   async auth(req, res, next) {
     const token = String(req.headers.authorization).split(" ").pop();
-    const { role } = await jwt.verify(
+    const {role} = await jwt.verify(
       token,
       req.app.get("secret"),
       async (err, token) => {
         if (err) {
           response(res, 1, "未登录", err);
-          return;
+          return {role:null};
         }
         return token;
       }
-    );
+    )
+
+    if(!role)return
 
     if (role === "Tourist" && req.method !== "GET") {
       response(res, 1, "权限不足");
@@ -50,7 +52,8 @@ module.exports = {
     const user = require("bcryptjs").compareSync(password, isAdmin.password);
 
     const token = jwt.sign(
-      {
+      { 
+        role:"Admin",
         id: String(isAdmin.id),
       },
       req.app.get("secret")

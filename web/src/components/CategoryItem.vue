@@ -54,7 +54,7 @@ export default {
     color: rgb(34, 120, 178);
     font-weight: 600;
     border: 1px solid #fff;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(46, 46, 46);
   }
   .cateItemCount {
     position: absolute;
@@ -68,7 +68,7 @@ export default {
   color: rgb(34, 120, 178);
   font-weight: 600;
   border: 1px solid #fff;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(46, 46, 46);
   .cateItemCount {
     color: rgb(34, 120, 178);
     background-color: rgb(255, 255, 255);

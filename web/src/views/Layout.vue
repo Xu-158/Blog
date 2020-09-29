@@ -33,7 +33,6 @@
       </div>
     </footer>
     <div class="topBtn" @click="topTop">
-      <!-- <a href="#topAnchor" style="position:fixed;right:0;bottom:0"></a> -->
       <img src="@/assets/images/backTop.png" alt="" />
     </div>
   </div>
@@ -115,11 +114,12 @@ export default {
   header {
     position: sticky;
     top: 0;
+    height: 10vh;
   }
   article {
     width: 100%;
     margin-top: 3rem;
-    min-height: 60vh;
+    min-height: 70vh;
     .content {
       border-radius: 2rem;
       width: 60%;
@@ -141,10 +141,8 @@ export default {
     .footerContent {
       width: 60%;
       margin: 0 auto;
-      height: 20vh;
       text-align: center;
       .friend {
-        height: 20vh;
         flex: 1;
         padding: 2rem;
         overflow: hidden;

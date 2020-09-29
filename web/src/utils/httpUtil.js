@@ -2,6 +2,7 @@ import axios from "axios";
 import Vue from "vue";
 
 const httpUtil = axios.create({
+  // baseURL: "http:///192.168.42.191:3000/web",
   baseURL: "http://127.0.0.1:3000/web",
   timeout: 50000
 });
