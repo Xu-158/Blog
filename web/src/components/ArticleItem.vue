@@ -43,6 +43,7 @@ export default {
   padding-left: 1rem;
   padding-right: 1rem;
   align-items: center;
+  border-radius: 1rem;
   background-color: map-get($colors, "articleBox");
   &:hover {
     background-color: map-get($colors, "articleBoxArticle");

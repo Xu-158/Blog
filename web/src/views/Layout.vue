@@ -118,9 +118,10 @@ export default {
   }
   article {
     width: 100%;
-    margin-top: 5rem;
+    margin-top: 3rem;
     min-height: 60vh;
     .content {
+      border-radius: 2rem;
       width: 60%;
       margin: 0 auto;
       box-shadow: 0 0 10px 10px rgb(194, 194, 194);
@@ -133,7 +134,7 @@ export default {
     }
   }
   footer {
-    margin-top: 5rem;
+    margin-top: 3rem;
     width: 100%;
     height: 20vh;
     background-color: map-get($colors, "footer");
@@ -149,7 +150,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         margin-top: 10px;
-        a{
+        a {
           display: block;
         }
       }
@@ -168,6 +169,10 @@ export default {
     position: fixed;
     right: 3rem;
     bottom: 2rem;
+    img {
+      width: 3rem;
+      height: 4rem;
+    }
   }
   @media (max-width: 1024px) {
     .topBtn {

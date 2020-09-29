@@ -9,11 +9,11 @@
       </el-table-column>
       <el-table-column prop="tagNames" label="文章标签" width="300">
         <template slot-scope="scope">
-          <el-tag>{{scope.row.tagNames.join(' - ')}}</el-tag>
+           <el-tag v-for="item in scope.row.tagNames" :key="item" style="margin:3px 3px">{{item}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createdAt" label="创建日期" width="200"></el-table-column>
-      <el-table-column prop="isTop" label="是否置顶" width="100">
+      <el-table-column prop="createdAt" label="创建日期" width="180"></el-table-column>
+      <el-table-column prop="isTop" label="是否置顶" width="80">
         <template slot-scope="scope">
           <div>
             <i
@@ -25,7 +25,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="isShow" label="是否可见" >
+      <el-table-column prop="isShow" label="是否可见" width="80">
         <template slot-scope="scope">
           <div>
             <i
