@@ -6,7 +6,9 @@
     </header>
     <article class="m-t-8">
       <div class="content bg-white">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </div>
     </article>
     <footer class="m-t-8">
