@@ -17,6 +17,10 @@ export default {
   },
   created() {
     this.initArticle();
+    console.log('article create');
+  },
+  mounted(){
+    console.log('article mounted');
   },
   methods: {
     async initArticle() {

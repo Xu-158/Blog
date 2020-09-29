@@ -6,7 +6,9 @@
     </header>
     <article class="m-t-8">
       <div class="content bg-white">
-        <keep-alive>
+        <!-- <keep-alive>是Vue的内置组件，能在组件切换过程中将状态保留在内存中，防止重复渲染DOM。 -->
+        <!-- 一可以减少服务器请求次数，二则可以在用户返回上一页后记忆到上次浏览位置（ios端微信浏览器不适用) -->
+        <keep-alive max="6">
           <router-view></router-view>
         </keep-alive>
       </div>
@@ -15,8 +17,13 @@
       <div class="footerContent d-flex jc-start ai-center">
         <div class="friend" v-if="friendList">
           <div class="m-b-6 text-title">友情链接：</div>
-          <div class="m-b-5" v-for="friend in friendList" :key="friend._id">
-            <a class="text-title fs-xs" :href="friend.url" target="_blank"
+          <div class="m-b-5 friendLinkItems">
+            <a
+              class="text-title fs-xs"
+              v-for="friend in friendList"
+              :key="friend._id"
+              :href="friend.url"
+              target="_blank"
               >{{ friend.name
               }}<span class="fs-xxs">：{{ friend.description }}</span></a
             >
@@ -136,8 +143,15 @@ export default {
       height: 20vh;
       text-align: center;
       .friend {
+        height: 20vh;
         flex: 1;
         padding: 2rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 10px;
+        a{
+          display: block;
+        }
       }
       .data {
         flex: 1;

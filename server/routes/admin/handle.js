@@ -61,9 +61,16 @@ module.exports = {
 
   // 游客登陆
   async touristLogin(req, res) {
-    const tourist = {
+    let TouristId = await Role.findOne({'type': 'Tourist'})
+    let canLogin = await Admin.findOne({role:`${TouristId._id}`})
+    if(!TouristId||!canLogin){
+      response(res, 1, "登陆失败,暂未开启游客登录功能"); 
+      return;   
+    }  
+
+    const tourist = { 
       role: "Tourist",
-      account: "无名游客",
+      account: `${canLogin.account}`,
       password: "123456",
     };
 
@@ -74,7 +81,7 @@ module.exports = {
       req.app.get("secret")
     );
 
-    response(res, 0, "登陆成功", { account: "无名游客" }, token);
+    response(res, 0, "登陆成功", { account: `${canLogin.name}` }, token);
   },
 
   // GitHub登陆
@@ -333,7 +340,7 @@ module.exports = {
       return;
     }
     const adminSize = await Admin.find().countDocuments();
-    if (adminSize >= 1) {
+    if (adminSize >= 2) {
       response(res, 1, "管理员已达到上限");
       return;
     }
@@ -378,18 +385,6 @@ module.exports = {
       await Role.create(roles);
     }
     response(res, 0, "获取管理员列表成功", totalUser);
-  },
-
-  // 新建角色
-  async addRole(req, res) {
-    const role = req.body;
-    const totalRole = await Role.find().countDocuments();
-    if (totalRole > 1) {
-      response(res, 1, "角色已达到上限!");
-      return;
-    }
-    const data = await Role.create(role);
-    response(res, 0, "创建角色成功!", data);
   },
 
   // 角色列表

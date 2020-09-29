@@ -1,11 +1,10 @@
 <template>
   <div class="FriendLink">
+    <el-button type="primary" class="addDialog" plain @click="openDialog = true">
+      <div><i class="el-icon-circle-plus"></i><span>添加友情链接</span></div>
+    </el-button>
     <el-tabs type="border-card">
       <el-tab-pane label="友情链接列表">
-        <el-button type="primary" plain @click="openDialog = true">
-          <div>添加友情链接</div>
-        </el-button>
-
         <el-dialog title="信息添加" :visible.sync="openDialog">
           <el-form :model="formData">
             <el-form-item label="链接名称" :label-width="formLabelWidth">
@@ -152,7 +151,7 @@ export default {
     // 页数改变
     pageChange(currentPage) {
       this.page = currentPage;
-      this.initTagList();
+      this.initFriendLink();
     }
   }
 };
@@ -161,9 +160,14 @@ export default {
 <style lang="scss">
 @import "../../assets/style/style.scss";
 .FriendLink {
-  .table {
-    padding: 20px;
-    height: 70vh;
+  display: flex;
+  flex-direction: column;
+  .addDialog {
+    margin-bottom: 20px;
+    .el-icon-circle-plus {
+      font-size: 20px;
+      vertical-align: sub;
+    }
   }
   .option-1 {
     margin-right: 10px;
