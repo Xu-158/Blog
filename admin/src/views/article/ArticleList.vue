@@ -2,17 +2,26 @@
   <div>
     <h2>文章列表</h2>
     <el-table :data="tableData" class="table">
-      <el-table-column prop="title" label="标题" width="350">
+      <el-table-column prop="title" label="标题">
         <template slot-scope="scope">
-          <div class="title">{{scope.row.title}}</div>
+          <div class="title">{{ scope.row.title }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="tagNames" label="文章标签" width="300">
+      <el-table-column prop="tagNames" label="文章标签">
         <template slot-scope="scope">
-           <el-tag v-for="item in scope.row.tagNames" :key="item" style="margin:3px 3px">{{item}}</el-tag>
+          <el-tag
+            v-for="item in scope.row.tagNames"
+            :key="item"
+            style="margin:3px 3px"
+            >{{ item }}</el-tag
+          >
         </template>
       </el-table-column>
-      <el-table-column prop="createdAt" label="创建日期" width="180"></el-table-column>
+      <el-table-column
+        prop="createdAt"
+        label="创建日期"
+        width="180"
+      ></el-table-column>
       <el-table-column prop="isTop" label="是否置顶" width="80">
         <template slot-scope="scope">
           <div>
@@ -21,7 +30,11 @@
               class="el-icon-success"
               style="color:#67c23A;font-size: 26px;"
             ></i>
-            <i v-else class="el-icon-error" style="color:#ff0000;font-size: 26px;"></i>
+            <i
+              v-else
+              class="el-icon-error"
+              style="color:#ff0000;font-size: 26px;"
+            ></i>
           </div>
         </template>
       </el-table-column>
@@ -33,14 +46,30 @@
               class="el-icon-success"
               style="color:#67c23A;font-size: 26px;"
             ></i>
-            <i v-else class="el-icon-error" style="color:#ff0000;font-size: 26px;"></i>
+            <i
+              v-else
+              class="el-icon-error"
+              style="color:#ff0000;font-size: 26px;"
+            ></i>
           </div>
         </template>
       </el-table-column>
-      <el-table-column  label="操作" width="150">
+      <el-table-column prop="lickCount" label="浏览量/点赞数" width="140">
         <template slot-scope="scope">
-          <el-button @click="goEdit(scope.row._id)" type="primary" size="small">编辑</el-button>
-          <el-button @click="toDelete(scope.row)" type="danger" size="small">删除</el-button>
+          <div>
+            <el-tag type="success">{{ scope.row.hitCount }}</el-tag>&nbsp;
+            <el-tag type="danger">{{ scope.row.likeCount }}</el-tag>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="150">
+        <template slot-scope="scope">
+          <el-button @click="goEdit(scope.row._id)" type="primary" size="small"
+            >编辑</el-button
+          >
+          <el-button @click="toDelete(scope.row)" type="danger" size="small"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>

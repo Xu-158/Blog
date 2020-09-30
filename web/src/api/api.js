@@ -15,6 +15,14 @@ export function getArticleInfo(params) {
   });
 }
 
+export function likeCountAdd(params){
+  return httpUtil({
+    method:'put',
+    url:'/likeCountAdd',
+    params
+  })
+}
+
 export function getTagList() {
   return httpUtil({
     method: "get",

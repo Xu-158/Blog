@@ -14,7 +14,19 @@ module.exports = {
   async getArticleInfo(req,res){
     const id = req.query.id
     const data = await Article.findById(id)
+    if(data){
+      data.hitCount++
+      data.save()
+    }
     response(res, 0, "获取文章详细成功",  data );
+  },
+
+  async likeCountAdd(req,res){
+    const id = req.query.id
+    let likeCount = req.query.likeCount
+    if(likeCount) ++likeCount
+    const data = await Article.findByIdAndUpdate(id,{likeCount},{new:true}) //new  默认为false  返回修改后的数据。
+    response(res, 0, "like++",  data );
   },
 
   async getTagList(req,res){

@@ -12,32 +12,38 @@ const routes = [
     children: [
       {
         path: "/home",
+        name: "home",
         meta: { title: "首页" },
         component: () => import("../views/ArticleListPage.vue")
       },
       {
         path: "/article/:id",
+        name: "articlePage",
         meta: { title: "文章" },
         props: true,
         component: () => import("../views/ArticlePage.vue")
       },
       {
         path: "/category",
+        name: "category",
         meta: { title: "分类" },
         component: () => import("../views/CategoryPage.vue")
       },
       {
         path: "/timeLine",
+        name: "timeLine",
         meta: { title: "时光机" },
         component: () => import("../views/TimeLinePage.vue")
       },
       {
         path: "/music",
+        name: "music",
         meta: { title: "音乐盒" },
         component: () => import("../views/MusicPage.vue")
       },
       {
-        path: "about",
+        path: "/about",
+        name: "about",
         meta: { title: "关于" },
         component: () => import("../views/AboutPage")
       }

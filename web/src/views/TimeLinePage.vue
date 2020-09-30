@@ -11,7 +11,6 @@
 <script>
 import { getTimeLineList } from "@/api/api";
 import timelineitem from "@/components/TimeLineItem.vue";
-import dateFormat from "@/utils/dateFormat.js";
 export default {
   data() {
     return {
@@ -25,9 +24,6 @@ export default {
     async getTimeLineList() {
       const res = await getTimeLineList();
       this.timeLineList = res.data;
-      this.timeLineList.filter(
-        cur => (cur.time = dateFormat("YYYY-mm-dd", new Date(cur.time)))
-      );
     }
   },
   components: { timelineitem }
