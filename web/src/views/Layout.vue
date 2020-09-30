@@ -8,7 +8,7 @@
       <div class="content bg-white">
         <!-- <keep-alive>是Vue的内置组件，能在组件切换过程中将状态保留在内存中，防止重复渲染DOM。 -->
         <!-- 一可以减少服务器请求次数，二则可以在用户返回上一页后记忆到上次浏览位置（ios端微信浏览器不适用) -->
-        <keep-alive max="6">
+        <keep-alive max="6" exclude="articlePage">
           <router-view></router-view>
         </keep-alive>
       </div>
@@ -32,14 +32,13 @@
         <div class="data">datadata</div>
       </div>
     </footer>
-    <div class="topBtn" @click="topTop">
-      <img src="@/assets/images/backTop.png" alt="" />
-    </div>
+    <backTop class="topBtn"></backTop>
   </div>
 </template>
 
 <script>
 import navbar from "@/components/NavBar";
+import BackTop from "@/components/BackTop";
 import { getFriendList } from "@/api/api";
 export default {
   name: "Home",
@@ -67,43 +66,21 @@ export default {
           navRoute: "/about"
         }
       ],
-      friendList: [],
-      backTop: false
+      friendList: []
     };
   },
   created() {
     this.getFriendList();
   },
-  mounted() {
-    // addEventListener(事件名，触发后调用的函数，布尔值用于描述事件是冒泡还是捕获)
-    // 事件传递有两种方式：冒泡与捕获。
-    // 事件传递定义了元素事件触发的顺序。 如果你将 <p> 元素插入到 <div> 元素中，用户点击 <p> 元素, 哪个元素的 "click" 事件先被触发呢？
-    // 在 冒泡 中，内部元素的事件会先被触发，然后再触发外部元素，即： <p> 元素的点击事件先触发，然后会触发 <div> 元素的点击事件。
-    // 在 捕获 中，外部元素的事件会先被触发，然后才会触发内部元素的事件，即： <div> 元素的点击事件先触发 ，然后再触发 <p> 元素的点击事件。
-    window.addEventListener("scroll", this.handleScroll, true);
-  },
   methods: {
     async getFriendList() {
       const res = await getFriendList();
       this.friendList = res.data;
-    },
-    handleScroll() {
-      let scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      scrollTop > 30 ? (this.backTop = true) : (this.backTop = false);
-    },
-    topTop() {
-      let top = document.documentElement.scrollTop || document.body.scrollTop;
-      const timeTop = setInterval(() => {
-        document.body.scrollTop = document.documentElement.scrollTop = top -= 50;
-        if (top <= 0) {
-          clearInterval(timeTop);
-        }
-      }, 10);
     }
   },
   components: {
-    navbar
+    navbar,
+    BackTop
   }
 };
 </script>
@@ -160,23 +137,6 @@ export default {
     @media (max-width: 1024px) {
       .footerContent {
         width: 90%;
-      }
-    }
-  }
-  .topBtn {
-    position: fixed;
-    right: 3rem;
-    bottom: 2rem;
-    img {
-      width: 3rem;
-      height: 4rem;
-    }
-  }
-  @media (max-width: 1024px) {
-    .topBtn {
-      img {
-        width: 3rem;
-        height: 5rem;
       }
     }
   }

@@ -21,13 +21,17 @@
 </template>
 
 <script>
+import dateFormat from "@/utils/dateFormat.js";
 export default {
   props: {
     timeLineObj: {
       type: Object,
       required: true
     }
-  }
+  },
+  created() {
+    this.timeLineObj.time = dateFormat("YYYY-mm-dd", new Date(this.timeLineObj.time))
+  },
 };
 </script>
 

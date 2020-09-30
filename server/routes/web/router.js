@@ -5,6 +5,7 @@ const handle = require('./handle')
 // Article
 router.get('/getArticleList', handle.getArticleList);
 router.get('/getArticleInfo', handle.getArticleInfo);
+router.put('/likeCountAdd',handle.likeCountAdd)
 
 // Tag
 router.get('/getTagList', handle.getTagList);

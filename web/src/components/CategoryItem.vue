@@ -8,7 +8,7 @@
       :class="{ active: index == activeIndex }"
     >
       {{ tagItem.title }}
-      <i class="cateItemCount p-x-3 fs-xxs text-font">{{
+      <i class="cateItemCount p-x-5 fs-xxs text-font">{{
         getArticleCount(index)
       }}</i>
     </div>
@@ -51,7 +51,7 @@ export default {
   border: 1px solid #999;
   border-radius: 5px;
   &:hover {
-    color: rgb(34, 120, 178);
+    color: rgb(67, 180, 255);
     font-weight: 600;
     border: 1px solid #fff;
     background-color: rgb(46, 46, 46);
@@ -65,13 +65,13 @@ export default {
   }
 }
 .active {
-  color: rgb(34, 120, 178);
+  color: rgb(67, 180, 255);
   font-weight: 600;
   border: 1px solid #fff;
   background-color: rgb(46, 46, 46);
   .cateItemCount {
-    color: rgb(34, 120, 178);
-    background-color: rgb(255, 255, 255);
+    color: rgb(67, 180, 255);
+    background-color: rgb(46, 46, 46);
     position: absolute;
     display: inline-block;
     border: 1px solid rgb(255, 255, 255);
