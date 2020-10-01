@@ -34,8 +34,8 @@
         </el-table>
       </el-tab-pane>
       <el-dialog title="信息添加" :visible.sync="openDialog">
-        <el-form :model="formData">
-          <el-form-item label="角色" :label-width="formLabelWidth">
+        <el-form :model="formData" :rules="rules" ref="formData">
+          <el-form-item label="角色" :label-width="formLabelWidth" prop="role">
             <el-select v-model="formData.role" autocomplete="off">
               <el-option
                 v-for="item in roleList"
@@ -45,19 +45,27 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="名字" :label-width="formLabelWidth">
+          <el-form-item label="名字" :label-width="formLabelWidth" prop="name">
             <el-input v-model="formData.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="账号" :label-width="formLabelWidth">
+          <el-form-item
+            label="账号"
+            :label-width="formLabelWidth"
+            prop="account"
+          >
             <el-input v-model="formData.account" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth">
+          <el-form-item
+            label="密码"
+            :label-width="formLabelWidth"
+            prop="password"
+          >
             <el-input v-model="formData.password" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="openDialog = false">取 消</el-button>
-          <el-button type="primary" @click="createAdmin">
+          <el-button type="primary" @click="submitForm">
             <div>确 定</div>
           </el-button>
         </div>
@@ -87,7 +95,16 @@ export default {
         password: ""
       },
       formLabelWidth: "120px",
-      roleList: []
+      roleList: [],
+      rules: {
+        role: { required: true, message: "请选择角色", trigger: "change" },
+        name: [
+          { required: true, message: "请输入名字", trigger: "blur" },
+          { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" }
+        ],
+        account: { required: true, message: "请输入账号", trigger: "blur" },
+        password: { required: true, message: "请输入密码", trigger: "blur" }
+      }
     };
   },
   created() {
@@ -117,6 +134,12 @@ export default {
       this.openDialog = false;
     },
 
+    submitForm() {
+      this.$refs.formData.validate(valid => {
+        if (valid) this.createAdmin();
+      });
+    },
+
     async handleDelete(id) {
       const res = await deleteAdmin({ id });
       if (res.status == 0) this.initAdminList();
@@ -130,9 +153,9 @@ export default {
 .AdminList {
   display: flex;
   flex-direction: column;
-  .addDialog{
+  .addDialog {
     margin-bottom: 20px;
-    .el-icon-circle-plus{
+    .el-icon-circle-plus {
       font-size: 20px;
       vertical-align: sub;
     }

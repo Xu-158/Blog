@@ -1,19 +1,36 @@
 <template>
   <div class="FriendLink">
-    <el-button type="primary" class="addDialog" plain @click="openDialog = true">
+    <el-button
+      type="primary"
+      class="addDialog"
+      plain
+      @click="openDialog = true"
+    >
       <div><i class="el-icon-circle-plus"></i><span>添加友情链接</span></div>
     </el-button>
     <el-tabs type="border-card">
       <el-tab-pane label="友情链接列表">
         <el-dialog title="信息添加" :visible.sync="openDialog">
-          <el-form :model="formData">
-            <el-form-item label="链接名称" :label-width="formLabelWidth">
+          <el-form :model="formData" :rules="rules" ref="formData">
+            <el-form-item
+              label="链接名称"
+              :label-width="formLabelWidth"
+              prop="name"
+            >
               <el-input v-model="formData.name" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="链接地址" :label-width="formLabelWidth">
+            <el-form-item
+              label="链接地址"
+              :label-width="formLabelWidth"
+              prop="url"
+            >
               <el-input v-model="formData.url" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="链接描述" :label-width="formLabelWidth">
+            <el-form-item
+              label="链接描述"
+              :label-width="formLabelWidth"
+              prop="description"
+            >
               <el-input
                 v-model="formData.description"
                 autocomplete="off"
@@ -106,7 +123,20 @@ export default {
         url: "",
         description: ""
       },
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      rules: {
+        name: {
+          required: true,
+          message: "请输入链接名称名称",
+          tirgger: "blur"
+        },
+        url: { required: true, message: "请输入链接URL", tirgger: "blur" },
+        description: {
+          required: true,
+          message: "请输入链接描述",
+          tirgger: "blur"
+        }
+      }
     };
   },
   created() {

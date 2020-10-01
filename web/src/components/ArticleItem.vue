@@ -3,7 +3,7 @@
     <div class="articleBox" @click="boxClick(articleObj._id)">
       <div class="article">
         <div class="title fs-xl p-7 m-b-3 text-title">
-          <span class="itemTop text-red fs-xxs p-x-2" v-if="articleObj.isTop"
+          <span class="itemTop text-red fs-xxs p-2" v-if="articleObj.isTop"
             >TOP</span
           ><span v-else>∵</span>
           {{ articleObj.title }}
@@ -61,9 +61,8 @@ export default {
       line-height: 2rem;
       font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
       .itemTop {
-        display: inline-block;
         vertical-align: middle;
-        border: 1px solid map-get($colors, "red");
+        border: 2px solid map-get($colors, "red");
         letter-spacing: 0.1rem;
         line-height: 1.5rem;
         border-radius: 1rem;
