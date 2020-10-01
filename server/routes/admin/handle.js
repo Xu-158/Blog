@@ -13,19 +13,19 @@ module.exports = {
   // 验证token的中间件函数
   async auth(req, res, next) {
     const token = String(req.headers.authorization).split(" ").pop();
-    const {role} = await jwt.verify(
+    const { role } = await jwt.verify(
       token,
       req.app.get("secret"),
       async (err, token) => {
         if (err) {
           response(res, 1, "未登录", err);
-          return {role:null};
+          return { role: null };
         }
         return token;
       }
     )
 
-    if(!role)return
+    if (!role) return
 
     if (role === "Tourist" && req.method !== "GET") {
       response(res, 1, "权限不足");
@@ -52,8 +52,8 @@ module.exports = {
     const user = require("bcryptjs").compareSync(password, isAdmin.password);
 
     const token = jwt.sign(
-      { 
-        role:"Admin",
+      {
+        role: "Admin",
         id: String(isAdmin.id),
       },
       req.app.get("secret")
@@ -64,14 +64,14 @@ module.exports = {
 
   // 游客登陆
   async touristLogin(req, res) {
-    let TouristId = await Role.findOne({'type': 'Tourist'})
-    let canLogin = await Admin.findOne({role:`${TouristId._id}`})
-    if(!TouristId||!canLogin){
-      response(res, 1, "登陆失败,暂未开启游客登录功能"); 
-      return;   
-    }  
+    let TouristId = await Role.findOne({ 'type': 'Tourist' })
+    let canLogin = await Admin.findOne({ role: `${TouristId._id}` })
+    if (!TouristId || !canLogin) {
+      response(res, 1, "登陆失败,暂未开启游客登录功能");
+      return;
+    }
 
-    const tourist = { 
+    const tourist = {
       role: "Tourist",
       account: `${canLogin.account}`,
       password: "123456",
@@ -183,13 +183,13 @@ module.exports = {
    */
   // 编辑文章标签
   async tagEdit(req, res) {
-    const { id, title, count } = req.body;
+    const { id, title } = req.body;
     let data, msg;
     if (id) {
-      data = await Tag.findByIdAndUpdate(id, { title, count });
+      data = await Tag.findByIdAndUpdate(id, { title });
       msg = "修改标签成功";
     } else {
-      data = await Tag.create({ title, count });
+      data = await Tag.create({ title });
       msg = "创建标签成功";
     }
     response(res, 0, msg, data);
@@ -230,6 +230,7 @@ module.exports = {
       if (oldArticleTag.tags) {
         oldArticleTag.tags.map(async (old) => {
           tag = await Tag.findById(old);
+          console.log(tag.selectArticles);
           tag.selectArticles &&
             tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1);
           await tag.save();
@@ -242,7 +243,8 @@ module.exports = {
       msg = "创建文章成功";
     }
     let tag, newSelectArticles;
-    if (newArticleTags) {
+    if (newArticleTags && article.isShow) {
+      console.log('add');
       newArticleTags.map(async (tagId) => {
         tag = await Tag.findById(tagId);
         newSelectArticles = tag.selectArticles.push(data._id);

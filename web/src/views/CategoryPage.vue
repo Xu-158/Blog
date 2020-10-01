@@ -4,12 +4,19 @@
       <categoryItem :tagList="tagList" @tagClick="tagItemClick"></categoryItem>
     </div>
     <articleList :articleList="articleList"></articleList>
+    <pagination
+      :totalSize="totalSize"
+      :currentPage="currentPage"
+      :onePageSize="onePageSize"
+      @pageChange="pageChange"
+    ></pagination>
   </div>
 </template>
 
 <script>
 import categoryItem from "@/components/CategoryItem.vue";
 import articleList from "@/components/ArticleList.vue";
+import pagination from "@/components/Pagination.vue";
 import articleTopMixin from "@/utils/articleTopMixin";
 import { getTagList, getTagArticle } from "@/api/api";
 export default {
@@ -17,7 +24,10 @@ export default {
   data() {
     return {
       tagList: [],
-      articleList: []
+      articleList: [],
+      totalSize: 0,
+      currentPage: 0,
+      onePageSize: 4
     };
   },
   created() {
@@ -25,16 +35,25 @@ export default {
   },
   methods: {
     async getTagList() {
-      const res = await getTagList();
+      const res = await getTagList(); 
       this.tagList = res.data;
     },
     async tagItemClick(id) {
-      const res = await getTagArticle({ id });
-      this.articleList = res.data;
+      const res = await getTagArticle({
+        id,
+        page: this.currentPage,
+        pageSize: this.onePageSize
+      });
+      this.articleList = res.data.articleList;
+      this.totalSize = res.data.totlaSize;
       this.articleTopMixin(this.articleList);
+    },
+    pageChange(index) {
+      this.currentPage = index;
+      this.initArticle();
     }
   },
-  components: { categoryItem, articleList }
+  components: { categoryItem, articleList, pagination }
 };
 </script>
 

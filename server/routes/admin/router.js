@@ -19,7 +19,6 @@ router.post('/touris/login', handle.touristLogin)
 router.get('/github',handle.githubOAuth)
 router.get('/checkoAuth',handle.checkoAuth)
 
-
 // 文章标签
 router.post('/tag/edit', handle.auth, handle.tagEdit)
 router.delete('/tag/delete', handle.auth, handle.tagDelete)

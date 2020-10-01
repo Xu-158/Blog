@@ -1,9 +1,10 @@
 import httpUtil from "../utils/httpUtil";
 
-export function getArticleList() {
+export function getArticleList(params) {
   return httpUtil({
     method: "get",
-    url: "/getArticleList"
+    url: "/getArticleList",
+    params
   });
 }
 
