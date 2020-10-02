@@ -14,9 +14,7 @@
 import { getArticleList } from "@/api/api";
 import articleList from "@/components/ArticleList.vue";
 import pagination from "@/components/Pagination.vue";
-import articleTopMixin from "@/utils/articleTopMixin";
 export default {
-  mixins: [articleTopMixin],
   data() {
     return {
       articleList: [],
@@ -36,7 +34,6 @@ export default {
       });
       this.articleList = res.data.articleList;
       this.totalSize = res.data.totlaSize;
-      this.articleTopMixin(this.articleList);
     },
     pageChange(index) {
       this.currentPage = index;

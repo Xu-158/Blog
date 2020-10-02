@@ -3,7 +3,7 @@
     <div class="cateBox">
       <categoryItem :tagList="tagList" @tagClick="tagItemClick"></categoryItem>
     </div>
-    <articleList :articleList="articleList"></articleList>
+    <articleList v-if="articleList" :articleList="articleList"></articleList>
     <pagination
       :totalSize="totalSize"
       :currentPage="currentPage"
@@ -17,10 +17,8 @@
 import categoryItem from "@/components/CategoryItem.vue";
 import articleList from "@/components/ArticleList.vue";
 import pagination from "@/components/Pagination.vue";
-import articleTopMixin from "@/utils/articleTopMixin";
 import { getTagList, getTagArticle } from "@/api/api";
 export default {
-  mixins: [articleTopMixin],
   data() {
     return {
       tagList: [],
@@ -35,8 +33,11 @@ export default {
   },
   methods: {
     async getTagList() {
-      const res = await getTagList(); 
+      const res = await getTagList();
       this.tagList = res.data;
+      if (this.tagList.length) {
+        this.tagItemClick(this.tagList[0]._id);
+      }
     },
     async tagItemClick(id) {
       const res = await getTagArticle({
@@ -46,7 +47,6 @@ export default {
       });
       this.articleList = res.data.articleList;
       this.totalSize = res.data.totlaSize;
-      this.articleTopMixin(this.articleList);
     },
     pageChange(index) {
       this.currentPage = index;

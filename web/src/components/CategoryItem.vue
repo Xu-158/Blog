@@ -19,7 +19,7 @@
 export default {
   data() {
     return {
-      activeIndex: null
+      activeIndex: 0
     };
   },
   props: {

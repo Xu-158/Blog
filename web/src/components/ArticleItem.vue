@@ -8,13 +8,12 @@
           ><span v-else>∵</span>
           {{ articleObj.title }}
         </div>
-        <div
-          class="articleContnet text-font"
-          v-html="articleObj.contentHtml"
-        ></div>
+        <div class="articleContnet text-font" v-html="articleObj.contentHtml"></div>
       </div>
       <div class="flex-1"></div>
-      <img :src="articleObj.thumbnail" alt="图裂开了" />
+      <div class="d-flex flex-column">
+        <img :src="articleObj.thumbnail" alt="图裂开了" width="100%" />
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +53,7 @@ export default {
     flex: 8;
     height: 20vh;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
     .title {
       font-weight: 600;
@@ -80,8 +80,7 @@ export default {
   }
   @media (max-width: 1024px) {
     img {
-      flex: 7;
-      width: 15vw;
+      width: 25vw;
       height: 15vh;
     }
   }

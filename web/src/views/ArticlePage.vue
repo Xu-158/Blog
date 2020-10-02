@@ -2,7 +2,7 @@
   <div class="article">
     <h2>{{ article.title }}</h2>
     <h4>{{ article.createdAt }}</h4>
-    <div><img :src="article.thumbnail" alt="" /></div>
+    <div><img :src="article.thumbnail" alt=""  width="100%"/></div>
     <div v-html="article.contentHtml"></div>
     <button class="text-red fs-xll m-y-8" @click="likeClick">
       <span class="p-x-5">&#10084;</span> <span>{{ article.likeCount }}</span>

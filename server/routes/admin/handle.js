@@ -197,10 +197,18 @@ module.exports = {
 
   // 删除文章标签
   async tagDelete(req, res) {
+    // 当删除标签时 应该解除关联该标签的文章
     const id = await req.query.id;
-    const data = await Tag.findByIdAndDelete(id);
-    response(res, 0, "删除文章标签", data);
-  },
+    const data = await Tag.findById(id);
+    data.selectArticles && data.selectArticles.map(async (articleId)=>{
+      const article = await Article.findById(articleId)
+      article.tags && (article.tags = article.tags.filter((curr)=>{return curr != id}))
+      await article.save()
+    })
+    // console.log(data);
+    const tag = await Tag.findByIdAndDelete(id);
+    response(res, 0, "删除文章标签", tag);
+  }, 
 
   // 查询文章标签列表
   async tagList(req, res) {
@@ -222,17 +230,18 @@ module.exports = {
   async articleEdit(req, res) {
     const { id, article } = req.body;
     let data, msg;
-    let newArticleTags = article.tags; //新文章 tags[](_id)
+    let newTagsList = article.tags; //新文章 tags[](_id)
     if (id) {
-      let tag, oldArticleTag;
-      oldArticleTag = await Article.findById(id); //旧文章 tags[](_id)
+      let tag, oldTagsList;
+      oldTagsList = await Article.findById(id); //旧文章 tags[](_id)
       // 删除旧Tag 的 selectArticles 中文章id
-      if (oldArticleTag.tags) {
-        oldArticleTag.tags.map(async (old) => {
+      if (oldTagsList.tags) {
+        oldTagsList.tags.map(async (old) => {
           tag = await Tag.findById(old);
           console.log(tag.selectArticles);
-          tag.selectArticles &&
-            tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1);
+          // tag.selectArticles &&
+          //   tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1);
+          tag.selectArticles && (tag.selectArticles = tag.selectArticles.filter((curr)=> curr != id))
           await tag.save();
         });
       }
@@ -243,9 +252,9 @@ module.exports = {
       msg = "创建文章成功";
     }
     let tag, newSelectArticles;
-    if (newArticleTags && article.isShow) {
+    if (newTagsList && article.isShow) {
       console.log('add');
-      newArticleTags.map(async (tagId) => {
+      newTagsList.map(async (tagId) => {
         tag = await Tag.findById(tagId);
         newSelectArticles = tag.selectArticles.push(data._id);
         await tag.save();
