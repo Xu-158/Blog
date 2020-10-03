@@ -1,8 +1,16 @@
 <template>
   <div class="AdminList">
-    <el-button type="primary addDialog" plain @click="openDialog = true">
-      <div><i class="el-icon-circle-plus"></i><span> 添加管理员</span></div>
-    </el-button>
+    <el-tooltip
+      class="item"
+      effect="dark"
+      content="默认不开启游客登录，添加 'Tourist' 类型管理员开启游客登录"
+      placement="top"
+    >
+      <el-button type="primary addDialog" plain @click="openDialog = true">
+        <div><i class="el-icon-circle-plus"></i><span> 添加管理员</span></div>
+      </el-button>
+    </el-tooltip>
+
     <el-tabs type="border-card">
       <el-tab-pane label="管理员列表">
         <el-table class="table" :data="tableData" v-if="tableData">

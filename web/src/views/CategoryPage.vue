@@ -21,6 +21,7 @@ import { getTagList, getTagArticle } from "@/api/api";
 export default {
   data() {
     return {
+      id: "",
       tagList: [],
       articleList: [],
       totalSize: 0,
@@ -40,6 +41,8 @@ export default {
       }
     },
     async tagItemClick(id) {
+      if (this.id != id) this.currentPage = 0;
+      this.id = id;
       const res = await getTagArticle({
         id,
         page: this.currentPage,
@@ -50,7 +53,7 @@ export default {
     },
     pageChange(index) {
       this.currentPage = index;
-      this.initArticle();
+      this.tagItemClick(this.id);
     }
   },
   components: { categoryItem, articleList, pagination }

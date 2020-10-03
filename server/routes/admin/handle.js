@@ -44,21 +44,26 @@ module.exports = {
     const { account, password } = req.body;
     const isAdmin = await Admin.findOne({ account }).select("+password");
 
-    if (!isAdmin && !user) {
+    if (!isAdmin) {
       response(res, 1, "账号或密码不正确！");
       return;
+    } else {
+      const user = require("bcryptjs").compareSync(password, isAdmin.password);
+      if (!user) {
+        response(res, 1, "账号或密码不正确！");
+        return;
+      }
     }
 
-    const user = require("bcryptjs").compareSync(password, isAdmin.password);
+    let role = await Role.findById(isAdmin.role)
 
     const token = jwt.sign(
       {
-        role: "Admin",
+        role: `${role.type}`,
         id: String(isAdmin.id),
       },
       req.app.get("secret")
     );
-
     response(res, 0, "登陆成功", { account }, token);
   },
 
@@ -135,6 +140,8 @@ module.exports = {
               },
             },
             function (error, resp, body) {
+              console.log(body);
+              console.log(error);
               let token, data, flag;
               if (body) data = JSON.parse(body);
               if (
@@ -200,15 +207,15 @@ module.exports = {
     // 当删除标签时 应该解除关联该标签的文章
     const id = await req.query.id;
     const data = await Tag.findById(id);
-    data.selectArticles && data.selectArticles.map(async (articleId)=>{
+    data.selectArticles && data.selectArticles.map(async (articleId) => {
       const article = await Article.findById(articleId)
-      article.tags && (article.tags = article.tags.filter((curr)=>{return curr != id}))
+      article.tags && (article.tags = article.tags.filter((curr) => curr != id))
       await article.save()
     })
     // console.log(data);
     const tag = await Tag.findByIdAndDelete(id);
     response(res, 0, "删除文章标签", tag);
-  }, 
+  },
 
   // 查询文章标签列表
   async tagList(req, res) {
@@ -238,10 +245,7 @@ module.exports = {
       if (oldTagsList.tags) {
         oldTagsList.tags.map(async (old) => {
           tag = await Tag.findById(old);
-          console.log(tag.selectArticles);
-          // tag.selectArticles &&
-          //   tag.selectArticles.splice(tag.selectArticles.indexOf(id), 1);
-          tag.selectArticles && (tag.selectArticles = tag.selectArticles.filter((curr)=> curr != id))
+          tag.selectArticles && (tag.selectArticles = tag.selectArticles.filter((curr) => curr != id))
           await tag.save();
         });
       }
@@ -253,7 +257,6 @@ module.exports = {
     }
     let tag, newSelectArticles;
     if (newTagsList && article.isShow) {
-      console.log('add');
       newTagsList.map(async (tagId) => {
         tag = await Tag.findById(tagId);
         newSelectArticles = tag.selectArticles.push(data._id);
