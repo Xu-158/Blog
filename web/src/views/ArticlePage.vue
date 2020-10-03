@@ -1,10 +1,19 @@
 <template>
   <div class="article">
     <h2>{{ article.title }}</h2>
-    <h4>{{ article.createdAt }}</h4>
-    <div><img :src="article.thumbnail" alt=""  width="100%"/></div>
+    <h4>
+      {{ article.createdAt }}
+      <span class="m-l-8 fs-lg text-footer fs-xs"
+        >&#128064;{{ article.hitCount }}</span
+      >
+    </h4>
+    <div><img :src="article.thumbnail" alt="" width="100%" /></div>
     <div v-html="article.contentHtml"></div>
-    <button class="text-red fs-xll m-y-8" @click="likeClick">
+    <button
+      class="fs-xll m-y-8"
+      :class="{ likeActive: likeFlag }"
+      @click="likeClick"
+    >
       <span class="p-x-5">&#10084;</span> <span>{{ article.likeCount }}</span>
     </button>
   </div>
@@ -20,7 +29,8 @@ export default {
   },
   data() {
     return {
-      article: {}
+      article: {},
+      likeFlag: false
     };
   },
   created() {
@@ -36,12 +46,13 @@ export default {
       );
     },
     async likeClick() {
-      if (this.article) {
+      if (this.article && !this.likeFlag) {
         const res = await likeCountAdd({
           id: this.article._id,
           likeCount: this.article.likeCount
         });
         this.article.likeCount = res.data.likeCount;
+        this.likeFlag = true;
       }
     }
   }
@@ -58,6 +69,25 @@ export default {
   button {
     border: none;
     background-color: rgba(252, 252, 252, 0);
+  }
+  .likeActive {
+    animation: myfirst .5s;
+    animation-iteration-count: 1;
+    
+  }
+  @keyframes myfirst {
+    // 0% {
+    //   color: rgb(71, 56, 56);
+    // }
+    // 25% {
+    //   color: rgb(85, 48, 48);
+    // }
+    // 50% {
+    //   color: rgb(124, 42, 42);
+    // }
+    100% {
+      color: rgb(236, 5, 5);
+    }
   }
 }
 </style>

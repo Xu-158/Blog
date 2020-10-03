@@ -8,10 +8,22 @@
           ><span v-else>∵</span>
           {{ articleObj.title }}
         </div>
-        <div class="articleContnet text-font" v-html="articleObj.contentHtml"></div>
+        <div
+          class="articleContnet text-font"
+          v-html="articleObj.contentHtml"
+        ></div>
       </div>
-      <div class="flex-1"></div>
-      <div class="d-flex flex-column">
+      <div class="flex-1">
+        <div class="m-l-7 p-t-8 fs-lg articleAction">
+          <div class="fs-xs m-b-7">
+            &#128064; &nbsp;&nbsp;&nbsp;{{ articleObj.hitCount }}
+          </div>
+          <div class="fs-sm text-red">
+            &#10084; &nbsp;&nbsp;&nbsp;{{ articleObj.likeCount }}
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column jc-between">
         <img :src="articleObj.thumbnail" alt="图裂开了" width="100%" />
       </div>
     </div>
@@ -83,6 +95,12 @@ export default {
       width: 25vw;
       height: 15vh;
     }
+  }
+  .articleAction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 }
 </style>
