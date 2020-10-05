@@ -8,7 +8,7 @@
       >
     </h4>
     <div><img :src="article.thumbnail" alt="" width="100%" /></div>
-    <div v-html="article.contentHtml"></div>
+    <div v-html="article.contentHtml" class=""></div>
     <button
       class="fs-xll m-y-8"
       :class="{ likeActive: likeFlag }"
@@ -22,6 +22,9 @@
 <script>
 import { getArticleInfo, likeCountAdd } from "@/api/api";
 import dateFormat from "@/utils/dateFormat.js";
+import hljs from "highlight.js";
+import "highlight.js/styles/hybrid.css";
+
 export default {
   name: "articlePage",
   props: {
@@ -44,6 +47,7 @@ export default {
         "YYYY-mm-dd HH:MM:SS",
         new Date(this.article.createdAt)
       );
+      this.highlighthandle();
     },
     async likeClick() {
       if (this.article && !this.likeFlag) {
@@ -54,6 +58,13 @@ export default {
         this.article.likeCount = res.data.likeCount;
         this.likeFlag = true;
       }
+    },
+    async highlighthandle() {
+      await hljs;
+      let highlight = document.querySelectorAll("code,pre");
+      highlight.forEach(block => {
+        hljs.highlightBlock(block);
+      });
     }
   }
 };
@@ -64,7 +75,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   overflow: hidden;
   button {
     border: none;
@@ -86,6 +96,18 @@ export default {
       transform: rotateY(90deg);
       transform: rotateZ(90deg);
     }
+    30% {
+      font-size: 1.4rem;
+      transform: rotateY(80deg);
+      transform: rotateZ(80deg);
+    }
+    40% {
+      font-size: 1.4rem;
+      transform: rotateY(90deg);
+      transform: rotateZ(90deg);
+      // transform: scaleX(30deg);
+      transform: scaleX(90deg);
+    }
     50% {
       font-size: 1.45rem;
       transform: rotateY(180deg);
@@ -102,9 +124,9 @@ export default {
       transform: rotateZ(360deg);
     }
     95% {
-      font-size: 1.8rem;
-      transform: rotateY(310deg);
-      transform: rotateZ(310deg);
+      font-size: 2.1rem;
+      transform: rotateY(350deg);
+      transform: rotateZ(350deg);
     }
     100% {
       font-size: 1.8rem;

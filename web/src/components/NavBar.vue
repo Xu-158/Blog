@@ -12,6 +12,7 @@
         :key="item.navRoute"
       >
         <li
+          class="p-y-4 p-x-7"
           @click="navItemClick(item.navRoute, index)"
           :class="{ navActive: index == currIndex }"
         >
@@ -88,6 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/style/_variables.scss";
 nav {
   ul {
     display: inline-block;
@@ -95,14 +97,10 @@ nav {
     .nav-item {
       display: inline-block;
       &:hover {
-        transition: all .5s;
+        transition: all 0.4s;
         transform: skewY(10deg);
         transform: skewX(-10deg);
-        transform: translate(-4px,-4px);
-        color: rgb(226, 186, 112);
-        font-size: 1rem;
-        background-color: rgba(175, 175, 175, 0.295);
-        box-shadow: 8px 8px 2px rgb(0, 0, 0);
+        transform: translate(-4px, -4px);
       }
     }
   }
@@ -113,12 +111,18 @@ nav {
     display: block;
     .nav-item {
       line-height: 2.2rem;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       display: block;
     }
   }
   .navActive {
-    color: rgb(253, 255, 133);
+    transform: skewY(10deg);
+    transform: skewX(-10deg);
+    transform: translate(-4px, -4px);
+    color: map-get($colors, "title");
+    font-weight: bold;
+    background-color: rgba(145, 143, 143, 0.37);
+    box-shadow: 6px 6px 4px rgb(0, 0, 0);
   }
 }
 .userInfo {

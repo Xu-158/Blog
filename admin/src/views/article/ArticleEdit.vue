@@ -71,8 +71,6 @@
 
 <script>
 import MarkdownEditor from "@/components/MarkdownEditor";
-import "highlight.js/styles/googlecode.css";
-import hljs from "highlight.js";
 import {
   getTagList,
   addArticle,
@@ -190,14 +188,6 @@ export default {
     changeEdit(html, md) {
       this.articleForm.contentMd = md;
       this.articleForm.contentHtml = html;
-      async function highlighthandle() {
-        await hljs;
-        let highlight = document.querySelectorAll("code,pre");
-        highlight.forEach(block => {
-          hljs.highlightBlock(block);
-        });
-      }
-      highlighthandle();
     }
   }
 };
