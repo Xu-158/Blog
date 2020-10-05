@@ -30,8 +30,7 @@ export default {
   },
   computed: {
     pageCount() {
-      if(this.totalSize / this.onePageSize<=1) return 1
-      return parseInt(this.totalSize / this.onePageSize) + 1;
+      return Math.ceil(this.totalSize / this.onePageSize);
     }
   },
   methods: {

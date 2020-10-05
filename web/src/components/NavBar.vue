@@ -94,10 +94,16 @@ nav {
     list-style: none;
     .nav-item {
       display: inline-block;
-    }
-    .nav-item:hover {
-      color: rgb(226, 186, 112);
-      font-size: 1rem;
+      &:hover {
+        transition: all .5s;
+        transform: skewY(10deg);
+        transform: skewX(-10deg);
+        transform: translate(-4px,-4px);
+        color: rgb(226, 186, 112);
+        font-size: 1rem;
+        background-color: rgba(175, 175, 175, 0.295);
+        box-shadow: 8px 8px 2px rgb(0, 0, 0);
+      }
     }
   }
   .hiddNavItem {

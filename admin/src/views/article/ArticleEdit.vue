@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="title">{{id?'编辑':'新建'}}文章</h2>
+    <h2 class="title">{{ id ? "编辑" : "新建" }}文章</h2>
     <el-form
       :model="articleForm"
       ref="articleForm"
@@ -12,15 +12,32 @@
         <el-input v-model="articleForm.title"></el-input>
       </el-form-item>
       <el-form-item label="文章类型 :" prop="tags">
-        <el-checkbox-group v-if="tagList" v-model="articleForm.tags" size="medium">
-          <el-checkbox-button v-for="tag in tagList" :label="tag._id" :key="tag._id">{{tag.title}}</el-checkbox-button>
+        <el-checkbox-group
+          v-if="tagList"
+          v-model="articleForm.tags"
+          size="medium"
+        >
+          <el-checkbox-button
+            v-for="tag in tagList"
+            :label="tag._id"
+            :key="tag._id"
+            >{{ tag.title }}</el-checkbox-button
+          >
         </el-checkbox-group>
       </el-form-item>
 
       <el-form-item label="设置置顶 :">
-        <el-switch v-model="articleForm.isTop" active-color="#13ce66" inactive-color="#666"></el-switch>
+        <el-switch
+          v-model="articleForm.isTop"
+          active-color="#13ce66"
+          inactive-color="#666"
+        ></el-switch>
         <span style="padding-left:40px;color:#606266">设置可见 :&nbsp;</span>
-        <el-switch v-model="articleForm.isShow" active-color="#13ce66" inactive-color="#666"></el-switch>
+        <el-switch
+          v-model="articleForm.isShow"
+          active-color="#13ce66"
+          inactive-color="#666"
+        ></el-switch>
       </el-form-item>
       <el-form-item label="封 面 :">
         <el-upload
@@ -30,12 +47,20 @@
           :show-file-list="false"
           :on-success="handleThumbnailSuccess"
         >
-          <img v-if="articleForm.thumbnail" :src="articleForm.thumbnail" class="avatar" />
+          <img
+            v-if="articleForm.thumbnail"
+            :src="articleForm.thumbnail"
+            class="avatar"
+          />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
       <el-form-item label="文章内容 :" prop="contentMd">
-        <markdown-editor :editor="editor" class="me-write-editor" @changeEdit="changeEdit"></markdown-editor>
+        <markdown-editor
+          :editor="editor"
+          class="me-write-editor"
+          @changeEdit="changeEdit"
+        ></markdown-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -46,6 +71,8 @@
 
 <script>
 import MarkdownEditor from "@/components/MarkdownEditor";
+import "highlight.js/styles/googlecode.css";
+import hljs from "highlight.js";
 import {
   getTagList,
   addArticle,
@@ -118,14 +145,6 @@ export default {
     this.getTag();
     this.id && this.getArticle();
   },
-  // watch: {
-  //   // 属性侦听
-  //   'editor.value': function(o) {
-  //     this.articleForm.contentMd = o;
-  //   },
-  //   deep: true //侦听对象的属性
-  // },
-  computed: {},
   methods: {
     async getTag() {
       const res = await getTagList({ page: 1, pageSize: 999 });
@@ -171,6 +190,14 @@ export default {
     changeEdit(html, md) {
       this.articleForm.contentMd = md;
       this.articleForm.contentHtml = html;
+      async function highlighthandle() {
+        await hljs;
+        let highlight = document.querySelectorAll("code,pre");
+        highlight.forEach(block => {
+          hljs.highlightBlock(block);
+        });
+      }
+      highlighthandle();
     }
   }
 };

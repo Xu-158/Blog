@@ -71,22 +71,45 @@ export default {
     background-color: rgba(252, 252, 252, 0);
   }
   .likeActive {
-    animation: myfirst .5s;
-    animation-iteration-count: 1;
-    
+    transition: color 1s;
+    color: rgb(236, 5, 5);
+    animation: active 1s linear;
   }
-  @keyframes myfirst {
-    // 0% {
-    //   color: rgb(71, 56, 56);
-    // }
-    // 25% {
-    //   color: rgb(85, 48, 48);
-    // }
-    // 50% {
-    //   color: rgb(124, 42, 42);
-    // }
+  @keyframes active {
+    0% {
+      font-size: 1.2rem;
+      transform: rotateY(0deg);
+      transform: rotateZ(0deg);
+    }
+    20% {
+      font-size: 1.35rem;
+      transform: rotateY(90deg);
+      transform: rotateZ(90deg);
+    }
+    50% {
+      font-size: 1.45rem;
+      transform: rotateY(180deg);
+      transform: rotateZ(180deg);
+    }
+    70% {
+      font-size: 1.65rem;
+      transform: rotateY(270deg);
+      transform: rotateZ(270deg);
+    }
+    90% {
+      font-size: 1.8rem;
+      transform: rotateY(360deg);
+      transform: rotateZ(360deg);
+    }
+    95% {
+      font-size: 1.8rem;
+      transform: rotateY(310deg);
+      transform: rotateZ(310deg);
+    }
     100% {
-      color: rgb(236, 5, 5);
+      font-size: 1.8rem;
+      transform: rotateY(360deg);
+      transform: rotateZ(360deg);
     }
   }
 }

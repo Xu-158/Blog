@@ -8,10 +8,7 @@
           ><span v-else>∵</span>
           {{ articleObj.title }}
         </div>
-        <div
-          class="articleContnet text-font"
-          v-html="articleObj.contentHtml"
-        ></div>
+        <div class="articleContnet text-font" v-html="articleObj.contentHtml"></div>
       </div>
       <div class="flex-1">
         <div class="m-l-7 p-t-8 fs-lg articleAction">
@@ -65,8 +62,6 @@ export default {
     flex: 8;
     height: 20vh;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     .title {
       font-weight: 600;
       letter-spacing: 0.3rem;
@@ -81,6 +76,11 @@ export default {
       }
     }
     .articleContnet {
+      /* 多行超出省略的必备条件 */
+      display: -webkit-box; /* 弹性盒模型 */
+      -webkit-box-orient: vertical; /* 元素垂直居中*/
+      -webkit-line-clamp: 4; /*  文字显示的行数*/
+      overflow: hidden; /* 超出隐藏 */
       text-indent: 2rem;
       letter-spacing: 0.2rem;
     }
@@ -90,17 +90,25 @@ export default {
     width: 10vw;
     max-height: 25vh;
   }
-  @media (max-width: 1024px) {
-    img {
-      width: 25vw;
-      height: 15vh;
-    }
-  }
   .articleAction {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  }
+  @media (max-width: 1024px) {
+    img {
+      width: 25vw;
+      height: auto;
+    }
+    .articleAction {
+      display: none;
+    }
+  }
+}
+@media (max-width: 1024px) {
+  .articleBox {
+    height: 20vh;
   }
 }
 </style>
