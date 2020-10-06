@@ -16,8 +16,7 @@ router.get('/auth', handle.auth, handle.authHandle)
 router.post('/login', handle.login)
 router.post('/touris/login', handle.touristLogin)
 // Github认证
-router.get('/github',handle.githubOAuth)
-router.get('/checkoAuth',handle.checkoAuth)
+router.get('/githubLogin',handle.githubLogin)
 
 // 文章标签
 router.post('/tag/edit', handle.auth, handle.tagEdit)

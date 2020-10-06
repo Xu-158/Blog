@@ -23,20 +23,13 @@ export function tourisLogin(data) {
   })
 }
 
-//获取git认证
-export function githubLogin() {
+//获取github认证登陆
+export function githubLogin(params) {
   return httpUtil({
-    url: '/github',
-    method: 'get',
-  })
-}
-
-// 获取token
-export function checkoAuth(params) {
-  return httpUtil({
-    url: '/checkoAuth',
+    url: '/githubLogin',
     method: 'get',
     params
   })
 }
+
 

@@ -44,7 +44,6 @@ export default {
   data() {
     return {
       isMobile: false,
-      showMobileNavItem: false,
       currIndex: 0
     };
   },
@@ -58,6 +57,12 @@ export default {
       default() {
         return "XU_158";
       }
+    },
+    showMobileNavItem: {
+      // 控制移动端菜单展开
+      type: Boolean,
+      default: false,
+      required: true
     }
   },
   created() {
@@ -73,7 +78,8 @@ export default {
   },
   methods: {
     navItemClick(routeName, index) {
-      this.showMobileNavItem = false;
+      if (this.isMobile)
+        this.$emit("update:showMobileNavItem", !this.showMobileNavItem);
       this.currIndex = index;
       this.$router.push(routeName);
     },
@@ -82,7 +88,7 @@ export default {
       if (this.isMobile) this.showMobileNavItem = false;
     },
     showNavItem() {
-      this.showMobileNavItem = !this.showMobileNavItem;
+      this.$emit("update:showMobileNavItem", !this.showMobileNavItem);
     }
   }
 };

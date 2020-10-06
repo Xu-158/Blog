@@ -7,8 +7,6 @@
           :default-openeds="list"
           unique-opened
           :default-active="$route.path"
-          @open="handleOpen"
-          @close="handleClose"
           :collapse="isCollapse"
           collapse-transition
         >
@@ -149,12 +147,6 @@ export default {
           break;
       }
     },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
   },
   components: {
     Breadcrumb

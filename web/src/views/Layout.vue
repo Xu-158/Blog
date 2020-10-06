@@ -1,8 +1,13 @@
 <template>
   <div class="homepage bg-bg">
-    <div id="topAnchor"></div>
     <header>
-      <navbar :navItemObj="navItemObj"></navbar>
+      <!-- sync 实现父子组件的数据双向绑定  -->
+      <!-- <navbar:showMobileNavItem.sync="showMobileNavItem" ></navbar> 等价于↓ -->
+      <!-- <navbar:showMobileNavItem="showMobileNavItem" @update:showMobileNavItem="newVal =>showMobileNavItem = newVal" ></navbar> -->
+      <navbar
+        :navItemObj="navItemObj"
+        :showMobileNavItem.sync="showMobileNavItem"
+      ></navbar>
     </header>
     <article class="m-t-8">
       <div class="content bg-white">
@@ -66,7 +71,8 @@ export default {
           navRoute: "/about"
         }
       ],
-      friendList: []
+      friendList: [],
+      showMobileNavItem: false // 控制移动端菜单展开
     };
   },
   created() {
@@ -76,7 +82,7 @@ export default {
     async getFriendList() {
       const res = await getFriendList();
       this.friendList = res.data;
-    }
+    },
   },
   components: {
     navbar,

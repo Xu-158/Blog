@@ -22,7 +22,7 @@
               >&#xe8b7;</span
             >
           </el-button>
-          <el-button type="info" @click="githubLogin" :loading="githubLoading">
+          <el-button type="info" @click="toGithub" :loading="githubLoading">
             <span style="color:black;font-weight:600">Github&nbsp;</span>
             <span class="iconfont" style="color:black;font-size:20px"
               >&#xea0a;</span
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { login, tourisLogin, githubLogin, checkoAuth } from "@/api/login";
+import { login, tourisLogin, githubLogin } from "@/api/login";
 export default {
   name: "Login",
   data() {
@@ -60,10 +60,10 @@ export default {
     };
   },
   created() {
-    this.code = window.location.search || "";
+    this.code = window.location.search.split("=").pop() || ""; //?code=88680366fd3e8fc28767 截取Code
     if (this.code) {
       this.githubLoading = true;
-      this.checkoAuth(this.code);
+      this.githubLogin(this.code);
     }
   },
   methods: {
@@ -79,43 +79,42 @@ export default {
       const res = await login({ account, password });
       this.loading = false;
       if (res.status == 1) return;
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("account", res.data.account);
+      this.setSessionStorage(res);
       this.$router.push("/");
     },
 
     async tourisLogin() {
       this.$loading.show();
       const res = await tourisLogin();
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("account", res.data.account);
+      this.setSessionStorage(res);
       this.$loading.hide();
       this.$router.push("/");
     },
 
-    //  获取 github 认证 code
-    async githubLogin() {
+    toGithub() {
       this.githubLoading = true;
       this.$loading.show();
-      const res = await githubLogin();
-      if (!res) return;
-      const url = res.data.attestUrl + res.data.client_id;
+      const url = process.env.VUE_APP_GITHUB_LOGIN_URL;
       window.location.href = url;
     },
 
-    // 把 code 发到服务端获取 token 及用户信息
-    async checkoAuth(code) {
-      const res = await checkoAuth({ code: code });
+    // 认证  github
+    async githubLogin(code) {
+      const res = await githubLogin({ code: code });
       if (res.status == 1) {
         this.$message.error(res.msg);
         this.$loading.hide();
         return;
       }
-      localStorage.setItem("info", JSON.stringify(res.data));
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("account", res.data.name);
-      this.$loading.hide();
+      this.setSessionStorage(res);
+      sessionStorage.setItem("info", JSON.stringify(res.data));
       this.$router.push("/");
+      this.$loading.hide();
+    },
+
+    setSessionStorage(res) {
+      sessionStorage.setItem("token", res.token);
+      sessionStorage.setItem("account", res.data.name);
     }
   }
 };
@@ -154,7 +153,7 @@ export default {
     margin: 10rem auto;
     .btn-row {
       width: 100%;
-      .el-button{
+      .el-button {
         margin: 0 auto;
         width: 10rem;
       }

@@ -93,28 +93,20 @@ module.exports = {
   },
 
   // GitHub登陆
-  async githubOAuth(req, res) {
-    const { client_id, attestUrl } = req.app.get("githubClient");
-
-    response(res, 0, "", { client_id: client_id, attestUrl: attestUrl });
-  },
-
-  // 使用用户的访问令牌获取 access_token
-  async checkoAuth(req, res) {
-    const { client_id, client_secret, url, headers } = req.app.get(
-      "githubClient"
-    );
+  async githubLogin(req, res) {
+    const { client_id, client_secret, url, headers, redirect_uri } = req.app.get("githubClient");
 
     if (!req.query.code) {
       response(res, 1, "缺少code");
       return;
     }
 
-    let code = req.query.code.split("=").pop(); //?code=88680366fd3e8fc28767 截取Code
+    const code = req.query.code;
     const body = {
       client_id: client_id,
       client_secret: client_secret,
       code: code,
+      redirect_uri: redirect_uri
     };
 
     request(
@@ -140,33 +132,33 @@ module.exports = {
               },
             },
             function (error, resp, body) {
-              console.log(body);
-              console.log(error);
               let token, data, flag;
               if (body) data = JSON.parse(body);
-              if (
-                !error &&
-                resp.statusCode == 200 &&
-                data.login === loginAccount
-              ) {
+              if (!error && resp.statusCode == 200) {
                 // 签发token
-                token = jwt.sign(
-                  {
-                    id: String(data),
-                    role: "Github",
-                  },
-                  req.app.get("secret")
-                );
+                if (data.login === loginAccount) {
+                  token = jwt.sign(
+                    {
+                      id: String(data),
+                      role: "Github",
+                    },
+                    req.app.get("secret"),
+                    { expiresIn: 60 * 60 * 24 * 7 }
+                  );
+                } else {
+                  token = jwt.sign(
+                    {
+                      id: String(data),
+                      role: "Tourist",
+                    },
+                    req.app.get("secret"),
+                    { expiresIn: 60 * 60 * 24 * 7 }
+                  );
+                }
                 flag = true;
               }
 
-              response(
-                res,
-                flag ? 0 : 1,
-                flag ? "登陆成功" : "登录失败",
-                data,
-                token
-              );
+              response(res, flag ? 0 : 1, flag ? "登陆成功" : "登录失败", data?data:error, token);
             }
           );
         }
