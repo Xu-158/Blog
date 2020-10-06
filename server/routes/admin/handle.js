@@ -25,9 +25,7 @@ module.exports = {
       }
     )
 
-    if (!role) return
-
-    if (role === "Tourist" && req.method !== "GET") {
+    if (role && role === "Tourist" && req.method !== "GET") {
       response(res, 1, "权限不足");
       return;
     }
@@ -77,7 +75,7 @@ module.exports = {
     }
 
     const tourist = {
-      role: "Tourist",
+      role: `${TouristId.type}`,
       account: `${canLogin.account}`,
       password: "123456",
     };
@@ -133,6 +131,7 @@ module.exports = {
             },
             function (error, resp, body) {
               let token, data, flag;
+              console.log(body);
               if (body) data = JSON.parse(body);
               if (!error && resp.statusCode == 200) {
                 // 签发token
@@ -158,7 +157,7 @@ module.exports = {
                 flag = true;
               }
 
-              response(res, flag ? 0 : 1, flag ? "登陆成功" : "登录失败", data?data:error, token);
+              response(res, flag ? 0 : 1, flag ? "登陆成功" : "登录失败", data ? data : error, token);
             }
           );
         }
@@ -251,7 +250,7 @@ module.exports = {
     if (newTagsList && article.isShow) {
       newTagsList.map(async (tagId) => {
         tag = await Tag.findById(tagId);
-        newSelectArticles = tag.selectArticles.push(data._id);
+        if (tag && tag.selectArticles) newSelectArticles = tag.selectArticles.push(data._id);
         await tag.save();
       });
     }

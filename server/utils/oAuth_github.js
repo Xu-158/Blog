@@ -3,8 +3,8 @@ module.exports = app => {
     const githubClient = {
         client_id: baseConfig.mode == "dev" ? "19a82025eb4214511c99" : "19a82025eb4214511c99",
         client_secret: baseConfig.mode == "dev" ?
-            "d66d87938649286ccd047d2b352c41fea8229379"
-            : "d66d87938649286ccd047d2b352c41fea8229379",
+            "183a871a7db4929f400a6ee8e04a62f031a0967c"
+            : "183a871a7db4929f400a6ee8e04a62f031a0967c",
         redirect_uri: baseConfig.mode == "dev" ? "http://localhost:8080/login" : "http://localhost:8080/login",
         url: "https://github.com/login/oauth/access_token",
         attestUrl: 'https://github.com/login/oauth/authorize?client_id=',

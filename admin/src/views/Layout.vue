@@ -12,9 +12,9 @@
         >
           <div class="changeBtnGroup">
             <el-radio-group v-model="isCollapse" style="margin: 10px 0px">
-            <el-radio-button :label="false">展开</el-radio-button>
-            <el-radio-button :label="true">收起</el-radio-button>
-          </el-radio-group>
+              <el-radio-button :label="false">展开</el-radio-button>
+              <el-radio-button :label="true">收起</el-radio-button>
+            </el-radio-group>
           </div>
           <el-submenu index="1">
             <template slot="title">
@@ -92,7 +92,9 @@
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="homepage">首页</el-dropdown-item>
-              <el-dropdown-item :divided="true" command="logout">退出</el-dropdown-item>
+              <el-dropdown-item :divided="true" command="logout"
+                >退出</el-dropdown-item
+              >
             </el-dropdown-menu>
           </el-dropdown>
         </el-header>
@@ -116,14 +118,14 @@ export default {
     };
   },
   created() {
-    this.info = JSON.parse(localStorage.getItem("info"));
+    this.info = JSON.parse(sessionStorage.getItem("info"));
   },
   mounted() {
-    this.account = localStorage.account;
+    this.account = sessionStorage.getItem("account") && this.info.login;
   },
   computed: {
-    asideWidth(){
-      return this.isCollapse?'70px':'200px'
+    asideWidth() {
+      return this.isCollapse ? "70px" : "200px";
     }
   },
   methods: {
@@ -133,9 +135,9 @@ export default {
           this.$router.push("/home");
           break;
         case "logout":
-          localStorage.removeItem("token");
-          localStorage.removeItem("account");
-          localStorage.removeItem("info");
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("account");
+          sessionStorage.removeItem("info");
 
           window.location.replace(
             `${window.location.protocol}//${window.location.host}`
@@ -146,7 +148,7 @@ export default {
         default:
           break;
       }
-    },
+    }
   },
   components: {
     Breadcrumb
@@ -159,7 +161,7 @@ export default {
 .layout {
   .layout-container {
     height: 100vh;
-    .changeBtnGroup{
+    .changeBtnGroup {
       display: flex;
       align-items: center;
       justify-content: center;

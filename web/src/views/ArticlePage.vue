@@ -42,6 +42,10 @@ export default {
   methods: {
     async getArticleInfo() {
       const res = await getArticleInfo({ id: this.id });
+      console.log(res.data);
+      if(!res.data){
+        this.$router.push("/notFound")
+      }
       this.article = res.data;
       this.article.createdAt = dateFormat(
         "YYYY-mm-dd HH:MM:SS",
@@ -76,6 +80,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
+  padding: 2rem;
   button {
     border: none;
     background-color: rgba(252, 252, 252, 0);
@@ -105,7 +110,6 @@ export default {
       font-size: 1.4rem;
       transform: rotateY(90deg);
       transform: rotateZ(90deg);
-      // transform: scaleX(30deg);
       transform: scaleX(90deg);
     }
     50% {

@@ -114,7 +114,7 @@ export default {
 
     setSessionStorage(res) {
       sessionStorage.setItem("token", res.token);
-      sessionStorage.setItem("account", res.data.name);
+      sessionStorage.setItem("account", res.data.account);
     }
   }
 };

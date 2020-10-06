@@ -11,7 +11,7 @@
             timeLineObj.title
           }}
         </div>
-        <div class="content text-font p-x-8 fs-xs">
+        <div class="content text-font p-x-8 fs-sm">
           &#9745;&#9744;
           <pre>{{ timeLineObj.content }}</pre>
         </div>

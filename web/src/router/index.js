@@ -46,22 +46,22 @@ const routes = [
         name: "about",
         meta: { title: "关于" },
         component: () => import("../views/AboutPage")
-      }
+      },
     ]
   },
   {
     path: "*",
     name: "404",
-    meta: { title: "失踪了哦！" },
     component: () => import("@/views/Layout"),
     children: [
       {
         path: "*",
         name: "404 NotFound!",
+        meta: { title: "失踪了哦！" },
         component: () => import("@/views/404")
       }
     ]
-  }
+  },
 ];
 
 const router = new VueRouter({

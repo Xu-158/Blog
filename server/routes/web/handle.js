@@ -20,12 +20,16 @@ module.exports = {
 
   async getArticleInfo(req, res) {
     const id = req.query.id
-    const data = await Article.findById(id)
-    if (data) {
-      data.hitCount++
-      await data.save()
-    }
-    response(res, 0, "获取文章详细成功", data);
+    Article.findById(id, async (err, result) => {
+      if (result) {
+        result.hitCount++
+        await result.save()
+        response(res, 0, "获取文章详细成功", result);
+      } else {
+        response(res, 1, "获取文章详细失败", err);
+      }
+      console.log(err);
+    })
   },
 
   async likeCountAdd(req, res) {
