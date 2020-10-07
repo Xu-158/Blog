@@ -3,7 +3,6 @@ import { Message } from "element-ui";
 
 const httpUtil = axios.create({
   baseURL: process.env.VUE_APP_BASE_API || "/admin",
-  // baseURL:'http:///192.168.42.191:3000/admin',
   timeout: 15000
 });
 

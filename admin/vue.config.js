@@ -1,6 +1,6 @@
 module.exports = {
   outputDir: __dirname + '/../server/admin',
-  publicPath: process.env.NODE_ENV == 'production' ? '/admin/' : '/',
+  publicPath: process.env.NODE_ENV == 'production' ? '/admin/' : '/', 
   // 向所有 Sass 样式传入共享的全局变量
   // css: {
   //   // 给 sass-loader 传递选项

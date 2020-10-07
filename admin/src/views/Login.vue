@@ -75,20 +75,16 @@ export default {
 
     async loginF() {
       const { account, password } = this.ruleForm;
-      this.loading = true;
+      this.$loading.show();
       const res = await login({ account, password });
-      this.loading = false;
       if (res.status == 1) return;
       this.setSessionStorage(res);
-      this.$router.push("/");
     },
 
     async tourisLogin() {
       this.$loading.show();
       const res = await tourisLogin();
       this.setSessionStorage(res);
-      this.$loading.hide();
-      this.$router.push("/");
     },
 
     toGithub() {
@@ -106,15 +102,15 @@ export default {
         this.$loading.hide();
         return;
       }
-      this.setSessionStorage(res);
       sessionStorage.setItem("info", JSON.stringify(res.data));
-      this.$router.push("/");
-      this.$loading.hide();
+      this.setSessionStorage(res);
     },
 
     setSessionStorage(res) {
       sessionStorage.setItem("token", res.token);
       sessionStorage.setItem("account", res.data.account);
+      this.$router.push("/");
+      this.$loading.hide();
     }
   }
 };

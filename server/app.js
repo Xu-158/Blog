@@ -7,6 +7,7 @@ app.use(require('cors')())
 app.set('secret', 'xxuujjjfff158')
 
 app.use('/admin', express.static(__dirname + '/admin'))
+app.use('/', express.static(__dirname + '/web'))
 
 app.use('/admin', require('./routes/admin/router'));
 app.use('/web', require('./routes/web/router'));
@@ -17,7 +18,7 @@ require('./utils/oAuth_github')(app)
 
 
 
-// //七牛云
+// //七牛云 
 // const qiniu = require('qiniu')
 // const qiniuConfig = require('./utils/qiniuConfig')
 // //鉴权对象

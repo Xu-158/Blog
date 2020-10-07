@@ -114,14 +114,13 @@ export default {
     return {
       list: ["0"],
       account: "",
-      isCollapse: false
+      isCollapse: false,
+      info: {}
     };
   },
   created() {
     this.info = JSON.parse(sessionStorage.getItem("info"));
-  },
-  mounted() {
-    this.account = sessionStorage.getItem("account") && this.info.login;
+    this.initInfo();
   },
   computed: {
     asideWidth() {
@@ -129,6 +128,11 @@ export default {
     }
   },
   methods: {
+    initInfo() {
+      this.account = this.info
+        ? this.info.login
+        : sessionStorage.getItem("account");
+    },
     handleCommand(command) {
       switch (command) {
         case "homepage":

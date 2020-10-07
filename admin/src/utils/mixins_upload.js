@@ -5,7 +5,7 @@ export default {
     },
     // 文件上传时的请求头
     uploadHeaders() {
-      return { 'Authorization': localStorage.getItem('token') || '' }
+      return { 'Authorization': sessionStorage.getItem('token') || '' }
     }
   },
 }
