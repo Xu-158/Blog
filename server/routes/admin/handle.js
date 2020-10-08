@@ -68,8 +68,13 @@ module.exports = {
   // 游客登陆
   async touristLogin(req, res) {
     let TouristId = await Role.findOne({ 'type': 'Tourist' })
+    if(!TouristId){
+      response(res, 1, "登陆失败,暂未开启游客登录功能");
+      return;
+    }
+    
     let canLogin = await Admin.findOne({ role: `${TouristId._id}` })
-    if (!TouristId || !canLogin) {
+    if (!canLogin) {
       response(res, 1, "登陆失败,暂未开启游客登录功能");
       return;
     }
