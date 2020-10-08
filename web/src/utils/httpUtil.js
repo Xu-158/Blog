@@ -2,7 +2,7 @@ import axios from "axios";
 import Vue from "vue";
 
 const httpUtil = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API || "/web",
+  baseURL: process.env.VUE_APP_BASE_API,
   timeout: 50000
 });
 
