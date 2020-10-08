@@ -77,7 +77,6 @@ export default {
       const { account, password } = this.ruleForm;
       this.$loading.show();
       const res = await login({ account, password });
-      if (res.status == 1) return;
       this.setSessionStorage(res);
     },
 
@@ -107,8 +106,10 @@ export default {
     },
 
     setSessionStorage(res) {
-      sessionStorage.setItem("token", res.token);
-      sessionStorage.setItem("account", res.data.account);
+      if (res) {
+        sessionStorage.setItem("token", res.token);
+        sessionStorage.setItem("account", res.data.account);
+      }
       this.$router.push("/");
       this.$loading.hide();
     }
