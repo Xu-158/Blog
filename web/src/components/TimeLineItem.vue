@@ -12,7 +12,6 @@
           }}
         </div>
         <div class="content text-font p-x-8 fs-sm">
-          &#9745;&#9744;
           <pre>{{ timeLineObj.content }}</pre>
         </div>
       </div>
@@ -30,8 +29,11 @@ export default {
     }
   },
   created() {
-    this.timeLineObj.time = dateFormat("YYYY-mm-dd", new Date(this.timeLineObj.time))
-  },
+    this.timeLineObj.time = dateFormat(
+      "YYYY-mm-dd",
+      new Date(this.timeLineObj.time)
+    );
+  }
 };
 </script>
 
@@ -78,6 +80,7 @@ export default {
         letter-spacing: 0.15rem;
         line-height: 1.5rem;
         font-weight: 600;
+        padding-left: 2rem;
       }
     }
     @media (max-width: 1024px) {
