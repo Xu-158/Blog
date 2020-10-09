@@ -9,8 +9,8 @@ app.set('secret', 'xxuujjjfff158')
 app.use('/admin', express.static(__dirname + '/admin'))
 app.use('/', express.static(__dirname + '/web'))
 
-app.use('/admin', require('./routes/admin/router'));
-app.use('/web', require('./routes/web/router'));
+app.use('/api/admin', require('./routes/admin/router'));
+app.use('/api/web', require('./routes/web/router'));
 require('./models/db')(app)
 require('./utils/base')(app)
 require('./utils/uploadConfig')(app)
