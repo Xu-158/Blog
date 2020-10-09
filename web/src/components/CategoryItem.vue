@@ -1,7 +1,7 @@
 <template>
   <div v-if="tagList">
     <div
-      class="cateItem p-x-8 p-y-5 m-r-8 m-b-8 m-t-3 fs-lg"
+      class="cateItem p-x-8 p-y-7 m-r-8 m-b-8 m-t-3 fs-sm"
       v-for="(tagItem, index) in tagList"
       :key="tagItem._id"
       @click="tagClick(tagItem._id, index)"
@@ -50,7 +50,7 @@ export default {
   position: relative;
   display: inline-block;
   border: 1px solid #999;
-  border-radius: 5px;
+  border-radius: 8px;
   color: map-get($colors, "font");
   font-weight: 600;
   &:hover {
@@ -77,11 +77,6 @@ export default {
   .cateItemCount {
     color: white;
     background-color: map-get($colors, "articleBoxArticle");
-    position: absolute;
-    display: inline-block;
-    border: 1px solid rgb(255, 255, 255);
-    border-radius: 50%;
-    bottom: -1rem;
   }
 }
 </style>

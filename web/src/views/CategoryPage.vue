@@ -64,7 +64,7 @@ export default {
 .categoryPage {
   padding: 2rem;
   .cateBox {
-    padding: 2.5rem;
+    padding: 1rem;
   }
 }
 </style>

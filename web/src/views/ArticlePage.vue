@@ -8,7 +8,7 @@
       >
     </h4>
     <div><img :src="article.thumbnail" alt="" width="100%" /></div>
-    <div v-html="article.contentHtml" class=""></div>
+    <div class="content" v-html="article.contentHtml"></div>
     <button
       class="fs-xll m-y-8"
       :class="{ likeActive: likeFlag }"
@@ -81,6 +81,9 @@ export default {
   justify-content: center;
   overflow: hidden;
   padding: 2rem;
+  .content{
+    line-height: 2rem;
+  }
   button {
     border: none;
     background-color: rgba(252, 252, 252, 0);

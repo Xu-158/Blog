@@ -21,12 +21,7 @@
       </div>
     </ul>
     <div class="userInfo p-8" v-if="!isMobile">
-      <span>{{ userName }}</span>
-      <img
-        class="m-x-8"
-        src="http://p1.music.126.net/cvmt4nmLFJfU35VDkxJl0A==/109951164833038560.jpg?param=140y140"
-        alt=""
-      />
+      <span class="webName text-ling fs-lg">破旧笔记</span>
     </div>
     <div v-else>
       <div
@@ -129,6 +124,10 @@ nav {
     font-weight: bold;
     background-color: rgba(145, 143, 143, 0.37);
     box-shadow: 6px 6px 4px rgb(0, 0, 0);
+  }
+  .webName {
+    font-weight: 700;
+    letter-spacing: 0.8rem;
   }
 }
 .userInfo {

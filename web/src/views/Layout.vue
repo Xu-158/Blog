@@ -98,6 +98,7 @@ export default {
     position: sticky;
     top: 0;
     height: 10vh;
+    z-index: 999;
   }
   article {
     width: 100%;

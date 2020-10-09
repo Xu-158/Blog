@@ -83,6 +83,7 @@ export default {
       overflow: hidden; /* 超出隐藏 */
       text-indent: 2rem;
       letter-spacing: 0.2rem;
+      line-height: 2rem;
     }
   }
   img {
