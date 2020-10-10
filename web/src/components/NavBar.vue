@@ -90,7 +90,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/style/_variables.scss";
 nav {
   ul {
     display: inline-block;

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import articleItem from "@/components/ArticleItem.vue";
+import articleItem from "@c/ArticleItem.vue";
 export default {
   props: {
     articleList: {

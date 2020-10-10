@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { getAboutMe } from "@/api/api";
+import { getAboutMe } from "@api";
 export default {
   data() {
     return {

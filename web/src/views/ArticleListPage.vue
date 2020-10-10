@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import { getArticleList } from "@/api/api";
-import articleList from "@/components/ArticleList.vue";
-import pagination from "@/components/Pagination.vue";
+import { getArticleList } from "@api";
+import articleList from "@c/ArticleList.vue";
+import pagination from "@c/Pagination.vue";
 export default {
   data() {
     return {

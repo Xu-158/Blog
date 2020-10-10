@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import navbar from "@/components/NavBar";
-import BackTop from "@/components/BackTop";
-import { getFriendList } from "@/api/api";
+import navbar from "@c/NavBar";
+import BackTop from "@c/BackTop";
+import { getFriendList } from "@api";
 export default {
   name: "Home",
   data() {
@@ -92,7 +92,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/style/_variables.scss";
 .homepage {
   header {
     position: sticky;

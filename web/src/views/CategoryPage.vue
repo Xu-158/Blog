@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import categoryItem from "@/components/CategoryItem.vue";
-import articleList from "@/components/ArticleList.vue";
-import pagination from "@/components/Pagination.vue";
-import { getTagList, getTagArticle } from "@/api/api";
+import categoryItem from "@c/CategoryItem.vue";
+import articleList from "@c/ArticleList.vue";
+import pagination from "@c/Pagination.vue";
+import { getTagList, getTagArticle } from "@api";
 export default {
   data() {
     return {

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import { getTimeLineList } from "@/api/api";
-import timelineitem from "@/components/TimeLineItem.vue";
+import { getTimeLineList } from "@api";
+import timelineitem from "@c/TimeLineItem.vue";
 export default {
   data() {
     return {

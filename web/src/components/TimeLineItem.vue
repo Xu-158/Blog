@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import dateFormat from "@/utils/dateFormat.js";
+import dateFormat from "@u/dateFormat.js";
 export default {
   props: {
     timeLineObj: {

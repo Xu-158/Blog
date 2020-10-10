@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { getArticleInfo, likeCountAdd } from "@/api/api";
-import dateFormat from "@/utils/dateFormat.js";
+import { getArticleInfo, likeCountAdd } from "@api";
+import dateFormat from "@u/dateFormat.js";
 import hljs from "highlight.js";
 import "highlight.js/styles/hybrid.css";
 
