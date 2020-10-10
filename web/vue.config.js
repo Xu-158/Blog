@@ -52,6 +52,10 @@ module.exports = {
         maxChunks: 5,
         minChunkSize: 100
       })
-    ]
+    ],
+    // 用cdn方式引入
+    externals: {
+      'highlight.js':'hljs'
+    }
   }
 };

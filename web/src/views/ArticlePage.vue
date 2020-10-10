@@ -22,7 +22,7 @@
 <script>
 import { getArticleInfo, likeCountAdd } from "@api";
 import dateFormat from "@u/dateFormat.js";
-import hljs from "highlight.js";
+// import hljs from "highlight.js";
 import "highlight.js/styles/hybrid.css";
 
 export default {
