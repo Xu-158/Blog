@@ -273,10 +273,12 @@ module.exports = {
   async articleDelete(req, res) {
     const id = req.query.id;
     const data = await Article.findByIdAndDelete(id);
+    console.log('data: ', data);
     let tag;
     data.tags.map(async (tagId) => {
       tag = await Tag.findById(tagId);
-      tag.selectArticles.splice(tag.selectArticles.indexOf(tagId), 1);
+      let targetIndex = tag.selectArticles.indexOf(id)
+      if (targetIndex != -1) tag.selectArticles.splice(targetIndex, 1);
       await tag.save();
     });
     response(res, 0, "删除文章成功", data);
