@@ -82,7 +82,7 @@ export default {
     async getFriendList() {
       const res = await getFriendList();
       this.friendList = res.data;
-    },
+    }
   },
   components: {
     navbar,

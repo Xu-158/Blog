@@ -4,6 +4,11 @@
   </div>
 </template>
 
+<script>
+export default {
+};
+</script>
+
 <style lang="scss">
 #app {
   // 解决手机 fixed不生效
@@ -18,5 +23,6 @@
     background: url("./assets/images/bgImage.png") center 0 no-repeat;
     background-size: cover;
   }
+  min-height: 100vh;
 }
 </style>

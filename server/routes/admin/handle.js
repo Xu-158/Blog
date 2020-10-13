@@ -68,11 +68,11 @@ module.exports = {
   // 游客登陆
   async touristLogin(req, res) {
     let TouristId = await Role.findOne({ 'type': 'Tourist' })
-    if(!TouristId){
+    if (!TouristId) {
       response(res, 1, "登陆失败,暂未开启游客登录功能");
       return;
     }
-    
+
     let canLogin = await Admin.findOne({ role: `${TouristId._id}` })
     if (!canLogin) {
       response(res, 1, "登陆失败,暂未开启游客登录功能");
@@ -188,14 +188,21 @@ module.exports = {
   async tagEdit(req, res) {
     const { id, title } = req.body;
     let data, msg;
+    let resCode = 0
     if (id) {
       data = await Tag.findByIdAndUpdate(id, { title });
       msg = "修改标签成功";
     } else {
-      data = await Tag.create({ title });
-      msg = "创建标签成功";
+      const isExist = await Tag.findOne({ title })
+      if (!isExist) {
+        data = await Tag.create({ title });
+        msg = "创建标签成功";
+      } else {
+        msg = "不能创建同名标签";
+        resCode = 1
+      }
     }
-    response(res, 0, msg, data);
+    response(res, resCode, msg, data);
   },
 
   // 删除文章标签
