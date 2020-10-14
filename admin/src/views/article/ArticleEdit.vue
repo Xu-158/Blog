@@ -43,9 +43,9 @@
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
-          :headers="uploadHeaders"
+          :http-request="uploadImg"
           :show-file-list="false"
-          :on-success="handleThumbnailSuccess"
+          :header="uploadHeaders"
         >
           <img
             v-if="articleForm.thumbnail"
@@ -71,13 +71,16 @@
 
 <script>
 import MarkdownEditor from "@/components/MarkdownEditor";
+
 import {
   getTagList,
   addArticle,
   getArticleInfo,
   updateArticle
 } from "@/api/article";
-import mixins_upload from "../../utils/mixins_upload";
+import mixins_upload from "@/utils/mixins_upload";
+import uploadToQiniu from "@/utils/qiniuUpload";
+
 export default {
   components: { MarkdownEditor },
   mixins: [mixins_upload],
@@ -136,7 +139,7 @@ export default {
         contentMd: [
           { required: true, message: "请输入文章内容", trigger: "blur" }
         ]
-      }
+      },
     };
   },
   created() {
@@ -176,18 +179,15 @@ export default {
       });
     },
 
-    handleThumbnailSuccess(res) {
-      if (res.status == 0) {
-        this.$message.success(`${res.msg}`);
-        this.articleForm.thumbnail = res.data.url;
-      } else {
-        this.$message.error(`${res.msg}`);
-      }
-    },
-
     changeEdit(html, md) {
       this.articleForm.contentMd = md;
       this.articleForm.contentHtml = html;
+    },
+
+    uploadImg(req) {
+      const result = uploadToQiniu(req).then(res=>{
+        this.articleForm.thumbnail = res.url
+      });
     }
   }
 };

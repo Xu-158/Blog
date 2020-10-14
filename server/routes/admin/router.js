@@ -3,10 +3,14 @@ const router = express.Router();
 const path = require('path')
 
 const handle = require('./handle')
-const handleMulter = require('../../utils/multer')()
+// const handleMulter = require('../../utils/multer')()
+
+const qiniu = require('./qiniu')
 
 // 上传文件
-router.post('/uploads/images', handle.auth, handleMulter.single('file'), handle.uploadFile)
+// router.post('/uploads', handle.auth, handleMulter.single('file'), handle.uploadFile)
+router.post('/qiniuUploadToken', handle.auth, qiniu.qiniuUploadToken)
+router.get('/getQiniuSource', handle.auth, qiniu.qiniuSource)
 
 // 托管静态文件
 router.use('/uploads', express.static(path.join(__dirname, '../../uploads/')))
@@ -16,7 +20,7 @@ router.get('/auth', handle.auth, handle.authHandle)
 router.post('/login', handle.login)
 router.post('/touris/login', handle.touristLogin)
 // Github认证
-router.get('/githubLogin',handle.githubLogin)
+router.get('/githubLogin', handle.githubLogin)
 
 // 文章标签
 router.post('/tag/edit', handle.auth, handle.tagEdit)

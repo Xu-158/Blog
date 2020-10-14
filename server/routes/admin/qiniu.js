@@ -1,0 +1,60 @@
+const response = require("../../utils/response");
+const qiniu = require('qiniu');
+const qiniuConfig = require('../../utils/qiniuConfig')
+
+//七牛云 
+const mac = new qiniu.auth.digest.Mac(
+  qiniuConfig.ACCESS_KE,
+  qiniuConfig.SECRET_KEY
+);
+const cdnManager = new qiniu.cdn.CdnManager(mac);
+const config = new qiniu.conf.Config();
+config.zone = qiniu.zone.Zone_z2;
+const bucketManager = new qiniu.rs.BucketManager(mac, config);
+
+module.exports = {
+  //七牛云文件上传(给前端token)
+  async qiniuUploadToken(req, res) {
+
+    let key = req.body.key || "";
+
+    const options = {
+      scope: `${qiniuConfig.bucket}`,
+      saveKey: key,
+      expires: 3600 * 24,
+      returnBody: `{
+            "key":"$(key)",
+            "hash":"$(etag)",
+            "fsize":$(fsize),
+            "bucket":"$(bucket)",
+            "msg":"上传成功",
+            "status":0,
+            "url":"http://img.xujinfeng.top/$(key)"
+          }`
+    };
+
+    let putPolicy = new qiniu.rs.PutPolicy(options);
+    let uploadToken = await putPolicy.uploadToken(mac);
+
+    response(res, 0, '七牛云Token', uploadToken);
+  },
+
+  //获取七牛云存储桶下文件列表
+  qiniuSource(req, res) {
+    let prefix = req.params.type || '';
+    if (prefix === "all") prefix = '';
+
+    let options = {
+      limit: 10000,
+      prefix: prefix
+    };
+
+    bucketManager.listPrefix(`${qiniuConfig.bucket}`, options, function (err, respBody, respInfo) {
+      if (!err) {
+        response(res, 0, '七牛云存储桶列表', respBody);
+      } else {
+        response(err, 1, '获取错误')
+      }
+    })
+  },
+}

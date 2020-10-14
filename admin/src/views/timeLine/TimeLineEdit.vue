@@ -30,7 +30,7 @@
         <el-button type="danger" @click="deleteTimeLine" v-if="timeLine._id"
           >删除</el-button
         >
-        <el-button>取消</el-button>
+        <el-button @click="back()">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -68,7 +68,7 @@ export default {
       this.back(res);
     },
     back(res) {
-      if (res.status == 0) this.$router.go(-1);
+      this.$router.go(-1);
     }
   }
 };

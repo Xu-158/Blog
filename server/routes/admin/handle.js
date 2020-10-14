@@ -174,12 +174,12 @@ module.exports = {
    * 系统管理 Handle
    */
   // 上传文件
-  async uploadFile(req, res) {
-    let file = req.file;
-    const uploadConfig = req.app.get("uploadConfig");
-    file.url = `${uploadConfig.filePath}/${file.childFloder}/${file.filename}`;
-    response(res, 0, "上传成功", file);
-  },
+  // async uploadFile(req, res) {
+  //   let file = req.file;
+  //   const uploadConfig = req.app.get("uploadConfig");
+  //   file.url = `${uploadConfig.filePath}/${file.childFloder}/${file.filename}`;
+  //   response(res, 0, "上传成功", file);
+  // },
 
   /** 
    * 文章管理 Handle

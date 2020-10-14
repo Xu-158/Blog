@@ -2,8 +2,10 @@ module.exports = app => {
   const baseConfig = app.get('baseConfig')
   const uploadConfig = {
     filePath: baseConfig.mode == "dev"
-      ? "http://localhost:3000/admin/uploads"
-      : "http://47.107.105.76/api/admin/uploads",
+      // ? "http://localhost:3000/admin/uploads"
+      // : "http://47.107.105.76/api/admin/uploads",
+      ? "http://img.xujinfeng.top/"
+      : "http://img.xujinfeng.top/",
     mimetype: {
       "image/png": "images",
       "image/jpeg": "images",

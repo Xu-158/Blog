@@ -69,6 +69,7 @@
             <el-menu-item-group>
               <template slot="title">管理员</template>
               <el-menu-item index="/system/adminList">管理员列表</el-menu-item>
+              <el-menu-item index="/system/sourceList">系统资源</el-menu-item>
               <el-menu-item index="/system/aboutMe">关于我</el-menu-item>
             </el-menu-item-group>
           </el-submenu>

@@ -14,7 +14,7 @@ const routes = [
     children: [
       {
         path: "home",
-        name: "首页",
+        name: "home",
         component: () => import("@/views/Home"),
         meta: { title: "首页" }
       }
@@ -43,33 +43,33 @@ const routes = [
     path: "/article",
     component: Layout,
     redirect: "/article/articleTag",
-    name: "标签管理",
+    name: "article",
     meta: { title: "标签管理" },
     children: [
       {
         path: "articleTag",
         component: () => import("@/views/article/ArticleTag"),
-        name: "查看标签",
+        name: "articleTag",
         meta: { title: "查看标签" }
       },
       {
         path: "ArticleAdd",
         props: true,
         component: () => import("@/views/article/ArticleEdit"),
-        name: "新建文章",
+        name: "articleAdd",
         meta: { title: "新建文章" }
       },
       {
         path: "ArticleUpdate/:id",
         props: true,
         component: () => import("@/views/article/ArticleEdit"),
-        name: "编辑文章",
+        name: "articleUpdate",
         meta: { title: "编辑文章" }
       },
       {
         path: "ArticleList",
         component: () => import("@/views/article/ArticleList"),
-        name: "文章列表",
+        name: "articleList",
         meta: { title: "文章列表" }
       }
     ]
@@ -78,13 +78,13 @@ const routes = [
     path: "/link",
     component: Layout,
     redirect: "/link/friendLink",
-    name: "链接管理",
+    name: "link",
     meta: { title: "链接管理" },
     children: [
       {
         path: "friendLink",
         component: () => import("@/views/link/FriendLink"),
-        name: "查看友情链接",
+        name: "friendLink",
         meta: { title: "查看友情链接" }
       }
     ]
@@ -93,20 +93,26 @@ const routes = [
     path: "/system",
     component: Layout,
     redirect: "/system/adminList",
-    name: "系统管理",
+    name: "system",
     meta: { title: "系统管理" },
     children: [
       {
         path: "adminList",
         component: () => import("../views/system/AdminList.vue"),
-        name: "管理员列表",
+        name: "adminList",
         meta: { title: "管理员列表" }
       },
       {
         path: "aboutMe",
         component: () => import("../views/system/AboutMe.vue"),
-        name: "关于我",
+        name: "aboutMe",
         meta: { title: "关于我" }
+      },
+      {
+        path: "sourceList",
+        component: () => import("../views/system/SourceList.vue"),
+        name: "sourceList",
+        meta: { title: "系统资源" }
       }
     ]
   },
@@ -114,19 +120,19 @@ const routes = [
     path: "/timeLine",
     component: Layout,
     redirect: "/home",
-    name: "时间线",
+    name: "timeLine",
     meta: { title: "时间线" },
     children: [
       {
         path: "/timeLine/timeLineList",
         component: () => import("../views/timeLine/TimeLineList.vue"),
-        name: "时间线列表",
+        name: "timeLineList",
         meta: { title: "时间线列表" },
         children: [
           {
             path: "/timeLine/timeLineList/timeLineEdit",
             component: () => import("../views/timeLine/TimeLineEdit.vue"),
-            name: "编辑时间线",
+            name: "timeLineEdit",
             props: true,
             meta: { title: "编辑时间线" }
           }

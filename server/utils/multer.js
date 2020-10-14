@@ -3,15 +3,6 @@ const path = require('path')
 const fs = require("fs");
 const response = require('./response')
 
-// const createFolder = function (folder) {
-//   try {
-//     // 同步地测试用户对 path 指定的文件或目录的权限 (是否可以读写)
-//     fs.accessSync(folder);
-//   } catch (e) {
-//     // 同步地创建目录
-//     fs.mkdirSync(folder);
-//   }
-// };
 const createFolder = function (folder) {
   try {
     let p = folder.split("..").pop().split("/")
