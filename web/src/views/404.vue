@@ -10,7 +10,7 @@ export default {
     return {
       fonsize: 40,
       color1: "black",
-      color2: "green",
+      color2: "red",
       color3: "blue"
     };
   },
@@ -69,7 +69,7 @@ export default {
       ctx.lineTo(160, 180);
       ctx.lineWidth = "2px";
       ctx.lineCap = "round";
-      ctx.strokeStyle = "yellow";
+      ctx.strokeStyle = "#FFD700";
       ctx.stroke();
     },
     drawX(ctx) {
@@ -90,9 +90,9 @@ export default {
       gradient.addColorStop("0.5", `${this.color2}`);
       gradient.addColorStop("1", `${this.color3}`);
       ctx.strokeStyle = gradient;
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = "#534";
-      ctx.strokeText("你 的 打 开 方 式 不 对 劲", 10, 280);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#666";
+      ctx.strokeText("你 的 打 开 方 式 不 正 确", 10, 280);
     }
   }
 };

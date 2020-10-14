@@ -11,7 +11,7 @@
         <el-form-item label="密码" prop="password">
           <el-input
             type="password"
-            v-model="ruleForm.password"
+            v-model.trim="ruleForm.password"
             placeholder="请输入密码"
           ></el-input>
         </el-form-item>

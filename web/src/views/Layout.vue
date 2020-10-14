@@ -37,7 +37,7 @@
         <div class="data">datadata</div>
       </div>
     </footer>
-    <backTop class="topBtn"></backTop>
+    <backTop class="topBtn" v-show="showBackTopBtn"></backTop>
   </div>
 </template>
 
@@ -72,11 +72,24 @@ export default {
         }
       ],
       friendList: [],
-      showMobileNavItem: false // 控制移动端菜单展开
+      showMobileNavItem: false, // 控制移动端菜单展开
+      showBackTopBtn: false
     };
   },
   created() {
     this.getFriendList();
+  },
+  mounted() {
+    // 滑动收缩顶部菜单
+    window.addEventListener("scroll", e => {
+      if (this.showMobileNavItem) {
+        this.showMobileNavItem = !this.showMobileNavItem;
+      }
+      // document.documentElement.scrollTop     chorme/Firefox
+      // document.body.scrollTop    edge
+      let top = document.documentElement.scrollTop || document.body.scrollTop;
+      this.showBackTopBtn = top > 300 ? true : false;
+    });
   },
   methods: {
     async getFriendList() {
@@ -119,7 +132,6 @@ export default {
   footer {
     margin-top: 3rem;
     width: 100%;
-    height: 20vh;
     background-color: map-get($colors, "footer");
     .footerContent {
       width: 60%;

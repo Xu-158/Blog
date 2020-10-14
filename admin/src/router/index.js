@@ -8,6 +8,19 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/",
+    component: Layout,
+    redirect: "/home",
+    children: [
+      {
+        path: "home",
+        name: "首页",
+        component: () => import("@/views/Home"),
+        meta: { title: "首页" }
+      }
+    ]
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("@/views/Login"),
@@ -23,32 +36,6 @@ const routes = [
         path: "404",
         component: () => import("@/views/404"),
         meta: { title: "失踪了啊！" }
-      }
-    ]
-  },
-  {
-    path: "https://github.com/login/oauth/authorize",
-    name: "github",
-    component: Layout,
-    redirect: "/404",
-    children: [
-      {
-        path: "github",
-        component: () => import("@/views/404"),
-        meta: { title: "github！" }
-      }
-    ]
-  },
-  {
-    path: "/",
-    component: Layout,
-    redirect: "/home",
-    children: [
-      {
-        path: "home",
-        name: "首页",
-        component: () => import("@/views/Home"),
-        meta: { title: "首页" }
       }
     ]
   },
@@ -127,8 +114,8 @@ const routes = [
     path: "/timeLine",
     component: Layout,
     redirect: "/home",
-    name: "首页",
-    meta: { title: "首页" },
+    name: "时间线",
+    meta: { title: "时间线" },
     children: [
       {
         path: "/timeLine/timeLineList",
