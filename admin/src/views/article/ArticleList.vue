@@ -10,18 +10,20 @@
       <el-table-column prop="tagNames" label="文章标签">
         <template slot-scope="scope">
           <el-tag
-            v-for="item in scope.row.tagNames"
-            :key="item"
+            v-for="item in scope.row.tags"
+            :key="item._id"
             style="margin:3px 3px"
-            >{{ item }}</el-tag
+            >{{ item.title }}</el-tag
           >
         </template>
       </el-table-column>
-      <el-table-column
-        prop="createdAt"
-        label="创建日期"
-        width="180"
-      ></el-table-column>
+      <el-table-column prop="createdAt" label="创建日期" width="180"
+        ><template slot-scope="scope">
+          <div>
+            {{ regData(scope.row.createdAt) }}
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="isTop" label="是否置顶" width="80">
         <template slot-scope="scope">
           <div>
@@ -57,7 +59,8 @@
       <el-table-column prop="lickCount" label="浏览量/点赞数" width="140">
         <template slot-scope="scope">
           <div>
-            <el-tag type="success">{{ scope.row.hitCount }}</el-tag>&nbsp;
+            <el-tag type="success">{{ scope.row.hitCount }}</el-tag
+            >&nbsp;
             <el-tag type="danger">{{ scope.row.likeCount }}</el-tag>
           </div>
         </template>
@@ -101,22 +104,19 @@ export default {
   created() {
     this.initData();
   },
+  computed: {
+    regData() {
+      return data => {
+        return dateFormat("YYYY-mm-dd HH:MM", new Date(data));
+      };
+    }
+  },
   methods: {
     async initData() {
       const { page, pageSize } = this;
       const res = await getArticleList({ page, pageSize });
       this.tableData = res.data.data;
       this.articleTotal = res.data.totalSize;
-
-      // 数据格式
-      this.tableData.map(obj => {
-        const tagNames = [];
-        obj.createdAt = dateFormat("YYYY-mm-dd HH:MM", new Date(obj.createdAt));
-        obj.tags.map(tag => {
-          tagNames.push(tag.title + " ");
-        });
-        this.$set(obj, "tagNames", tagNames);
-      });
     },
 
     goEdit(id) {

@@ -19,7 +19,3 @@ const baseConfig = app.get('baseConfig')
 app.listen(baseConfig.host, () => {
   console.log('RUN AT http://localhost:' + baseConfig.host)
 })
-
-global.app = app
-
-module.exports = app;

@@ -79,7 +79,7 @@ import {
   updateArticle
 } from "@/api/article";
 import mixins_upload from "@/utils/mixins_upload";
-import uploadToQiniu from "@/utils/qiniuUpload";
+import uploadToQiniu from "@/api/qiniuUpload";
 
 export default {
   components: { MarkdownEditor },
@@ -184,10 +184,9 @@ export default {
       this.articleForm.contentHtml = html;
     },
 
-    uploadImg(req) {
-      const result = uploadToQiniu(req).then(res=>{
-        this.articleForm.thumbnail = res.url
-      });
+    async uploadImg(req) {
+      const result = await uploadToQiniu(req.file)
+      this.articleForm.thumbnail = result.url
     }
   }
 };

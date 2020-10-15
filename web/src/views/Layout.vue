@@ -24,7 +24,7 @@
           <div class="m-b-6 text-title">友情链接：</div>
           <div class="m-b-5 friendLinkItems">
             <a
-              class="text-title fs-xs"
+              class="text-title fs-xxs"
               v-for="friend in friendList"
               :key="friend._id"
               :href="friend.url"

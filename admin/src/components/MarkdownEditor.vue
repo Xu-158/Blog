@@ -15,7 +15,7 @@
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 
-import { upload } from "@/api/article";
+import uploadToQiniu from "@/api/qiniuUpload";
 
 export default {
   name: "MarkdownEditor",
@@ -30,13 +30,16 @@ export default {
   },
   methods: {
     async imgAdd(pos, $file) {
-      let formdata = new FormData();
-      formdata.append("file", $file);
-      const res = await upload(formdata);
-      if (res.status == 0) {
-        let _res = res.data;
-        this.$refs.md.$img2Url(pos, _res.url);
-      }
+      // let formdata = new FormData();
+      // formdata.append("file", $file);
+      let file = $file;
+
+      const res = await uploadToQiniu(file);
+      console.log(res);
+      // if (res.status == 0) {
+      //   let _res = res.data;
+      //   this.$refs.md.$img2Url(pos, _res.url);
+      // }
     },
     change() {
       this.$emit("changeEdit", this.$refs.md.d_render, this.$refs.md.d_value);

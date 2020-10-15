@@ -9,8 +9,9 @@ const qiniu = require('./qiniu')
 
 // 上传文件
 // router.post('/uploads', handle.auth, handleMulter.single('file'), handle.uploadFile)
-router.post('/qiniuUploadToken', handle.auth, qiniu.qiniuUploadToken)
+router.get('/qiniuUploadToken', handle.auth, qiniu.qiniuUploadToken)
 router.get('/getQiniuSource', handle.auth, qiniu.qiniuSource)
+router.delete('/qiniuDelete',handle.auth, qiniu.qiniuDelete)
 
 // 托管静态文件
 router.use('/uploads', express.static(path.join(__dirname, '../../uploads/')))

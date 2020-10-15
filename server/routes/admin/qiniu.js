@@ -41,11 +41,12 @@ module.exports = {
 
   //获取七牛云存储桶下文件列表
   qiniuSource(req, res) {
-    let prefix = req.params.type || '';
+    let prefix = req.query.prefix || '';
+    let limit = req.query.limit || 9999;
     if (prefix === "all") prefix = '';
 
     let options = {
-      limit: 10000,
+      limit: limit,
       prefix: prefix
     };
 
@@ -57,4 +58,18 @@ module.exports = {
       }
     })
   },
+
+  //删除空间中的文件
+  qiniuDelete(req, res) {
+    const key = req.query.key
+    bucketManager.delete(`${qiniuConfig.bucket}`, key, function (err, respBody, respInfo) {
+      if (err) {
+        response(res, 1, '删除失败', err)
+      } else {
+        if (respInfo.statusCode) {
+          response(res, 0, '删除成功')
+        }
+      }
+    });
+  }
 }

@@ -7,20 +7,20 @@
       @submit.native.prevent="saveAbout"
     >
       <el-form-item label="LOGO :">
-        <el-col :span="4">
+        <el-col :span="8">
           <el-upload
             class="avatar-uploader"
             :action="uploadUrl"
-            :headers="uploadHeaders"
+            :http-request="uploadImg"
             :show-file-list="false"
-            :on-success="handleThumbnailSuccess"
+            :header="uploadHeaders"
           >
             <img v-if="aboutForm.logo" :src="aboutForm.logo" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-col>
 
-        <el-col :span="11">
+        <el-col :span="10">
           <el-form-item label="QQ : " prop="name" style="padding-bottom:15px">
             <el-input v-model="aboutForm.qq"></el-input>
           </el-form-item>
@@ -55,6 +55,7 @@
 import MarkdownEditor from "@/components/MarkdownEditor";
 import mixins_upload from "@/utils/mixins_upload";
 import { updateAbout, getAboutInfo } from "@/api/about";
+import uploadToQiniu from "@/api/qiniuUpload";
 export default {
   components: { MarkdownEditor },
   mixins: [mixins_upload],
@@ -67,7 +68,7 @@ export default {
         e_mail: "",
         github: "",
         contentHtml: "",
-        contentMd: "",
+        contentMd: ""
       },
       editor: {
         value: "",
@@ -95,9 +96,9 @@ export default {
           trash: false, // 清空
           ishljs: true,
           navigation: true, // 导航目录
-          preview: true, // 预览
-        },
-      },
+          preview: true // 预览
+        }
+      }
     };
   },
   mounted() {
@@ -122,20 +123,16 @@ export default {
       if (data.status == 0) this.initAboutInfo();
     },
 
-    handleThumbnailSuccess(res) {
-      if (res.status == 0) {
-        this.$message.success(`${res.msg}`);
-        this.$set(this.aboutForm, "logo", res.data.url);
-      } else {
-        this.$message.error(`${res.msg}`);
-      }
+    async uploadImg(req) {
+      const result = await uploadToQiniu(req.file);
+      this.aboutForm.logo = result.url;
     },
 
     changeEdit(html, md) {
       this.aboutForm.contentMd = md;
       this.aboutForm.contentHtml = html;
-    },
-  },
+    }
+  }
 };
 </script>
 
