@@ -56,11 +56,15 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="文章内容 :" prop="contentMd">
-        <markdown-editor
-          :editor="editor"
-          class="me-write-editor"
-          @changeEdit="changeEdit"
-        ></markdown-editor>
+        <v-md-editor
+          v-model="text"
+          :mode="mode"
+          :left-toolbar="toolbar"
+          height="400px"
+          :disabled-menus="[]"
+          @upload-image="handleUploadImage"
+          @change="change"
+        ></v-md-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -70,7 +74,6 @@
 </template>
 
 <script>
-import MarkdownEditor from "@/components/MarkdownEditor";
 
 import {
   getTagList,
@@ -82,7 +85,6 @@ import mixins_upload from "@/utils/mixins_upload";
 import uploadToQiniu from "@/api/qiniuUpload";
 
 export default {
-  components: { MarkdownEditor },
   mixins: [mixins_upload],
   props: {
     id: { type: String }
@@ -99,35 +101,10 @@ export default {
         contentMd: "",
         contentHtml: ""
       },
-      editor: {
-        value: "",
-        ref: "", //保存mavonEditor实例  实际不该这样
-        default_open: "edit",
-        toolbars: {
-          bold: true, // 粗体
-          italic: true, // 斜体
-          header: true, // 标题
-          underline: true, // 下划线
-          strikethrough: true, // 中划线
-          mark: true, // 标记
-          superscript: true, // 上角标
-          subscript: true, // 下角标
-          quote: true, // 引用
-          ol: true, // 有序列表
-          ul: true, // 无序列表
-          imagelink: true, // 图片链接
-          code: true, // code
-          fullscreen: true, // 全屏编辑
-          readmodel: true, // 沉浸式阅读
-          help: true, // 帮助
-          undo: true, // 上一步
-          redo: true, // 下一步
-          trash: false, // 清空
-          ishljs: true,
-          navigation: true, // 导航目录
-          preview: true // 预览
-        }
-      },
+      text: "", //
+      mode: "editable", //可选值：edit(纯编辑模式) editable(编辑与预览模式) preview(纯预览模式)。
+      toolbar:
+        "undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image code",
       rules: {
         title: [
           { required: true, message: "请输入文章标题", trigger: "blur" },
@@ -139,7 +116,7 @@ export default {
         contentMd: [
           { required: true, message: "请输入文章内容", trigger: "blur" }
         ]
-      },
+      }
     };
   },
   created() {
@@ -155,7 +132,7 @@ export default {
     async getArticle() {
       const res = await getArticleInfo({ id: this.id });
       this.articleForm = res.data;
-      this.editor.value = res.data.contentMd;
+      this.text = res.data.contentMd;
     },
 
     saveArticle() {
@@ -179,14 +156,22 @@ export default {
       });
     },
 
-    changeEdit(html, md) {
-      this.articleForm.contentMd = md;
-      this.articleForm.contentHtml = html;
+    async uploadImg(req) {
+      const result = await uploadToQiniu(req.file);
+      this.articleForm.thumbnail = result.url;
     },
 
-    async uploadImg(req) {
-      const result = await uploadToQiniu(req.file)
-      this.articleForm.thumbnail = result.url
+    async handleUploadImage(event, insertImage, files) {
+      const result = await uploadToQiniu(files[0]);
+      insertImage({
+        url: `${result.url}`,
+        desc: "图片哦"
+      });
+    },
+    change(text, html) {
+      // 内容变化时触发的事件。text 为输入的内容，html 为解析之后的 html 字符串。
+      this.articleForm.contentMd = text;
+      this.articleForm.contentHtml = html;
     }
   }
 };

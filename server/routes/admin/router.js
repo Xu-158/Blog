@@ -9,7 +9,7 @@ const qiniu = require('./qiniu')
 
 // 上传文件
 // router.post('/uploads', handle.auth, handleMulter.single('file'), handle.uploadFile)
-router.get('/qiniuUploadToken', handle.auth, qiniu.qiniuUploadToken)
+router.post('/qiniuUploadToken', handle.auth, qiniu.qiniuUploadToken)
 router.get('/getQiniuSource', handle.auth, qiniu.qiniuSource)
 router.delete('/qiniuDelete',handle.auth, qiniu.qiniuDelete)
 

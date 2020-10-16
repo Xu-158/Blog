@@ -4,7 +4,7 @@ import httpUtil from "@/utils/httpUtil";
 export function qiniuUploadToken() {
   return httpUtil({
     url: '/qiniuUploadToken',
-    method: 'get'
+    method: 'post'
   })
 }
 

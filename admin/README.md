@@ -1,5 +1,5 @@
 # admin
-
+"@kangc/v-md-editor": "^1.5.0", //http://ckang_1229.gitee.io/vue-markdown-editor/zh/
 ## Project setup
 ```
 npm install

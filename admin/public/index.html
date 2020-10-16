@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <!-- ElementUI CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 
@@ -16,10 +18,17 @@
   </noscript>
   <div id="app"></div>
   <!-- built files will be auto injected -->
-  <!-- ElementUI CDN -->
-  <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <!-- 引入组件库 -->
+  <!-- http://cdn.bytedance.com/?query=vue&version=2.6.10 -->
+  <script src="https://s3.pstatp.com/cdn/expire-1-M/vue/2.6.10/vue.js" type="application/javascript"></script>
+
+  <!-- http://cdn.bytedance.com/?query=vue-router&version=3.0.6 -->
+  <script src="https://s0.pstatp.com/cdn/expire-1-M/vue-router/3.0.6/vue-router.js"
+    type="application/javascript"></script>
+
+  <!-- https://cdn.baomitu.com/element-ui -->
+  <script crossorigin="anonymous" integrity="sha384-WbhdtWslh0AUD1Dhf8OExUvvjZ/VN6o2HHMsYlDXb6uf3IweMH13dGL4V/KgDc7y"
+    src="https://lib.baomitu.com/element-ui/2.13.2/index.js"></script>
 </body>
 
 </html>

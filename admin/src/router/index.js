@@ -1,10 +1,11 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+// import Vue from "vue";
+// import VueRouter from "vue-router";
+Vue.use(VueRouter);
+
 import Layout from "@/views/Layout";
 import NProgress from "nprogress";
 import { existToken } from "@/utils/existToken";
 
-Vue.use(VueRouter);
 
 const routes = [
   {
@@ -174,9 +175,9 @@ router.afterEach(() => {
 });
 
 // 禁止相同路由跳转（会导致错误警告）
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err);
-};
+// const originalPush = VueRouter.prototype.push;
+// VueRouter.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err);
+// };
 
 export default router;
