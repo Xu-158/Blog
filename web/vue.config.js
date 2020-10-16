@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const productionGzipExtensions = ["js", "css"];
 const isProduction = process.env.NODE_ENV === "production";
 module.exports = {
@@ -53,11 +53,13 @@ module.exports = {
         maxChunks: 5,
         minChunkSize: 100
       }),
-      new BundleAnalyzerPlugin(), 
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled'//关闭分析
+      }),
     ],
     // 用cdn方式引入
     externals: {
-      'highlight.js':'hljs'
+      'highlight.js': 'hljs'
     }
   }
 };

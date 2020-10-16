@@ -38,35 +38,33 @@ export default {
   data() {
     return {
       article: {},
-      likeFlag: false
+      likeFlag: false,
+      directoryList: []
     };
   },
   created() {
     this.getArticleInfo();
-    // this.test();
   },
   mounted() {
-    this.$nextTick(function() {
-      setTimeout(() => {
-        let a = document.querySelector(".previewMd").querySelectorAll("h1,h2,h3,h4,h5,h6")
-        a.forEach((e)=>{
-          console.log(e.innerHTML);
-        })
-      }, 100 );
-    });
+    this.test();
   },
   methods: {
     test() {
-      this.$nextTick(() => {
-        let a = document.querySelector(".previewMd").querySelector("div");
-        console.log(a.children);
-        console.log(a.children.length);
-        for (el of a.children) console.log(el);
-        // console.log(
-        //   document
-        //     .querySelector(".previewMd")
-        //     .querySelectorAll("h1,h2,h3,h4,h5,h6")
-        // );
+      this.$nextTick(function() {
+        setTimeout(() => {
+          let a = document
+            .querySelector(".previewMd")
+            .querySelectorAll("h1,h2,h3,h4,h5,h6");
+          console.log(a);
+          a.forEach(e => {
+            let obj = {
+              id: e.offsetTop,
+              title: e.innerHTML,
+              level: e.tagName.slice(1)
+            };
+            this.directoryList.push(obj);
+          });
+        }, 200);
       });
     },
     async getArticleInfo() {

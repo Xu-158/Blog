@@ -41,12 +41,14 @@
       </div>
     </footer>
     <backTop class="topBtn" v-show="showBackTopBtn"></backTop>
+    <articleDirectory class="directory" v-show="showBackTopBtn"></articleDirectory>
   </div>
 </template>
 
 <script>
 import navbar from "@c/NavBar";
 import BackTop from "@c/BackTop";
+import ArticleDirectory from "@c/ArticleDirectory";
 import { getFriendList } from "@api";
 export default {
   name: "Home",
@@ -102,7 +104,8 @@ export default {
   },
   components: {
     navbar,
-    BackTop
+    BackTop,
+    ArticleDirectory
   }
 };
 </script>
