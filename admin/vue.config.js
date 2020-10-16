@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; 
 const productionGzipExtensions = ["js", "css"];
 const isProduction = process.env.NODE_ENV === "production";
 module.exports = {
@@ -41,7 +42,10 @@ module.exports = {
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 5,
         minChunkSize: 100
-      })
+      }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled'//关闭分析
+      }), 
     ],
     // 用cdn方式引入
     externals: {

@@ -136,23 +136,35 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.login-card {
-  width: 30%;
-  margin: 10rem auto;
-}
-.btn-row {
+.login {
+  height: 100vh;
+  background-image: linear-gradient(150deg, rgb(76, 197, 96), rgb(53, 53, 168));
   display: flex;
-  justify-content: space-around;
-}
-@media (max-width: 1024px) {
+  justify-content: center;
+  align-items: center;
   .login-card {
-    width: 90%;
-    margin: 10rem auto;
+    margin: 0 auto;
+    width: 30%;
+    height: 40vh;
     .btn-row {
-      width: 100%;
-      .el-button {
-        margin: 0 auto;
-        width: 10rem;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .login {
+    .login-card {
+      width: 90%;
+      height: 55vh;
+      margin: 0 auto;
+      .btn-row {
+        width: 100%;
+        .el-button {
+          margin: 0 auto;
+          width: 10rem;
+        }
       }
     }
   }

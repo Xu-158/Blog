@@ -154,7 +154,7 @@ export default {
     },
     regDate() {
       return date => {
-        return dateFormat("YYYY-mm-dd HH:MM", new Date(date/1e4));
+        return dateFormat("YYYY-mm-dd HH:MM", new Date(date / 1e4));
       };
     }
   },
@@ -167,7 +167,7 @@ export default {
             limit: 9999,
             prefix: "image"
           })
-        ).data.items;
+        ).data.items.reverse();
       }
       skip = skip || this.imagesPage;
       if (this.imagesData) {
@@ -184,7 +184,7 @@ export default {
       if (!skip) {
         this.mp3Data = (
           await getQiniuSource({ limit: 9999, prefix: "audio" })
-        ).data.items;
+        ).data.items.reverse();
       }
       skip = skip || this.mp3Page;
       if (this.mp3Data) {

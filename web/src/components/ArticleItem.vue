@@ -98,7 +98,7 @@ export default {
   }
   @media (max-width: 1024px) {
     img {
-      width: 25vw;
+      width: 20vw;
       height: auto;
     }
     .articleAction {

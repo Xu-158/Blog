@@ -8,7 +8,12 @@
       >
     </h4>
     <div><img :src="article.thumbnail" alt="" width="100%" /></div>
-    <div class="content" v-html="article.contentHtml"></div>
+    <v-md-preview
+      class="previewMd"
+      :include-level="[3, 4]"
+      :text="article.contentMd"
+      ref="previewMd"
+    ></v-md-preview>
     <button
       class="fs-xll m-y-8"
       :class="{ likeActive: likeFlag }"
@@ -38,13 +43,36 @@ export default {
   },
   created() {
     this.getArticleInfo();
+    // this.test();
+  },
+  mounted() {
+    this.$nextTick(function() {
+      setTimeout(() => {
+        let a = document.querySelector(".previewMd").querySelectorAll("h1,h2,h3,h4,h5,h6")
+        a.forEach((e)=>{
+          console.log(e.innerHTML);
+        })
+      }, 100 );
+    });
   },
   methods: {
+    test() {
+      this.$nextTick(() => {
+        let a = document.querySelector(".previewMd").querySelector("div");
+        console.log(a.children);
+        console.log(a.children.length);
+        for (el of a.children) console.log(el);
+        // console.log(
+        //   document
+        //     .querySelector(".previewMd")
+        //     .querySelectorAll("h1,h2,h3,h4,h5,h6")
+        // );
+      });
+    },
     async getArticleInfo() {
       const res = await getArticleInfo({ id: this.id });
-      console.log(res.data);
-      if(!res.data){
-        this.$router.push("/notFound")
+      if (!res.data) {
+        this.$router.push("/notFound");
       }
       this.article = res.data;
       this.article.createdAt = dateFormat(
@@ -62,6 +90,7 @@ export default {
         this.article.likeCount = res.data.likeCount;
         this.likeFlag = true;
       }
+      this.test();
     },
     async highlighthandle() {
       await hljs;
@@ -76,12 +105,14 @@ export default {
 
 <style lang="scss" scoped>
 .article {
+  background-color: rgba(255, 255, 255, 0.452);
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
   padding: 2rem;
-  .content{
+  .content {
     line-height: 2rem;
   }
   button {

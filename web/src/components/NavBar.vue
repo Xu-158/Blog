@@ -1,35 +1,37 @@
 <template>
-  <nav class="fs-xs bg-nav text-white d-flex ai-center jc-between">
+  <nav
+    class="fs-xs bg-nav text-white d-flex ai-center jc-between"
+    :class="{ heightNav: isMobile }"
+  >
     <ul
       :class="{
         hiddNavItem: isMobile,
         showMobileNavItem: showMobileNavItem
       }"
     >
-      <div
-        class="nav-item p-x-7"
+      <li
         v-for="(item, index) in navItemObj"
         :key="item.navRoute"
+        class="nav-item p-x-7 m-x-3 p-y-4 p-x-7"
+        @click="navItemClick(item.navRoute, index)"
+        :class="{ navActive: index == currIndex }"
       >
-        <li
-          class="p-y-4 p-x-7"
-          @click="navItemClick(item.navRoute, index)"
-          :class="{ navActive: index == currIndex }"
-        >
-          {{ item.navName }}
-        </li>
-      </div>
+        {{ item.navName }}
+      </li>
     </ul>
-    <div class="userInfo p-8" v-if="!isMobile">
-      <span class="webName text-ling fs-lg">破旧笔记</span>
-    </div>
-    <div v-else>
-      <div
-        @click="showNavItem"
-        class="menuBtn m-y-7 m-x-8 bg-dark p-6 text-white p-x-8 fs-xl"
+    <div>
+      <span
+        class="webName text-title fs-lg m-x-8"
+        v-show="!showMobileNavItem"
+        >{{ name }}</span
       >
-        ☰
-      </div>
+    </div>
+    <div
+      v-if="isMobile"
+      @click="showNavItem"
+      class="menuBtn m-y-7 m-x-8 bg-dark p-6 text-white p-x-8 fs-xl"
+    >
+      ☰
     </div>
   </nav>
 </template>
@@ -39,19 +41,14 @@ export default {
   data() {
     return {
       isMobile: false,
-      currIndex: 0
+      currIndex: 0,
+      name: "破旧笔记"
     };
   },
   props: {
     navItemObj: {
       type: Array,
       required: true
-    },
-    userName: {
-      type: String,
-      default() {
-        return "XU_158";
-      }
     },
     showMobileNavItem: {
       // 控制移动端菜单展开
@@ -73,8 +70,9 @@ export default {
   },
   methods: {
     navItemClick(routeName, index) {
-      if (this.isMobile)
-        this.$emit("update:showMobileNavItem", !this.showMobileNavItem);
+      if (this.isMobile) {
+        this.showNavItem();
+      }
       this.currIndex = index;
       this.$router.push(routeName);
     },
@@ -128,12 +126,14 @@ nav {
     font-weight: 700;
     letter-spacing: 0.8rem;
   }
+  .menuBtn {
+    display: inline-block;
+  }
 }
-.userInfo {
-  float: right;
-  img {
-    width: 20px;
-    height: 20px;
+.heightNav {
+  padding: 0.7rem;
+  .webName{
+    font-size: 1.7rem;
   }
 }
 </style>

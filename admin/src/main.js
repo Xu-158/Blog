@@ -14,8 +14,8 @@ Vue.use(loading);
 
 import VMdEditor from '@kangc/v-md-editor';
 import '@kangc/v-md-editor/lib/style/base-editor.css';
-import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
-VMdEditor.use(githubTheme);
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+VMdEditor.use(vuepressTheme);
 // Vue.use(VMdEditor);
 
 Vue.config.productionTip = false;

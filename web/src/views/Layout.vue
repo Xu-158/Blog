@@ -34,7 +34,10 @@
             >
           </div>
         </div>
-        <div class="data">datadata</div>
+        <div class="data  text-title">
+          <a class="text-title fs-xs" href="http://beian.miit.gov.cn">粤ICP备2020100622号</a>
+          <p class="fs-xxs">© 2020 XU. All rights reserved.</p>
+        </div>
       </div>
     </footer>
     <backTop class="topBtn" v-show="showBackTopBtn"></backTop>
