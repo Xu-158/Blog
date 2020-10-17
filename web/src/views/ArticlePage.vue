@@ -1,5 +1,10 @@
 <template>
   <div class="article">
+    <articleDirectory
+      :directoryList="directoryList"
+      class="directory"
+      v-if="showDirectory"
+    ></articleDirectory>
     <h2>{{ article.title }}</h2>
     <h4>
       {{ article.createdAt }}
@@ -7,7 +12,7 @@
         >&#128064;{{ article.hitCount }}</span
       >
     </h4>
-    <div><img :src="article.thumbnail" alt="" width="100%" /></div>
+    <div class="logo"><img :src="article.thumbnail" alt="" /></div>
     <v-md-preview
       class="previewMd"
       :include-level="[3, 4]"
@@ -27,11 +32,13 @@
 <script>
 import { getArticleInfo, likeCountAdd } from "@api";
 import dateFormat from "@u/dateFormat.js";
+import ArticleDirectory from "@c/ArticleDirectory";
 // import hljs from "highlight.js";
 import "highlight.js/styles/hybrid.css";
 
 export default {
   name: "articlePage",
+  components: { ArticleDirectory },
   props: {
     id: { type: String }
   },
@@ -39,17 +46,27 @@ export default {
     return {
       article: {},
       likeFlag: false,
-      directoryList: []
+      directoryList: [],
+      showDirectory: false
     };
   },
   created() {
     this.getArticleInfo();
   },
   mounted() {
-    this.test();
+    this.getHTag();
+    this.initDirectory();
+    window.addEventListener("resize", this.initDirectory);
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.name == "articlePage") this.showDirectoryBtn = true;
+    next();
   },
   methods: {
-    test() {
+    initDirectory() {
+      this.showDirectory = window.innerWidth < 1024 ? false : true;
+    },
+    getHTag() {
       this.$nextTick(function() {
         setTimeout(() => {
           let a = document
@@ -58,12 +75,13 @@ export default {
           console.log(a);
           a.forEach(e => {
             let obj = {
-              id: e.offsetTop,
+              offsetTop: e.offsetTop,
               title: e.innerHTML,
-              level: e.tagName.slice(1)
+              level: parseInt(e.tagName.slice(1))
             };
             this.directoryList.push(obj);
           });
+          console.log("this.directoryList: ", this.directoryList);
         }, 200);
       });
     },
@@ -88,7 +106,6 @@ export default {
         this.article.likeCount = res.data.likeCount;
         this.likeFlag = true;
       }
-      this.test();
     },
     async highlighthandle() {
       await hljs;
@@ -103,11 +120,12 @@ export default {
 
 <style lang="scss" scoped>
 .article {
-  background-color: rgba(255, 255, 255, 0.452);
+  background-color: rgba(255, 255, 255, 0.596);
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   overflow: hidden;
   padding: 2rem;
   .content {
@@ -169,6 +187,11 @@ export default {
       transform: rotateY(360deg);
       transform: rotateZ(360deg);
     }
+  }
+  .directory {
+    position: fixed;
+    top: 100px;
+    right: 20px;
   }
 }
 </style>

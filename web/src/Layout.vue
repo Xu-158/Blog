@@ -16,6 +16,11 @@
         <keep-alive max="6" exclude="articlePage">
           <router-view></router-view>
         </keep-alive>
+        <!-- <articleDirectory
+          :directoryList="friendList"
+          class="directory"
+          v-show="showDirectoryBtn"
+        ></articleDirectory> -->
       </div>
     </article>
     <footer class="m-t-8">
@@ -35,13 +40,14 @@
           </div>
         </div>
         <div class="data  text-title">
-          <a class="text-title fs-xs" href="http://beian.miit.gov.cn">粤ICP备2020100622号</a>
+          <a class="text-title fs-xs" href="http://beian.miit.gov.cn"
+            >粤ICP备2020100622号</a
+          >
           <p class="fs-xxs">© 2020 XU. All rights reserved.</p>
         </div>
       </div>
     </footer>
     <backTop class="topBtn" v-show="showBackTopBtn"></backTop>
-    <!-- <articleDirectory class="directory" v-show="showBackTopBtn"></articleDirectory> -->
   </div>
 </template>
 
@@ -78,11 +84,16 @@ export default {
       ],
       friendList: [],
       showMobileNavItem: false, // 控制移动端菜单展开
-      showBackTopBtn: false
+      showBackTopBtn: false,
+      showDirectoryBtn: true
     };
   },
   created() {
     this.getFriendList();
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.name == "articlePage") this.showDirectoryBtn = true;
+    next();
   },
   mounted() {
     // 滑动收缩顶部菜单
@@ -119,19 +130,20 @@ export default {
     z-index: 999;
   }
   article {
-    width: 100%;
-    margin-top: 3rem;
-    min-height: 70vh;
+    margin-top: 2rem;
     .content {
+      min-height: 70vh;
       border-radius: 2rem;
-      width: 60%;
+      width: 60vw;
       margin: 0 auto;
       box-shadow: 0 0 10px 10px rgb(194, 194, 194);
       padding: 1rem;
+      overflow: hidden;
     }
     @media (max-width: 1024px) {
       .content {
-        width: 90%;
+        min-height: 70vh;
+        width: 90vw;
       }
     }
   }

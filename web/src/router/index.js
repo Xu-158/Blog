@@ -8,13 +8,13 @@ const routes = [
     path: "/",
     name: "Home",
     redirect: "/home",
-    component: () => import("@/views/Layout.vue"),
+    component: () => import("@/Layout.vue"),
     children: [
       {
         path: "/home",
         name: "home",
         meta: { title: "首页" },
-        component: () => import("@/views/ArticleListPage.vue")
+        component: () => import("@/views/HomePage.vue")
       },
       {
         path: "/article/:id",
@@ -52,7 +52,7 @@ const routes = [
   {
     path: "*",
     name: "404",
-    component: () => import("@/views/Layout"),
+    component: () => import("@/Layout"),
     children: [
       {
         path: "*",
@@ -65,7 +65,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode:'history',
+  mode: 'history',
   routes,
 });
 

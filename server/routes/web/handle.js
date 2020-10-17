@@ -28,7 +28,6 @@ module.exports = {
       } else {
         response(res, 1, "获取文章详细失败", err);
       }
-      console.log(err);
     })
   },
 

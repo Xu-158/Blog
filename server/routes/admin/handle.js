@@ -215,7 +215,6 @@ module.exports = {
       article.tags && (article.tags = article.tags.filter((curr) => curr != id))
       await article.save()
     })
-    // console.log(data);
     const tag = await Tag.findByIdAndDelete(id);
     response(res, 0, "删除文章标签", tag);
   },
@@ -273,7 +272,6 @@ module.exports = {
   async articleDelete(req, res) {
     const id = req.query.id;
     const data = await Article.findByIdAndDelete(id);
-    console.log('data: ', data);
     let tag;
     data.tags.map(async (tagId) => {
       tag = await Tag.findById(tagId);
