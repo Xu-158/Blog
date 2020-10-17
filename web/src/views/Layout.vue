@@ -41,7 +41,7 @@
       </div>
     </footer>
     <backTop class="topBtn" v-show="showBackTopBtn"></backTop>
-    <articleDirectory class="directory" v-show="showBackTopBtn"></articleDirectory>
+    <!-- <articleDirectory class="directory" v-show="showBackTopBtn"></articleDirectory> -->
   </div>
 </template>
 

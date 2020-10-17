@@ -138,14 +138,13 @@ export default {
 
 .login {
   height: 100vh;
-  background-image: linear-gradient(150deg, rgb(76, 197, 96), rgb(53, 53, 168));
+  background-image: linear-gradient(150deg, rgb(17, 106, 223), rgb(36, 228, 19));
   display: flex;
   justify-content: center;
   align-items: center;
   .login-card {
     margin: 0 auto;
     width: 30%;
-    height: 40vh;
     .btn-row {
       display: flex;
       justify-content: space-around;
@@ -157,7 +156,6 @@ export default {
   .login {
     .login-card {
       width: 90%;
-      height: 55vh;
       margin: 0 auto;
       .btn-row {
         width: 100%;

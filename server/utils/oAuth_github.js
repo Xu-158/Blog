@@ -4,7 +4,7 @@ module.exports = app => {
     const githubClient = {
         client_id: isDev ? "19a82025eb4214511c99" : "811be2d52886c5979fde",
         client_secret: isDev == "dev" ?
-            "183a871a7db4929f400a6ee8e04a62f031a0967c"
+            "d4ea956f8d968c82893f7221b0f39771b15df453"
             : "40c0548b280d8d24938aba098682eb13427b029b",
         redirect_uri: isDev == "dev" ? "http://localhost:8080/login" : "http://www.xujinfeng.top/admin",
         url: "https://github.com/login/oauth/access_token",
