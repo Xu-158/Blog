@@ -1,9 +1,8 @@
 <template>
-  <div class="directory-btn">
+  <div class="directory-btn" v-if="directoryList">
     <!-- <img src="@/assets/images/directory.png" alt="" srcset="" /> -->
     <div class="directory-card bg-white p-3">
-      <ul class="p-1 text-dark">
-        <p class="fs-lg">目录：</p>
+      <ul class="p-x-1 text-dark" ref="menu">
         <li
           class="menu-item"
           :style="{
@@ -26,6 +25,7 @@
 </template>
 
 <script>
+import debounce from "@u/debounce";
 export default {
   props: {
     directoryList: {
@@ -35,8 +35,17 @@ export default {
   },
   data() {
     return {
-      activeItemIndex: 0
+      activeItemIndex: 0,
+      itemOffsetTopList: []
     };
+  },
+  mounted() {
+    window.addEventListener("scroll", debounce(this.calcActiveIndex, 10));
+  },
+  watch: {
+    directoryList(newVal, oldVal) {
+      this.initDirectoryList();
+    }
   },
   computed: {
     //根据level 计算 fontSize
@@ -86,27 +95,43 @@ export default {
     menuItemClick(offsetTop, index) {
       this.activeItemIndex = index;
       offsetTop = offsetTop - 60;
-      document.documentElement.scrollTop || this.scrollAnimate(1000, offsetTop);
-      // (document.documentElement.scrollTop = offsetTop);
-      document.body.scrollTop || this.scrollAnimate(1000, offsetTop);
-      // (document.body.scrollTop = offsetTop);
+      document.documentElement.scrollTop || this.scrollAnimate(100, offsetTop);
+      document.body.scrollTop || this.scrollAnimate(100, offsetTop);
     },
-    scrollAnimate(time, toNumber = 0) {
-      if (!time) {
+
+    initDirectoryList() {
+      this.directoryList.forEach(item => {
+        this.itemOffsetTopList.push(item.offsetTop);
+      });
+    },
+
+    calcActiveIndex() {
+      let nowScrollTop =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      this.itemOffsetTopList.map((curr, index) => {
+        if (
+          curr >= nowScrollTop &&
+          nowScrollTop >= this.itemOffsetTopList[index - 1]
+        ) {
+          this.activeItemIndex = index - 1;
+          this.$refs.menu.style.marginTop = -(index - 1) * 2.3 + "rem";
+        }
+      });
+    },
+
+    scrollAnimate(speed, toNumber = 0) {
+      if (!speed) {
         document.documentElement.scrollTop = document.body.scrollTop = toNumber;
         return;
       }
-      //每次的时间间隔
-      let spacingTime = 20;
       //计算动画次数
-      let count = time / spacingTime;
+      let count = 10;
       //获取当前scrollTop距离
       let nowScrollTop =
         document.documentElement.scrollTop + document.body.scrollTop;
       //计算当每次滑动距离
       let scrollValue = (nowScrollTop - toNumber) / count;
-      console.log('scrollValue: ', scrollValue);
-      
+
       let scrollTimer = setInterval(() => {
         if (count > 0) {
           count--;
@@ -114,7 +139,7 @@ export default {
         } else {
           clearInterval(scrollTimer);
         }
-      }, spacingTime);
+      }, speed / 10);
     }
   }
 };
@@ -125,9 +150,8 @@ export default {
   overflow: hidden;
   .directory-card {
     width: 17vw;
-    height: 50vh;
-    overflow: scroll;
-    overflow-x: hidden;
+    height: 60vh;
+    // overflow: scroll;
     border-radius: 2%;
     .menu-item {
       p {
@@ -135,6 +159,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         letter-spacing: 0.2rem;
+        line-height: 1.5rem;
       }
     }
     .activeItem {

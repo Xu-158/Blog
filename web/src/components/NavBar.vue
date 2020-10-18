@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import debounce from "@u/debounce";
 export default {
   data() {
     return {
@@ -66,7 +67,7 @@ export default {
   },
   mounted() {
     this._isMobile();
-    window.addEventListener("resize", this._isMobile);
+    window.addEventListener("resize", debounce(this._isMobile, 200));
   },
   methods: {
     navItemClick(routeName, index) {
@@ -132,7 +133,7 @@ nav {
 }
 .heightNav {
   padding: 0.7rem;
-  .webName{
+  .webName {
     font-size: 1.7rem;
   }
 }

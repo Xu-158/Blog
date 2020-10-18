@@ -37,6 +37,8 @@ import ArticleDirectory from "@c/ArticleDirectory";
 // import hljs from "highlight.js";
 import "highlight.js/styles/hybrid.css";
 
+import debounce from "@u/debounce";
+
 export default {
   name: "articlePage",
   components: { ArticleDirectory },
@@ -57,11 +59,7 @@ export default {
   mounted() {
     this.getHTag();
     this.initDirectory();
-    window.addEventListener("resize", this.initDirectory);
-  },
-  beforeRouteUpdate(to, from, next) {
-    if (to.name == "articlePage") this.showDirectoryBtn = true;
-    next();
+    window.addEventListener("resize", debounce(this.initDirectory,200));
   },
   methods: {
     initDirectory() {
@@ -70,11 +68,10 @@ export default {
     getHTag() {
       this.$nextTick(function() {
         setTimeout(() => {
-          let a = document
+          let hTagList = document
             .querySelector(".previewMd")
             .querySelectorAll("h1,h2,h3,h4");
-          console.log(a);
-          a.forEach(e => {
+          hTagList.forEach(e => {
             let obj = {
               offsetTop: e.offsetTop,
               title: e.innerHTML,
@@ -82,7 +79,6 @@ export default {
             };
             this.directoryList.push(obj);
           });
-          console.log("this.directoryList: ", this.directoryList);
         }, 200);
       });
     },
@@ -127,7 +123,7 @@ export default {
   flex-direction: column;
   overflow: hidden;
   padding: 2rem;
-  .articleHeader{
+  .articleHeader {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,7 +191,7 @@ export default {
   .directory {
     position: fixed;
     top: 100px;
-    right: 20px;
+    right: 0px;
   }
 }
 </style>
