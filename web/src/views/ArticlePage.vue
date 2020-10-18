@@ -191,7 +191,8 @@ export default {
   .directory {
     position: fixed;
     top: 100px;
-    right: 0px;
+    right: 16px;
+    bottom: 16px;
   }
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <div class="directory-btn" v-if="directoryList">
-    <!-- <img src="@/assets/images/directory.png" alt="" srcset="" /> -->
-    <div class="directory-card bg-white p-3">
-      <ul class="p-x-1 text-dark" ref="menu">
+  <div class="directory-btn" v-if="directoryList.length != 0">
+    <div class="directory-card p-3">
+      <ul class="p-x-1 text-white menu">
+        <p class="fs-lg">目录：</p>
         <li
           class="menu-item"
           :style="{
-            color: item.level <= 2 ? '#000' : '#666',
+            color: item.level <= 2 ? 'white' : '#ffffff',
             fontSize: itemFontSize(item.level),
             marginLeft: itemMarginLeft(item.level)
           }"
@@ -52,11 +52,8 @@ export default {
     itemFontSize() {
       return level => {
         switch (level) {
-          case 1:
-            return "1.4rem";
-            break;
           case 2:
-            return "1.2rem";
+            return "1.3rem";
             break;
           case 3:
             return "1rem";
@@ -65,6 +62,7 @@ export default {
             return "0.8rem";
             break;
           default:
+            return "0.8rem";
             break;
         }
       };
@@ -73,19 +71,17 @@ export default {
     itemMarginLeft() {
       return level => {
         switch (level) {
-          case 1:
-            return "1.5rem";
-            break;
           case 2:
-            return "2rem";
+            return "1rem";
             break;
           case 3:
-            return "2.5rem";
+            return "2rem";
             break;
           case 4:
-            return "2.8rem";
+            return "3.5rem";
             break;
           default:
+            return "3.5rem";
             break;
         }
       };
@@ -114,7 +110,9 @@ export default {
           nowScrollTop >= this.itemOffsetTopList[index - 1]
         ) {
           this.activeItemIndex = index - 1;
-          this.$refs.menu.style.marginTop = -(index - 1) * 2.3 + "rem";
+          if (this.$el.querySelector(".menu").clientHeight > 500)
+            this.$el.querySelector(".menu").style.marginTop =
+              -(index - 1) * 2.3 + "rem";
         }
       });
     },
@@ -150,9 +148,9 @@ export default {
   overflow: hidden;
   .directory-card {
     width: 17vw;
-    height: 60vh;
-    // overflow: scroll;
-    border-radius: 2%;
+    background-color: rgba(255, 255, 255, 0.144);
+    // height: 60vh;
+    overflow: scroll;
     .menu-item {
       p {
         white-space: nowrap;
@@ -164,13 +162,14 @@ export default {
     }
     .activeItem {
       color: map-get($colors, "scrollbar-thumb") !important;
+      font-weight: 600;
     }
   }
 }
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-  background-color: #ffffff38;
+  background-color: #ffffff00;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
