@@ -1,5 +1,5 @@
 <template>
-  <div class="timeLine">
+  <div class="timeLine p-8">
     <timelineitem
       v-for="item in timeLineList"
       :key="item._id"

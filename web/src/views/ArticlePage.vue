@@ -3,7 +3,7 @@
     <articleDirectory
       :directoryList="directoryList"
       class="directory"
-      v-if="showDirectory"
+      v-show="showDirectory"
     ></articleDirectory>
     <div class="articleHeader">
       <h2>{{ article.title }}</h2>
@@ -59,7 +59,7 @@ export default {
   mounted() {
     this.getHTag();
     this.initDirectory();
-    window.addEventListener("resize", debounce(this.initDirectory,200));
+    window.addEventListener("resize", debounce(this.initDirectory, 200));
   },
   methods: {
     initDirectory() {

@@ -6,13 +6,13 @@
     <div class="card bg-articleBox p-8 d-flex m-b-8">
       <div class="time text-white">{{ timeLineObj.time }}</div>
       <div class="TimeLinecontent m-l-5">
-        <div class="title text-title p-x-8 fs-sm p-b-8">
-          <span class="fs-lg text-dark">&#10148;</span>&nbsp;{{
+        <div class="title text-title p-x-8 fs-lg p-b-2">
+          <span class="fs-xl text-dark">&#10148;</span>&nbsp;{{
             timeLineObj.title
           }}
         </div>
-        <div class="content text-font p-x-8 fs-sm">
-          <pre>{{ timeLineObj.content }}</pre>
+        <div class="content text-primary p-x-2 fs-xs">
+          <p>{{ timeLineObj.content }}</p>
         </div>
       </div>
     </div>

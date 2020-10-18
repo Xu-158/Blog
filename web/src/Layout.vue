@@ -16,11 +16,6 @@
         <keep-alive max="6" exclude="articlePage">
           <router-view></router-view>
         </keep-alive>
-        <!-- <articleDirectory
-          :directoryList="friendList"
-          class="directory"
-          v-show="showDirectoryBtn"
-        ></articleDirectory> -->
       </div>
     </article>
     <footer class="m-t-8">
@@ -54,7 +49,6 @@
 <script>
 import navbar from "@c/NavBar";
 import BackTop from "@c/BackTop";
-import ArticleDirectory from "@c/ArticleDirectory";
 import { getFriendList } from "@api";
 export default {
   name: "Home",
@@ -84,16 +78,11 @@ export default {
       ],
       friendList: [],
       showMobileNavItem: false, // 控制移动端菜单展开
-      showBackTopBtn: false,
-      showDirectoryBtn: true
+      showBackTopBtn: false
     };
   },
   created() {
     this.getFriendList();
-  },
-  beforeRouteUpdate(to, from, next) {
-    if (to.name == "articlePage") this.showDirectoryBtn = true;
-    next();
   },
   mounted() {
     // 滑动收缩顶部菜单
@@ -115,8 +104,7 @@ export default {
   },
   components: {
     navbar,
-    BackTop,
-    ArticleDirectory
+    BackTop
   }
 };
 </script>
@@ -131,8 +119,8 @@ export default {
   }
   article {
     margin-top: 2rem;
+    min-height: 70vh;
     .content {
-      min-height: 70vh;
       border-radius: 2rem;
       width: 60vw;
       margin: 0 auto;

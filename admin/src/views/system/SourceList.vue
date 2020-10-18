@@ -58,7 +58,24 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="音频资源">
-        <audio controls ref="audio"></audio>
+        <el-row type="flex" justify="center" align="middle">
+          <el-col :span="10">
+            <el-upload
+              class="upload-demo"
+              drag
+              :action="uploadUrl"
+              :http-request="uploadMP3"
+              :header="uploadHeaders"
+              accept=""
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                将文件拖到此处，或<em>点击上传</em>
+              </div>
+            </el-upload>
+          </el-col>
+          <el-col :span="10"><audio controls ref="audio"></audio></el-col>
+        </el-row>
         <el-table :data="mp3Views" style="width: 100%">
           <el-table-column label="name">
             <template slot-scope="scope">
@@ -124,7 +141,10 @@
 <script>
 import { getQiniuSource, qiniuDelete } from "@/api/qiniu";
 import dateFormat from "@/utils/dateFormat";
+import mixins_upload from "@/utils/mixins_upload";
+import uploadToQiniu from "@/api/qiniuUpload";
 export default {
+  mixins: [mixins_upload],
   data() {
     return {
       baseUrl: "http://img.xujinfeng.top/",
@@ -200,6 +220,7 @@ export default {
       this.mp3Page = currentPage;
       this.getMp3Source(currentPage);
     },
+
     imagesPageChange(currentPage) {
       this.imagesPage = currentPage;
       this.getImagesSource(currentPage);
@@ -217,6 +238,13 @@ export default {
         this.getImagesSource();
         this.getMp3Source();
       }
+    },
+
+    async uploadMP3(req) {
+      const result = await uploadToQiniu(req.file);
+      console.log('result: ', result);
+      console.log('result.url: ', result.url);
+      this.getMp3Source();
     }
   }
 };

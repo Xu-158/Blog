@@ -1,12 +1,11 @@
 <template>
   <div class="directory-btn" v-if="directoryList.length != 0">
-    <div class="directory-card p-3">
+    <div class="directory-card p-5">
       <ul class="p-x-1 text-white menu">
-        <p class="fs-lg">目录：</p>
+        <p class="fs-lg p-l-8">目录：</p>
         <li
           class="menu-item"
           :style="{
-            color: item.level <= 2 ? 'white' : '#ffffff',
             fontSize: itemFontSize(item.level),
             marginLeft: itemMarginLeft(item.level)
           }"
@@ -95,12 +94,14 @@ export default {
       document.body.scrollTop || this.scrollAnimate(100, offsetTop);
     },
 
+    // 初始化 h标签 距离顶部数组
     initDirectoryList() {
       this.directoryList.forEach(item => {
         this.itemOffsetTopList.push(item.offsetTop);
       });
     },
 
+    // 计算滚动区间
     calcActiveIndex() {
       let nowScrollTop =
         document.body.scrollTop || document.documentElement.scrollTop;
@@ -146,10 +147,9 @@ export default {
 <style lang="scss" scoped>
 .directory-btn {
   overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.144);
   .directory-card {
     width: 17vw;
-    background-color: rgba(255, 255, 255, 0.144);
-    // height: 60vh;
     overflow: scroll;
     .menu-item {
       p {
@@ -167,13 +167,13 @@ export default {
   }
 }
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  background-color: #ffffff00;
+  width: 1px;
+  height: 1px;
+  // background-color: #ffffff00;
 }
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 0px rgba(235, 2, 2, 0.5);
-  background-color: map-get($colors, "scrollbar-thumb");
-}
+// ::-webkit-scrollbar-thumb {
+//   // border-radius: 10px;
+//   // box-shadow: inset 0 0 0px rgba(235, 2, 2, 0.5);
+//   // background-color: map-get($colors, "scrollbar-thumb");
+// }
 </style>
