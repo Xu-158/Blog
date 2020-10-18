@@ -5,17 +5,18 @@
       class="directory"
       v-if="showDirectory"
     ></articleDirectory>
-    <h2>{{ article.title }}</h2>
-    <h4>
-      {{ article.createdAt }}
-      <span class="m-l-8 fs-lg text-footer fs-xs"
-        >&#128064;{{ article.hitCount }}</span
-      >
-    </h4>
-    <div class="logo"><img :src="article.thumbnail" alt="" /></div>
+    <div class="articleHeader">
+      <h2>{{ article.title }}</h2>
+      <h4>
+        {{ article.createdAt }}
+        <span class="m-l-8 fs-lg text-footer fs-xs"
+          >&#128064;{{ article.hitCount }}</span
+        >
+      </h4>
+      <div class="logo"><img :src="article.thumbnail" alt="" /></div>
+    </div>
     <v-md-preview
       class="previewMd"
-      :include-level="[3, 4]"
       :text="article.contentMd"
       ref="previewMd"
     ></v-md-preview>
@@ -71,7 +72,7 @@ export default {
         setTimeout(() => {
           let a = document
             .querySelector(".previewMd")
-            .querySelectorAll("h1,h2,h3,h4,h5,h6");
+            .querySelectorAll("h1,h2,h3,h4");
           console.log(a);
           a.forEach(e => {
             let obj = {
@@ -124,10 +125,13 @@ export default {
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   padding: 2rem;
+  .articleHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .content {
     line-height: 2rem;
   }
