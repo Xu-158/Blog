@@ -137,55 +137,27 @@ export default {
   }
   .likeActive {
     transition: color 1s;
-    color: rgb(236, 5, 5);
+    color: map-get($colors, 'red');
     animation: active 1s linear;
   }
   @keyframes active {
     0% {
-      font-size: 1.2rem;
-      transform: rotateY(0deg);
-      transform: rotateZ(0deg);
+      transform: scale(0.8);
     }
     20% {
-      font-size: 1.35rem;
-      transform: rotateY(90deg);
-      transform: rotateZ(90deg);
-    }
-    30% {
-      font-size: 1.4rem;
-      transform: rotateY(80deg);
-      transform: rotateZ(80deg);
+      transform: scale(1);
     }
     40% {
-      font-size: 1.4rem;
-      transform: rotateY(90deg);
-      transform: rotateZ(90deg);
-      transform: scaleX(90deg);
+      transform: scale(0.5);
     }
-    50% {
-      font-size: 1.45rem;
-      transform: rotateY(180deg);
-      transform: rotateZ(180deg);
+    60% {
+      transform: scale(1);
     }
-    70% {
-      font-size: 1.65rem;
-      transform: rotateY(270deg);
-      transform: rotateZ(270deg);
-    }
-    90% {
-      font-size: 1.8rem;
-      transform: rotateY(360deg);
-      transform: rotateZ(360deg);
-    }
-    95% {
-      font-size: 2.1rem;
-      transform: rotateY(350deg);
-      transform: rotateZ(350deg);
+    80% {
+      transform: scale(1.2);
     }
     100% {
-      font-size: 1.8rem;
-      transform: rotateY(360deg);
-      transform: rotateZ(360deg);
+      transform: scale(1);
     }
   }
   .directory {

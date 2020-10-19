@@ -1,15 +1,27 @@
 <template>
   <div class="aboutPage p-8">
     <div class="content p-8 m-8">
-      <div class="header d-flex p-8">
+      <div class="header d-flex p-8 flex-column">
         <img :src="data.logo" alt="图裂了" />
         <div class="info">
-          <p>QQ:{{ data.qq }}</p>
-          <p>{{ data.e_mail }}</p>
-          <p><a :href="data.github" class="text-dark" target="_blank">Github</a></p>
+          <span class="p-x-6">
+            <a
+              :href="
+                `http://wpa.qq.com/msgrd?v=3&uin=${data.qq}&site=qq&menu=yes`
+              "
+              class="text-dark"
+              target="_blank"
+              ><img src="~@a/images/qq.png" alt="" srcset=""
+            /></a>
+          </span>
+          <span class="p-x-6">
+            <a :href="data.github" class="text-dark" target="_blank"
+              ><img src="~@a/images/github.png" alt="" srcset=""
+            /></a>
+          </span>
         </div>
       </div>
-      <div class="body p-8 text-font" v-html="data.contentHtml"></div>
+      <div class="body p-6 text-font" v-html="data.contentHtml"></div>
     </div>
   </div>
 </template>
@@ -37,15 +49,15 @@ export default {
 <style lang="scss" scoped>
 .aboutPage {
   .content {
-    border: 1px dashed #666;
     .header {
-      justify-content: space-around;
-      img {
-        height: 10rem;
-      }
+      justify-content: center;
+      align-items: center;
       .info {
-        text-align: end;
-        // flex: 4;
+        text-align: center;
+        img {
+          width: 2rem;
+          height: 2rem;
+        }
       }
     }
     @media (max-width: 800px) {

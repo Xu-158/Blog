@@ -42,15 +42,21 @@ module.exports = {
   //获取七牛云存储桶下文件列表
   qiniuSource(req, res) {
     let prefix = req.query.prefix || '';
-    let limit = req.query.limit || 9999;
+    let limit = req.query.limit || 2;
+    let nextMarker = req.query.marker || '';
     if (prefix === "all") prefix = '';
 
     let options = {
       limit: limit,
-      prefix: prefix
+      prefix: prefix,
+      marker: nextMarker
     };
 
     bucketManager.listPrefix(`${qiniuConfig.bucket}`, options, function (err, respBody, respInfo) {
+      var nextMarker = respBody.marker;
+      var commonPrefixes = respBody.commonPrefixes;
+      console.log(nextMarker);
+      console.log(commonPrefixes);
       if (!err) {
         response(res, 0, '七牛云存储桶列表', respBody);
       } else {

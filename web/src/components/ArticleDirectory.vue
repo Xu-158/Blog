@@ -95,7 +95,7 @@ export default {
   methods: {
     menuItemClick(offsetTop, index) {
       this.activeItemIndex = index;
-      offsetTop = offsetTop - 60;
+      offsetTop = offsetTop - 70;
       document.documentElement.scrollTop || this.scrollAnimate(100, offsetTop);
       document.body.scrollTop || this.scrollAnimate(100, offsetTop);
     },
@@ -113,10 +113,10 @@ export default {
         document.body.scrollTop || document.documentElement.scrollTop;
       this.itemOffsetTopList.map((curr, index) => {
         if (
-          (curr >= nowScrollTop && !this.itemOffsetTopList[index - 1]) ||
-          this.itemOffsetTopList[index - 1] <= nowScrollTop
+          curr >= nowScrollTop + 70 &&
+          this.itemOffsetTopList[index - 1] <= nowScrollTop + 70
         ) {
-          this.activeItemIndex = index;
+          this.activeItemIndex = index - 1;
           if (this.$el.querySelector(".menu").clientHeight > 500)
             this.$el.querySelector(".menu").style.marginTop =
               -index * 2.3 + "rem";
@@ -179,7 +179,7 @@ export default {
         left: -20px;
       }
       &::after {
-        content: "...";
+        content: "···";
       }
     }
     .activeItem {

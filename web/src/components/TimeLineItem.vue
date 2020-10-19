@@ -55,10 +55,11 @@ export default {
   display: flex;
   justify-content: space-between;
   .middleLine {
-    flex: 1;
+    flex: 2;
     .time {
       white-space: nowrap;
       font-weight: 700;
+      text-align: center;
     }
     .line {
       margin: 0rem auto;
@@ -78,7 +79,7 @@ export default {
     }
   }
   .card {
-    flex: 8;
+    flex: 6;
     .TimeLinecontent {
       background-color: rgba(111, 141, 161, 0.719);
       border-radius: 10px;
