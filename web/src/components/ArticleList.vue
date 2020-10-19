@@ -54,7 +54,7 @@ export default {
   border-radius: 1rem;
   background-color: map-get($colors, "articleBox");
   &:hover {
-    background-color: map-get($colors, "articleBoxArticle");
+    background-color: map-get($colors, "articleBoxActive");
     box-shadow: 4px 4px 4px #666;
   }
   .article {

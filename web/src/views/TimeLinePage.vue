@@ -1,8 +1,9 @@
 <template>
   <div class="timeLine p-8">
     <timelineitem
-      v-for="item in timeLineList"
+      v-for="(item,index) in timeLineList"
       :key="item._id"
+      :index="index"
       :timeLineObj="item"
     ></timelineitem>
   </div>

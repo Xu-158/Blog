@@ -58,7 +58,7 @@ export default {
     color: white;
     font-weight: 600;
     border: 1px solid #fff;
-    background-color: map-get($colors, "articleBoxArticle");
+    background-color: map-get($colors, "articleBoxActive");
   }
   .cateItemCount {
     position: absolute;
@@ -72,10 +72,10 @@ export default {
 .active {
   color: white;
   border: 1px solid #fff;
-  background-color: map-get($colors, "articleBoxArticle");
+  background-color: map-get($colors, "articleBoxActive");
   .cateItemCount {
     color: white;
-    background-color: map-get($colors, "articleBoxArticle");
+    background-color: map-get($colors, "articleBoxActive");
   }
 }
 </style>
