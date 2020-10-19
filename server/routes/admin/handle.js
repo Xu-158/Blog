@@ -242,12 +242,15 @@ module.exports = {
     let newTagsList = article.tags; //新文章 tags[](_id)
     if (id) {
       let tag, oldTagsList;
-      oldTagsList = await Article.findById(id); //旧文章 tags[](_id)
+      oldTagsList = await Article.findById(id); //旧文章
       // 删除旧Tag 的 selectArticles 中文章id
       if (oldTagsList.tags) {
         oldTagsList.tags.map(async (old) => {
           tag = await Tag.findById(old);
-          tag.selectArticles && (tag.selectArticles = tag.selectArticles.filter((curr) => curr != id))
+          if ((tag.selectArticles).includes(id)) {
+            // 把文章关联的标签的 selectArticles 数组中删除 文章的id
+            tag.selectArticles = tag.selectArticles.filter((curr) => curr != id)
+          }
           await tag.save();
         });
       }
@@ -261,6 +264,7 @@ module.exports = {
     if (newTagsList && article.isShow) {
       newTagsList.map(async (tagId) => {
         tag = await Tag.findById(tagId);
+        // 往选中的标签的 selectArticles 数组 添加文章的id
         if (tag && tag.selectArticles) newSelectArticles = tag.selectArticles.push(data._id);
         await tag.save();
       });

@@ -1,32 +1,28 @@
 <template>
   <div class="timeLineItem d-flex m-b-3" v-if="timeLineObj">
     <div class="card">
-      <div v-if="index % 2 == 0" class="p-7 m-b-8">
-        <div class="TimeLinecontent m-l-5">
-          <div class="title text-timeLineTitle p-t-8 p-x-8">
-            {{ timeLineObj.title }}
-          </div>
-          <div class="content text-font">
-            <p>{{ timeLineObj.content }}</p>
-          </div>
+      <div v-if="index % 2 == 0" class=" TimeLinecontent p-x-8 m-r-3">
+        <div class="title text-timeLineTitle p-t-8 p-x-8">
+          {{ timeLineObj.title }}
+        </div>
+        <div class="content text-white">
+          <p>{{ timeLineObj.content }}</p>
         </div>
       </div>
     </div>
     <div class="middleLine">
-      <div class="time fs-xs text-dark">{{ timeLineObj.time }}</div>
+      <div class="time fs-xs text-articleBoxActive">{{ timeLineObj.time }}</div>
       <div class="line">
         <div class="point"></div>
       </div>
     </div>
     <div class="card">
-      <div v-if="index % 2 != 0" class="p-7 m-b-8">
-        <div class="TimeLinecontent m-l-5">
-          <div class="title text-timeLineTitle p-t-8 p-x-8">
-            {{ timeLineObj.title }}
-          </div>
-          <div class="content text-font">
-            <p>{{ timeLineObj.content }}</p>
-          </div>
+      <div class="TimeLinecontent p-x-8 m-l-3" v-if="index % 2 != 0">
+        <div class="title text-timeLineTitle p-t-8 p-x-8">
+          {{ timeLineObj.title }}
+        </div>
+        <div class="content text-white">
+          <p>{{ timeLineObj.content }}</p>
         </div>
       </div>
     </div>
@@ -62,6 +58,7 @@ export default {
     flex: 1;
     .time {
       white-space: nowrap;
+      font-weight: 700;
     }
     .line {
       margin: 0rem auto;
@@ -82,9 +79,6 @@ export default {
   }
   .card {
     flex: 8;
-    .time {
-      font-size: 0.9rem;
-    }
     .TimeLinecontent {
       background-color: rgba(111, 141, 161, 0.719);
       border-radius: 10px;
@@ -96,7 +90,7 @@ export default {
         word-break: break-all;
         word-wrap: break-word;
         letter-spacing: 0.1rem;
-        line-height: 1.8rem;
+        line-height: 1.2rem;
         font-weight: 600;
       }
       .content {
@@ -104,8 +98,8 @@ export default {
         word-break: break-all;
         word-wrap: break-word;
         letter-spacing: 0.15rem;
-        line-height: 1.5rem;
-        font-weight: 400;
+        line-height: 1.2rem;
+        font-weight: 500;
         font-size: 0.85rem;
         padding-left: 2rem;
       }

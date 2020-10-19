@@ -16,7 +16,7 @@
           :key="item.offsetTop"
           @click="menuItemClick(item.offsetTop, index)"
         >
-          <p>{{ item.title }}</p>
+          <span>{{ item.title }}</span>
         </li>
       </ul>
     </div>
@@ -51,6 +51,9 @@ export default {
     itemFontSize() {
       return level => {
         switch (level) {
+          case 1:
+            return "1.5rem";
+            break;
           case 2:
             return "1.3rem";
             break;
@@ -66,15 +69,18 @@ export default {
         }
       };
     },
-    //根据level 计算 fontSize
+    //根据level 计算 marginLeft
     itemMarginLeft() {
       return level => {
         switch (level) {
-          case 2:
+          case 1:
             return "1rem";
             break;
-          case 3:
+          case 2:
             return "2rem";
+            break;
+          case 3:
+            return "3rem";
             break;
           case 4:
             return "3.5rem";
@@ -107,13 +113,13 @@ export default {
         document.body.scrollTop || document.documentElement.scrollTop;
       this.itemOffsetTopList.map((curr, index) => {
         if (
-          curr >= nowScrollTop &&
-          nowScrollTop >= this.itemOffsetTopList[index - 1]
+          (curr >= nowScrollTop && !this.itemOffsetTopList[index - 1]) ||
+          this.itemOffsetTopList[index - 1] <= nowScrollTop
         ) {
-          this.activeItemIndex = index - 1;
+          this.activeItemIndex = index;
           if (this.$el.querySelector(".menu").clientHeight > 500)
             this.$el.querySelector(".menu").style.marginTop =
-              -(index - 1) * 2.3 + "rem";
+              -index * 2.3 + "rem";
         }
       });
     },
@@ -152,28 +158,43 @@ export default {
     width: 17vw;
     overflow: scroll;
     .menu-item {
-      p {
-        white-space: nowrap;
+      list-style: none;
+      position: relative;
+      span {
+        display: inline-block;
         overflow: hidden;
-        text-overflow: ellipsis;
-        letter-spacing: 0.2rem;
-        line-height: 1.5rem;
+        width: 11vw;
+        line-height: 2rem;
+        word-break: keep-all;
+        white-space: nowrap;
+      }
+      &::before {
+        content: "";
+        background-color: rgb(202, 187, 187);
+        position: absolute;
+        border: 0.2rem solid rgb(202, 187, 187);
+        border-radius: 50%;
+        font-size: 3rem;
+        top: 0.8rem;
+        left: -20px;
+      }
+      &::after {
+        content: "...";
       }
     }
     .activeItem {
-      color: map-get($colors, "scrollbar-thumb") !important;
+      color: map-get($colors, "directoryActive") !important;
       font-weight: 600;
     }
   }
 }
-::-webkit-scrollbar {
+// Chrome下隐藏滚动条
+.directory-card::-webkit-scrollbar {
   width: 1px;
   height: 1px;
-  // background-color: #ffffff00;
 }
-// ::-webkit-scrollbar-thumb {
-//   // border-radius: 10px;
-//   // box-shadow: inset 0 0 0px rgba(235, 2, 2, 0.5);
-//   // background-color: map-get($colors, "scrollbar-thumb");
-// }
+.directory-card {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
 </style>
