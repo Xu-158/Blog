@@ -138,11 +138,16 @@ export default {
 
 .login {
   height: 100vh;
-  background-image: linear-gradient(150deg, rgb(17, 106, 223), rgb(36, 228, 19));
+  background-image: linear-gradient(
+    150deg,
+    rgb(18, 129, 202),
+    rgba(210, 245, 85, 0.61)
+  );
   display: flex;
   justify-content: center;
   align-items: center;
   .login-card {
+    animation: animate 10s linear infinite;
     margin: 0 auto;
     width: 30%;
     .btn-row {

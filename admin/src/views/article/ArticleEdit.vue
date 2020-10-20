@@ -74,7 +74,6 @@
 </template>
 
 <script>
-
 import {
   getTagList,
   addArticle,
@@ -157,11 +156,21 @@ export default {
     },
 
     async uploadImg(req) {
+      const type = ["png", "jpg", "jpeg", "gif"];
+      if (type.indexOf(req.file.type.split("/").pop()) < 0) {
+        this.$message.error('只支持上传 "png", "jpg", "jpeg", "gif" 类型文件');
+        return;
+      }
       const result = await uploadToQiniu(req.file);
       this.articleForm.thumbnail = result.url;
     },
 
     async handleUploadImage(event, insertImage, files) {
+      const type = ["png", "jpg", "jpeg", "gif"];
+      if (type.indexOf(files[0].type.split("/").pop()) < 0) {
+        this.$message.error('只支持上传 "png", "jpg", "jpeg", "gif" 类型文件');
+        return;
+      }
       const result = await uploadToQiniu(files[0]);
       insertImage({
         url: `${result.url}`,

@@ -3,9 +3,8 @@ const router = express.Router();
 const path = require('path')
 
 const handle = require('./handle')
-// const handleMulter = require('../../utils/multer')()
-
 const qiniu = require('./qiniu')
+// const handleMulter = require('../../utils/multer')()
 
 // 上传文件
 // router.post('/uploads', handle.auth, handleMulter.single('file'), handle.uploadFile)
@@ -17,7 +16,7 @@ router.delete('/qiniuDelete',handle.auth, qiniu.qiniuDelete)
 router.use('/uploads', express.static(path.join(__dirname, '../../uploads/')))
 
 // 登陆
-router.get('/auth', handle.auth, handle.authHandle)
+router.get('/auth', handle.auth,handle.authHandle)
 router.post('/login', handle.login)
 router.post('/touris/login', handle.touristLogin)
 // Github认证
@@ -60,8 +59,5 @@ router.get('/timeLine/list', handle.auth, handle.timeLineList)
 // 关于我
 router.put('/about/update', handle.auth, handle.aboutEdit)
 router.get('/about/info', handle.auth, handle.aboutInfo)
-
-
-
 
 module.exports = router;

@@ -73,7 +73,7 @@ export default {
         background-color: rgb(0, 98, 122);
         position: absolute;
         left: -0.4rem;
-        top: 1rem;
+        top: 0.3rem;
         border-radius: 0.4rem;
       }
     }

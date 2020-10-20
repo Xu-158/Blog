@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-breadcrumb class="el-breadcrumb111" separator-class="el-icon-arrow-right">
+    <el-breadcrumb class="el-breadcrumb" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item
         v-for="(item) in levelList"
         :key="item.name"
@@ -33,6 +33,12 @@ export default {
 .el-breadcrumb {
   padding-bottom: 10px;
   margin-bottom: 10px;
+  .el-breadcrumb__inner{
+    &:hover{
+      color: rgb(5, 5, 5);
+      font-size: 15px
+    }
+  }
   .el-breadcrumb__separator{
     color: black;
   }

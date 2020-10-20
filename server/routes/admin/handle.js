@@ -12,69 +12,58 @@ const request = require("request");
 module.exports = {
   // 验证token的中间件函数
   async auth(req, res, next) {
-    const token = String(req.headers.authorization).split(" ").pop();
-    const { role } = await jwt.verify(
-      token,
-      req.app.get("secret"),
-      async (err, token) => {
-        if (err) {
-          response(res, 1, "未登录", err);
-          return { role: null };
-        }
-        return token;
+    const token = String(req.headers.authorization).split(" ").pop() || "";
+    let isErr = false;
+    const role = await jwt.verify(token, req.app.get("secret"), async (err, token) => {
+      if (err) {
+        isErr = true;
+        return { role: null };
       }
-    )
+    })
+
+    if (isErr) {
+      response(res, 1, "身份验证失败");
+      return
+    }
 
     if (role && role === "Tourist" && req.method !== "GET") {
       response(res, 1, "权限不足");
       return;
     }
 
-    await next();
+    await next()
   },
 
   async authHandle(req, res) {
     response(res, 0, "身份验证成功");
   },
 
-  // 登陆
+  // 账号登陆
   async login(req, res) {
-    const { account, password } = req.body;
-    const isAdmin = await Admin.findOne({ account }).select("+password");
+    let { account, password } = req.body;
 
-    if (!isAdmin) {
+    const isAdmin = await Admin.findOne({ account }).select("+password") || ""
+    const user = require("bcryptjs").compareSync(password, isAdmin && isAdmin.password);
+
+    if (!isAdmin && !user) {
       response(res, 1, "账号或密码不正确！");
       return;
-    } else {
-      const user = require("bcryptjs").compareSync(password, isAdmin.password);
-      if (!user) {
-        response(res, 1, "账号或密码不正确！");
-        return;
-      }
     }
 
+    // 查询账号角色类型
     let role = await Role.findById(isAdmin.role)
 
-    const token = jwt.sign(
-      {
-        role: `${role.type}`,
-        id: String(isAdmin.id),
-      },
-      req.app.get("secret")
-    );
+    const token = jwt.sign({ role: `${role.type}`, id: String(isAdmin.id), }, req.app.get("secret"));
+    account += `(${role.type})`
     response(res, 0, "登陆成功", { account }, token);
   },
 
   // 游客登陆
   async touristLogin(req, res) {
-    let TouristId = await Role.findOne({ 'type': 'Tourist' })
-    if (!TouristId) {
-      response(res, 1, "登陆失败,暂未开启游客登录功能");
-      return;
-    }
+    const TouristId = await Role.findOne({ 'type': 'Tourist' }) || '' //查找Role表 Tourist 类型
+    const canLogin = await Admin.findOne({ role: `${TouristId._id}` })//检查Admin表 是否 有注册 Tourist 
 
-    let canLogin = await Admin.findOne({ role: `${TouristId._id}` })
-    if (!canLogin) {
+    if (!TouristId && !canLogin) {
       response(res, 1, "登陆失败,暂未开启游客登录功能");
       return;
     }
@@ -82,17 +71,11 @@ module.exports = {
     const tourist = {
       role: `${TouristId.type}`,
       account: `${canLogin.account}`,
-      password: "123456",
     };
 
-    const token = jwt.sign(
-      {
-        role: String(tourist.role),
-      },
-      req.app.get("secret")
-    );
+    const token = jwt.sign({ role: String(tourist.role), }, req.app.get("secret"));
 
-    response(res, 0, "登陆成功", { account: `${canLogin.name}` }, token);
+    response(res, 0, "登陆成功", { account: `${canLogin.name}(${TouristId.type})` }, token);
   },
 
   // GitHub登陆
@@ -100,7 +83,7 @@ module.exports = {
     const { client_id, client_secret, url, headers, redirect_uri } = req.app.get("githubClient");
 
     if (!req.query.code) {
-      response(res, 1, "缺少code");
+      response(res, 1, "缺少必要参数'code'");
       return;
     }
 
@@ -112,32 +95,25 @@ module.exports = {
       redirect_uri: redirect_uri
     };
 
-    request(
-      {
-        url,
-        method: "POST",
-        json: true,
-        headers,
-        body,
-      },
+    // 向github发送请求
+    request({ url, method: "POST", json: true, headers, body, },
       function (error, resp, body) {
         if (!error && resp.statusCode == 200) {
           const { url, userAgent, loginAccount } = req.app.get("githubInfo");
           // 获取github用户信息
-          request(
+          request({
+            url, method: "get", headers:
             {
-              url,
-              method: "get",
-              headers: {
-                "User-Agent": userAgent,
-                accept: "application/json",
-                Authorization: `bearer ${body.access_token}`,
-              },
+              "User-Agent": userAgent,
+              accept: "application/json",
+              Authorization: `bearer ${body.access_token}`,
             },
+          },
             function (error, resp, body) {
               let token, data, flag;
               console.log(body);
               if (body) data = JSON.parse(body);
+              console.log(data);
               if (!error && resp.statusCode == 200) {
                 // 签发token
                 if (data.login === loginAccount) {
@@ -147,7 +123,7 @@ module.exports = {
                       role: "Github",
                     },
                     req.app.get("secret"),
-                    { expiresIn: 60 * 60 * 24 * 7 }
+                    { expiresIn: 60 * 60 * 24 }
                   );
                 } else {
                   token = jwt.sign(
@@ -156,7 +132,7 @@ module.exports = {
                       role: "Tourist",
                     },
                     req.app.get("secret"),
-                    { expiresIn: 60 * 60 * 24 * 7 }
+                    { expiresIn: 60 * 60 * 24 }
                   );
                 }
                 flag = true;

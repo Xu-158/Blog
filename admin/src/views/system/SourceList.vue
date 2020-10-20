@@ -59,7 +59,7 @@
       </el-tab-pane>
       <el-tab-pane label="音频资源">
         <el-row type="flex" justify="center" align="middle">
-          <el-col :span="10">
+          <el-col :span="8">
             <el-upload
               class="upload-demo"
               drag
@@ -74,7 +74,7 @@
               </div>
             </el-upload>
           </el-col>
-          <el-col :span="10"><audio controls ref="audio"></audio></el-col>
+          <el-col :span="12"><audio controls ref="audio"></audio></el-col>
         </el-row>
         <el-table :data="mp3Views" style="width: 100%">
           <el-table-column label="name">
@@ -241,9 +241,14 @@ export default {
     },
 
     async uploadMP3(req) {
+      console.log(req.file);
+      if (req.file.type != "audio/mpeg") {
+        this.$message.error('只支持上传 "audio/mpeg" 类型文件');
+        return;
+      }
       const result = await uploadToQiniu(req.file);
-      console.log('result: ', result);
-      console.log('result.url: ', result.url);
+      console.log("result: ", result);
+      console.log("result.url: ", result.url);
       this.getMp3Source();
     }
   }

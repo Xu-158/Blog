@@ -1,13 +1,13 @@
-@web = http://127.0.0.1:3000/web
-@admin = http://127.0.0.1:3000/admin
+@web = http://127.0.0.1:3000/api/web/
+@admin = http://127.0.0.1:3000/api/admin/
 
 @jsonType = Content-Type: application/json
 
 ###
-GET {{web}}/getArticle
+GET {{web}}getArticle
 
 ###文章管理
-POST  {{admin}}/tag/edit 
+POST  {{admin}}/role/list
 {{jsonType}}
 
 {
@@ -16,4 +16,4 @@ POST  {{admin}}/tag/edit
 }
 
 ###
-GET {{admin}}/tag/list
+GET  {{web}}getTagList

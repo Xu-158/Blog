@@ -3,14 +3,11 @@ import httpUtil from "@/utils/httpUtil";
 import { Message } from "element-ui";
 
 async function uploadToQiniu(file) {
-  console.log(file);
   // 获取七牛云 Token
   const { data, status } = await qiniuUploadToken()
   if (status === 1) return
 
   const uploadUrl = "http://upload-z2.qiniup.com";
-
-  console.log('file: ', file.name);
 
   let doc = file.type.split('/').shift();
 

@@ -36,7 +36,7 @@ module.exports = {
     let putPolicy = new qiniu.rs.PutPolicy(options);
     let uploadToken = await putPolicy.uploadToken(mac);
 
-    response(res, 0, '七牛云Token', uploadToken);
+    response(res, 0, '七牛云token', uploadToken);
   },
 
   //获取七牛云存储桶下文件列表
@@ -53,10 +53,6 @@ module.exports = {
     };
 
     bucketManager.listPrefix(`${qiniuConfig.bucket}`, options, function (err, respBody, respInfo) {
-      var nextMarker = respBody.marker;
-      var commonPrefixes = respBody.commonPrefixes;
-      console.log(nextMarker);
-      console.log(commonPrefixes);
       if (!err) {
         response(res, 0, '七牛云存储桶列表', respBody);
       } else {

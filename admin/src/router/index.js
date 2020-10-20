@@ -45,13 +45,13 @@ const routes = [
     component: Layout,
     redirect: "/article/articleTag",
     name: "article",
-    meta: { title: "标签管理" },
+    meta: { title: "内容管理" },
     children: [
       {
         path: "articleTag",
         component: () => import("@/views/article/ArticleTag"),
         name: "articleTag",
-        meta: { title: "查看标签" }
+        meta: { title: "标签管理" }
       },
       {
         path: "ArticleAdd",
@@ -72,6 +72,21 @@ const routes = [
         component: () => import("@/views/article/ArticleList"),
         name: "articleList",
         meta: { title: "文章列表" }
+      },
+      {
+        path: "/timeLine/timeLineList",
+        component: () => import("../views/timeLine/TimeLineList.vue"),
+        name: "timeLineList",
+        meta: { title: "时间线管理" },
+        children: [
+          {
+            path: "/timeLine/timeLineList/timeLineEdit",
+            component: () => import("../views/timeLine/TimeLineEdit.vue"),
+            name: "timeLineEdit",
+            props: true,
+            meta: { title: "编辑时间线" }
+          }
+        ]
       }
     ]
   },
@@ -117,30 +132,6 @@ const routes = [
       }
     ]
   },
-  {
-    path: "/timeLine",
-    component: Layout,
-    redirect: "/home",
-    name: "timeLine",
-    meta: { title: "时间线" },
-    children: [
-      {
-        path: "/timeLine/timeLineList",
-        component: () => import("../views/timeLine/TimeLineList.vue"),
-        name: "timeLineList",
-        meta: { title: "时间线列表" },
-        children: [
-          {
-            path: "/timeLine/timeLineList/timeLineEdit",
-            component: () => import("../views/timeLine/TimeLineEdit.vue"),
-            name: "timeLineEdit",
-            props: true,
-            meta: { title: "编辑时间线" }
-          }
-        ]
-      }
-    ]
-  }
 ];
 
 const router = new VueRouter({
@@ -153,6 +144,7 @@ router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title ? to.meta.title : "admin";
 
   const token = await existToken();
+
   if (token) {
     if (to.path === "/login") {
       next({ path: "/" });

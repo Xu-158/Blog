@@ -1,7 +1,7 @@
 <template>
   <div class="aboutPage p-8">
     <div class="content p-8 m-8">
-      <div class="header d-flex p-8 flex-column">
+      <div class="header d-flex p-8">
         <img :src="data.logo" alt="图裂了" />
         <div class="info">
           <span class="p-x-6">
@@ -21,7 +21,7 @@
           </span>
         </div>
       </div>
-      <div class="body p-6 text-font" v-html="data.contentHtml"></div>
+      <div class="body p-x-6 text-font" v-html="data.contentHtml"></div>
     </div>
   </div>
 </template>
@@ -50,13 +50,13 @@ export default {
 .aboutPage {
   .content {
     .header {
-      justify-content: center;
-      align-items: center;
+      justify-content: space-around;
+      align-items: flex-end;
       .info {
         text-align: center;
         img {
-          width: 2rem;
-          height: 2rem;
+          width: 1.6rem;
+          height: 1.6rem;
         }
       }
     }
@@ -71,13 +71,17 @@ export default {
         .info {
           margin-top: 1rem;
           text-align: start;
+          img {
+            width: 2rem;
+            height: 2rem;
+          }
         }
       }
     }
   }
   .body {
     text-indent: 2rem;
-    line-height: 1.5rem;
+    line-height: 1.7rem;
   }
 }
 </style>

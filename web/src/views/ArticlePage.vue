@@ -137,34 +137,37 @@ export default {
   }
   .likeActive {
     transition: color 1s;
-    color: map-get($colors, 'red');
+    color: map-get($colors, "red");
     animation: active 1s linear;
   }
-  @keyframes active {
-    0% {
-      transform: scale(0.8);
-    }
-    20% {
-      transform: scale(1);
-    }
-    40% {
-      transform: scale(0.5);
-    }
-    60% {
-      transform: scale(1);
-    }
-    80% {
-      transform: scale(1.2);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+
   .directory {
     position: fixed;
     top: 100px;
     right: 16px;
     bottom: 16px;
+  }
+
+  $animate: (
+    0%: 0.5,
+    10%: 0.8,
+    20%: 1.2,
+    30%: 0.6,
+    40%: 0.8,
+    50%: 1.5,
+    60%: 0.8,
+    70%: 0.4,
+    80%: 0.7,
+    90%: 0.8,
+    100%: 1.2
+  );
+
+  @keyframes active {
+    @each $key, $value in $animate {
+      #{$key} {
+        transform: scale(#{$value});
+      }
+    }
   }
 }
 </style>
