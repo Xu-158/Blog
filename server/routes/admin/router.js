@@ -4,10 +4,8 @@ const path = require('path')
 
 const handle = require('./handle')
 const qiniu = require('./qiniu')
-// const handleMulter = require('../../utils/multer')()
 
 // 上传文件
-// router.post('/uploads', handle.auth, handleMulter.single('file'), handle.uploadFile)
 router.post('/qiniuUploadToken', handle.auth, qiniu.qiniuUploadToken)
 router.get('/getQiniuSource', handle.auth, qiniu.qiniuSource)
 router.delete('/qiniuDelete',handle.auth, qiniu.qiniuDelete)

@@ -1,5 +1,5 @@
 <template>
-  <div class="timeLineItem d-flex m-b-3" v-if="timeLineObj">
+  <div class="timeLineItem d-flex m-b-3" v-if="timeLineObj && !isMobile">
     <div class="card">
       <div v-if="index % 2 == 0" class=" TimeLinecontent p-x-8 m-r-3">
         <div class="title text-timeLineTitle p-t-8 p-x-8">
@@ -27,10 +27,29 @@
       </div>
     </div>
   </div>
+  <div class="timeLineItem d-flex m-b-3" v-else-if="timeLineObj && isMobile">
+    <div class="card">
+      <div class=" TimeLinecontent p-x-8 m-r-3 m-b-8">
+        <div class="title text-timeLineTitle p-t-8 p-x-8">
+          {{ timeLineObj.title }}
+        </div>
+        <div class="content text-white">
+          <p>{{ timeLineObj.content }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="middleLine">
+      <div class="time fs-xs text-articleBoxActive">{{ timeLineObj.time }}</div>
+      <div class="line">
+        <div class="point"></div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import dateFormat from "@u/dateFormat.js";
+import debounce from "@u/debounce";
 export default {
   props: {
     timeLineObj: {
@@ -41,11 +60,25 @@ export default {
       type: Number
     }
   },
+  data() {
+    return {
+      isMobile: false
+    };
+  },
   created() {
     this.timeLineObj.time = dateFormat(
       "YYYY-mm-dd",
       new Date(this.timeLineObj.time)
     );
+  },
+  mounted() {
+    this._isMobile();
+    window.addEventListener("resize", debounce(this._isMobile, 200));
+  },
+  methods: {
+    _isMobile() {
+      this.isMobile = window.innerWidth < 800 ? true : false;
+    }
   }
 };
 </script>
@@ -72,7 +105,7 @@ export default {
         height: 0.8rem;
         background-color: rgb(0, 98, 122);
         position: absolute;
-        left: -0.4rem;
+        left: -0.35rem;
         top: 0.3rem;
         border-radius: 0.4rem;
       }
@@ -105,6 +138,12 @@ export default {
         padding-left: 2rem;
       }
     }
+  }
+}
+@media (max-width: 1000px) {
+  .timeLineItem {
+    display: flex;
+    justify-content: start;
   }
 }
 </style>

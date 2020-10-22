@@ -1,6 +1,11 @@
 const response = require("../../utils/response");
 const qiniu = require('qiniu');
 const qiniuConfig = require('../../utils/qiniuConfig')
+//              *** qiniuConfig.js 👇 ***
+//  module.exports = {ACCESS_KE:'ryLFircFrd4********3cuAjbyrnpPqIoA8P',
+//   SECRET_KEY:'OAr01Z*********bF_kFi1kwg4DmV_K3',
+//   bucket:'xjfblog'
+// }
 
 //七牛云 
 const mac = new qiniu.auth.digest.Mac(

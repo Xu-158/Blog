@@ -14,7 +14,9 @@
         <!-- <keep-alive>是Vue的内置组件，能在组件切换过程中将状态保留在内存中，防止重复渲染DOM。 -->
         <!-- 一可以减少服务器请求次数，二则可以在用户返回上一页后记忆到上次浏览位置（ios端微信浏览器不适用) -->
         <keep-alive max="6" exclude="articlePage">
-          <router-view></router-view>
+          <transition :name="transitionName">
+            <router-view></router-view>
+          </transition>
         </keep-alive>
       </div>
     </article>
@@ -49,6 +51,7 @@
 <script>
 import navbar from "@c/NavBar";
 import BackTop from "@c/BackTop";
+import Transition from "@c/Transition";
 import { getFriendList } from "@api";
 export default {
   name: "Home",
@@ -78,11 +81,21 @@ export default {
       ],
       friendList: [],
       showMobileNavItem: false, // 控制移动端菜单展开
-      showBackTopBtn: false
+      showBackTopBtn: false,
+      transitionName: ""
     };
   },
   created() {
     this.getFriendList();
+  },
+  watch: {
+    $route(to, from) {
+      if (to.meta.level > from.meta.level) {
+        this.transitionName = "scale-ent";
+      } else {
+        this.transitionName = "scale-out";
+      }
+    }
   },
   mounted() {
     // 滑动收缩顶部菜单
@@ -104,7 +117,8 @@ export default {
   },
   components: {
     navbar,
-    BackTop
+    BackTop,
+    Transition
   }
 };
 </script>
@@ -119,7 +133,7 @@ export default {
   }
   article {
     margin-top: 2rem;
-    min-height: 70vh;
+    min-height: 80vh;
     .content {
       border-radius: 2rem;
       width: 60vw;

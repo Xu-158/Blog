@@ -3,7 +3,6 @@ const app = express();
 
 app.use(express.json());
 app.use(require('cors')());
-app.set('secret', 'xxuujjjfff158');
 
 // 全局错误处理函数
 const errorHandler = require('./utils/errorHandler')
@@ -18,8 +17,11 @@ app.use('/api/web', require('./routes/web/router'));
 
 require('./models/db')(app)
 require('./utils/base')(app)
-require('./utils/uploadConfig')(app)
+require('./utils/secret')(app)
 require('./utils/oAuth_github')(app)
+require('./utils/secret')(app)
+//              *** secret.js 👇 ***
+//module.exports = app => {app.set('secret', 'xxuu********s3124');}
 
 const baseConfig = app.get('baseConfig')
 app.listen(baseConfig.host, () => {

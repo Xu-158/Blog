@@ -8,33 +8,28 @@ const About = require("../../models/About");
 const TimeLine = require("../../models/Timeline");
 const jwt = require("jsonwebtoken");
 const request = require("request");
+const URole = require('../../utils/role')
 
 module.exports = {
   // 验证token的中间件函数
   async auth(req, res, next) {
     const token = String(req.headers.authorization).split(" ").pop() || "";
-    let isErr = false;
+
     const { role } = await jwt.verify(token, req.app.get("secret"), async (err, token) => {
       if (err) {
         console.log(err.message);
-        isErr = true;
         return { role: null };
       }
       return token
     })
 
-    if (isErr) {
-      response(res, 1, "身份验证失败");
-      return
-    }
-
-    console.log(role);
-    if (role && role === "Tourist" && req.method !== "GET") {
+    if (role && role === URole.tourist && req.method !== "GET") {
       response(res, 1, "权限不足");
-      return;
+    } else if (role === URole.github || role === URole.admin || role === URole.tourist) {
+      await next()
+    } else {
+      response(res, 1, "身份验证失败");
     }
-
-    await next()
   },
 
   async authHandle(req, res) {
@@ -63,7 +58,7 @@ module.exports = {
 
   // 游客登陆
   async touristLogin(req, res) {
-    const TouristId = await Role.findOne({ 'type': 'Tourist' }) || '' //查找Role表 Tourist 类型
+    const TouristId = await Role.findOne({ 'type': URole.tourist }) || '' //查找Role表 Tourist 类型
     const canLogin = await Admin.findOne({ role: `${TouristId._id}` })//检查Admin表 是否 有注册 Tourist 
 
     if (!TouristId && !canLogin) {
@@ -76,7 +71,7 @@ module.exports = {
       account: `${canLogin.account}`,
     };
 
-    const token = jwt.sign({ role: String(tourist.role), }, req.app.get("secret"));
+    const token = jwt.sign({ role: String(tourist.role), account: String(`${canLogin.account}`) }, req.app.get("secret"));
 
     response(res, 0, "登陆成功", { account: `${canLogin.name}(${TouristId.type})` }, token);
   },
@@ -123,7 +118,7 @@ module.exports = {
                   token = jwt.sign(
                     {
                       id: String(data),
-                      role: "Github",
+                      role: URole.github,
                     },
                     req.app.get("secret"),
                     { expiresIn: 60 * 60 * 24 }
@@ -132,7 +127,7 @@ module.exports = {
                   token = jwt.sign(
                     {
                       id: String(data),
-                      role: "Tourist",
+                      role: URole.tourist,
                     },
                     req.app.get("secret"),
                     { expiresIn: 60 * 60 * 24 }
@@ -148,17 +143,6 @@ module.exports = {
       }
     );
   },
-
-  /**
-   * 系统管理 Handle
-   */
-  // 上传文件
-  // async uploadFile(req, res) {
-  //   let file = req.file;
-  //   const uploadConfig = req.app.get("uploadConfig");
-  //   file.url = `${uploadConfig.filePath}/${file.childFloder}/${file.filename}`;
-  //   response(res, 0, "上传成功", file);
-  // },
 
   /** 
    * 文章管理 Handle
@@ -384,7 +368,7 @@ module.exports = {
     const totalUser = await Admin.find().populate("role");
     const roleCount = await Role.find().countDocuments();
     if (roleCount < 1) {
-      const roles = [{ type: "Tourist" }, { type: "Admin" }];
+      const roles = [{ type: URole.tourist }, { type: URole.admin }];
       await Role.create(roles);
     }
     response(res, 0, "获取管理员列表成功", totalUser);

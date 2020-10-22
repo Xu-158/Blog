@@ -43,6 +43,7 @@ jspm_packages/
 uploads/
 dump/
 server/utils/qiniuConfig.js
+server/utils/secret.js
 
 # TypeScript v1 declaration files
 typings/
