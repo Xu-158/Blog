@@ -14,11 +14,13 @@ module.exports = {
   async auth(req, res, next) {
     const token = String(req.headers.authorization).split(" ").pop() || "";
     let isErr = false;
-    const role = await jwt.verify(token, req.app.get("secret"), async (err, token) => {
+    const { role } = await jwt.verify(token, req.app.get("secret"), async (err, token) => {
       if (err) {
+        console.log(err.message);
         isErr = true;
         return { role: null };
       }
+      return token
     })
 
     if (isErr) {
@@ -26,6 +28,7 @@ module.exports = {
       return
     }
 
+    console.log(role);
     if (role && role === "Tourist" && req.method !== "GET") {
       response(res, 1, "权限不足");
       return;
