@@ -140,10 +140,4 @@ export default {
     }
   }
 }
-@media (max-width: 1000px) {
-  .timeLineItem {
-    display: flex;
-    justify-content: start;
-  }
-}
 </style>

@@ -24,6 +24,14 @@
             </template>
           </el-table-column>
 
+          <el-table-column label="Size">
+            <template slot-scope="scope">
+              <el-tag size="medium">{{
+                sizeConversion(scope.row.fsize)
+              }}</el-tag>
+            </template>
+          </el-table-column>
+
           <el-table-column label="上传时间">
             <template slot-scope="scope">
               <el-tag size="medium">{{ regDate(scope.row.putTime) }}</el-tag>
@@ -32,17 +40,14 @@
 
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <!-- <el-button
-                size="mini"
-                @click="handleEdit(scope.$index, scope.row)"
-                >编辑</el-button
-              > -->
-              <el-button
-                size="mini"
-                type="danger"
-                @click="deleteAction(scope.row.key)"
-                >删除</el-button
+              <el-popconfirm
+                title="确定删除这个标签吗？"
+                @onConfirm="deleteAction(scope.row.key)"
               >
+                <el-button slot="reference" size="mini" type="danger"
+                  >删除</el-button
+                >
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -74,7 +79,12 @@
               </div>
             </el-upload>
           </el-col>
-          <el-col :span="12"><audio controls ref="audio"></audio></el-col>
+          <el-col :span="12">
+            <el-button>
+            <audio controls ref="audio"></audio>
+
+            </el-button>
+            </el-col>
         </el-row>
         <el-table :data="mp3Views" style="width: 100%">
           <el-table-column label="name">
@@ -92,6 +102,15 @@
               <el-tag size="medium">{{ scope.row.mimeType }}</el-tag>
             </template>
           </el-table-column>
+
+          <el-table-column label="Size">
+            <template slot-scope="scope">
+              <el-tag size="medium">{{
+                sizeConversion(scope.row.fsize)
+              }}</el-tag>
+            </template>
+          </el-table-column>
+
           <el-table-column label="上传时间">
             <template slot-scope="scope">
               <el-tag size="medium">{{ regDate(scope.row.putTime) }}</el-tag>
@@ -109,17 +128,14 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <!-- <el-button
-                size="mini"
-                @click="handleEdit(scope.$index, scope.row)"
-                >编辑</el-button
-              > -->
-              <el-button
-                size="mini"
-                type="danger"
-                @click="deleteAction(scope.row.key)"
-                >删除</el-button
+              <el-popconfirm
+                title="确定删除这个标签吗？"
+                @onConfirm="deleteAction(scope.row.key)"
               >
+                <el-button slot="reference" size="mini" type="danger"
+                  >删除</el-button
+                >
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -143,6 +159,7 @@ import { getQiniuSource, qiniuDelete } from "@/api/qiniu";
 import dateFormat from "@/utils/dateFormat";
 import mixins_upload from "@/utils/mixins_upload";
 import uploadToQiniu from "@/api/qiniuUpload";
+import byteConversion from "@/utils/byteConversion";
 export default {
   mixins: [mixins_upload],
   data() {
@@ -175,6 +192,11 @@ export default {
     regDate() {
       return date => {
         return dateFormat("YYYY-mm-dd HH:MM", new Date(date / 1e4));
+      };
+    },
+    sizeConversion() {
+      return fileSize => {
+        return byteConversion(fileSize);
       };
     }
   },

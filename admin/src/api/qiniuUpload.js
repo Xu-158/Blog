@@ -27,7 +27,7 @@ async function uploadToQiniu(file) {
   }
 
   if (mimetype[file.type] == 'mp3') {
-    keyName = `${doc}/${file.name}${Math.random()
+    keyName = `${doc}${new Date().getTime()}/${file.name}${Math.random()
       .toString(36)
       .slice(2)}.${mimetype[file.type]}`;
   } else {
@@ -36,6 +36,26 @@ async function uploadToQiniu(file) {
       .slice(2)}.${mimetype[file.type]}`;
   }
 
+  // 图片压缩
+  if (file.size > (1024 * 1024) && ['image/png', 'image/jpeg', 'image/jpg'].indexOf(file.type) >= 0) {
+    await canvasDataURL(file).then((blob) => {
+      Message({
+        showClose: true,
+        message:
+          `图片大于1M!,
+        压缩前：${(file.size / 1024 / 1024).toFixed(2)}"M"
+        压缩后：${(blob.size / 1024 / 1024).toFixed(2)}"M"
+        `,
+        type: 'success',
+        duration: 0
+      })
+      file = new File([blob], file.name, {
+        type: file.type
+      })
+    })
+  }
+
+  console.log('file:后 ', file);
 
   const formData = new FormData();
   formData.append("file", file);
@@ -63,6 +83,49 @@ async function uploadToQiniu(file) {
   }
   );
   return result
+}
+
+/**
+ * 
+ */
+function canvasDataURL(file) {
+  return new Promise(function (resolve, reject) {
+    console.log('canvasDataURL: ');
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      console.log('reader.onload: ');
+      const img = new Image();
+      const quality = 0.7;
+      const canvas = document.createElement('canvas');
+      const drawer = canvas.getContext('2d');
+      img.src = this.result;
+      // console.log('this.result: ', this.result);Base64
+      img.onload = function () {
+        console.log('img.onload: ');
+        canvas.height = img.height;
+        canvas.width = img.width;
+        drawer.drawImage(img, 0, 0, canvas.width, canvas.height);
+        convertBase64UrlToBlob(canvas.toDataURL(file.type, quality), resolve)
+      }
+    }
+  });
+}
+
+function convertBase64UrlToBlob(urlData, resolve) {
+  console.log('convertBase64UrlToBlob: ');
+  // console.log('urlData: ', urlData);
+  const arr = urlData.split(',');
+  const mine = arr[0].match(/:(.*?);/)[1]
+  const bstr = atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+  resolve(new Blob([u8arr], {
+    type: mine
+  }))
 }
 
 export default uploadToQiniu
