@@ -79,6 +79,9 @@ export default {
     _isMobile() {
       this.isMobile = window.innerWidth < 800 ? true : false;
     }
+  },
+  destroyed() {
+    window.removeEventListener("resize", debounce(this._isMobile, 200));
   }
 };
 </script>

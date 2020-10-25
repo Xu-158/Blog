@@ -36,6 +36,9 @@ export default {
         }
       }, 10);
     }
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll, true);
   }
 };
 </script>

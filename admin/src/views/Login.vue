@@ -109,6 +109,7 @@ export default {
       if (res) {
         sessionStorage.setItem("token", res.token);
         sessionStorage.setItem("account", res.data.account);
+        sessionStorage.setItem("role", res.data.role);
       }
       this.$router.push("/");
       this.$loading.hide();

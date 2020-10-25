@@ -53,7 +53,7 @@ module.exports = {
 
     const token = jwt.sign({ role: `${role.type}`, id: String(isAdmin.id), }, req.app.get("secret"));
     account += `(${role.type})`
-    response(res, 0, "登陆成功", { account }, token);
+    response(res, 0, "登陆成功", { account, role: URole.github }, token);
   },
 
   // 游客登陆
@@ -61,31 +61,31 @@ module.exports = {
     const TouristId = await Role.findOne({ 'type': URole.tourist }) || '' //查找Role表 Tourist 类型
     const canLogin = await Admin.findOne({ role: `${TouristId._id}` })//检查Admin表 是否 有注册 Tourist 
 
-    if (!TouristId && !canLogin) {
+    if (!canLogin) {
       response(res, 1, "登陆失败,暂未开启游客登录功能");
       return;
     }
 
     const tourist = {
-      role: `${TouristId.type}`,
+      role: URole.tourist,
       account: `${canLogin.account}`,
     };
 
     const token = jwt.sign({ role: String(tourist.role), account: String(`${canLogin.account}`) }, req.app.get("secret"));
 
-    response(res, 0, "登陆成功", { account: `${canLogin.name}(${TouristId.type})` }, token);
+    response(res, 0, "登陆成功", { account: `${canLogin.name}(${TouristId.type})`, role: URole.tourist }, token);
   },
 
   // GitHub登陆
   async githubLogin(req, res) {
     const { client_id, client_secret, url, headers, redirect_uri } = req.app.get("githubClient");
+    const code = req.query.code;
 
-    if (!req.query.code) {
+    if (!code) {
       response(res, 1, "缺少必要参数'code'");
       return;
     }
 
-    const code = req.query.code;
     const body = {
       client_id: client_id,
       client_secret: client_secret,
@@ -108,12 +108,9 @@ module.exports = {
             },
           },
             function (error, resp, body) {
-              let token, data, flag;
-              console.log(body);
+              let token, data, role;
               if (body) data = JSON.parse(body);
-              console.log(data);
               if (!error && resp.statusCode == 200) {
-                // 签发token
                 if (data.login === loginAccount) {
                   token = jwt.sign(
                     {
@@ -123,6 +120,7 @@ module.exports = {
                     req.app.get("secret"),
                     { expiresIn: 60 * 60 * 24 }
                   );
+                  role = URole.github;
                 } else {
                   token = jwt.sign(
                     {
@@ -132,11 +130,11 @@ module.exports = {
                     req.app.get("secret"),
                     { expiresIn: 60 * 60 * 24 }
                   );
+                  role = URole.tourist;
                 }
-                flag = true;
               }
 
-              response(res, flag ? 0 : 1, flag ? "登陆成功" : "登录失败", data ? data : error, token);
+              response(res, error ? 0 : 1, error ? "登陆成功" : "登录失败", { data, role }, token);
             }
           );
         }
@@ -251,9 +249,17 @@ module.exports = {
 
   // 获取文章详细
   async articleInfo(req, res) {
-    const id = req.query.id;
-    const data = await Article.findById(id);
-    response(res, 0, "获取文章成功", data);
+    const { id, role } = req.query;
+    const data = await Article.findById(id) || '';
+    if (data.isShow) {
+      response(res, 0, "获取文章成功", data);
+    } else {
+      if (role === URole.admin || role === URole.github) {
+        response(res, 0, "获取文章成功", data);
+      } else {
+        response(res, 1, "该文章不可见状态！权限不足！");
+      }
+    }
   },
 
   // 查询文章列表

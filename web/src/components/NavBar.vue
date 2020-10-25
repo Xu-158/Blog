@@ -84,6 +84,9 @@ export default {
     showNavItem() {
       this.$emit("update:showMobileNavItem", !this.showMobileNavItem);
     }
+  },
+  destroyed() {
+    window.removeEventListener("resize", debounce(this._isMobile, 200));
   }
 };
 </script>

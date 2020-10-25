@@ -98,22 +98,26 @@ export default {
     }
   },
   mounted() {
-    // 滑动收缩顶部菜单
-    window.addEventListener("scroll", e => {
+    window.addEventListener("scroll", this.showToTopBtn);
+  },
+  methods: {
+    async getFriendList() {
+      const res = await getFriendList();
+      this.friendList = res.data;
+    },
+    // 滑动显示顶部菜单
+    showToTopBtn() {
       if (this.showMobileNavItem) {
         this.showMobileNavItem = !this.showMobileNavItem;
       }
       // document.documentElement.scrollTop     chorme/Firefox
       // document.body.scrollTop    edge
       let top = document.documentElement.scrollTop || document.body.scrollTop;
-      this.showBackTopBtn = top > 300 ? true : false;
-    });
-  },
-  methods: {
-    async getFriendList() {
-      const res = await getFriendList();
-      this.friendList = res.data;
+      this.showBackTopBtn = top > 1000 ? true : false;
     }
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.showToTopBtn);
   },
   components: {
     navbar,

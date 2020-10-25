@@ -63,28 +63,29 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="音频资源">
-        <el-row type="flex" justify="center" align="middle">
-          <el-col :span="8">
-            <el-upload
-              class="upload-demo"
-              drag
-              :action="uploadUrl"
-              :http-request="uploadMP3"
-              :header="uploadHeaders"
-              accept=""
-            >
-              <i class="el-icon-upload"></i>
-              <div class="el-upload__text">
-                将文件拖到此处，或<em>点击上传</em>
-              </div>
-            </el-upload>
+        <el-row :gutter="10" type="flex" align="middle">
+          <el-col :xs="12" :sm="14" :md="16" :lg="12" :xl="12">
+            <div>
+              <el-upload
+                class="upload-demo"
+                drag
+                :action="uploadUrl"
+                :http-request="uploadMP3"
+                :header="uploadHeaders"
+                accept=""
+              >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">
+                  将文件拖到此处，或<em>点击上传</em>
+                </div>
+              </el-upload>
+            </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :xs="12" :sm="10" :md="8" :lg="12" :xl="12">
             <el-button>
-            <audio controls ref="audio"></audio>
-
+              <div><audio controls ref="audio"></audio></div>
             </el-button>
-            </el-col>
+          </el-col>
         </el-row>
         <el-table :data="mp3Views" style="width: 100%">
           <el-table-column label="name">
@@ -161,6 +162,7 @@ import mixins_upload from "@/utils/mixins_upload";
 import uploadToQiniu from "@/api/qiniuUpload";
 import byteConversion from "@/utils/byteConversion";
 export default {
+  name:'sourceList',
   mixins: [mixins_upload],
   data() {
     return {
@@ -179,6 +181,12 @@ export default {
   created() {
     this.getImagesSource();
     this.getMp3Source();
+  },
+  activated(){
+    console.log('activated: ', activated);
+  },
+  deactivated(){
+    console.log('deactivated: ', deactivated);
   },
   computed: {
     regName() {

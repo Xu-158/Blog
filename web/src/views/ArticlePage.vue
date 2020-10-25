@@ -111,6 +111,9 @@ export default {
         hljs.highlightBlock(block);
       });
     }
+  },
+  destroyed() {
+    window.removeEventListener("resize", debounce(this.initDirectory, 200));
   }
 };
 </script>

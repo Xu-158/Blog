@@ -67,7 +67,7 @@
       </el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="goEdit(scope.row._id)" type="primary" size="small"
+          <el-button @click="goEdit(scope.row)" type="primary" size="small"
             >编辑</el-button
           >
           <el-button @click="toDelete(scope.row)" type="danger" size="small"
@@ -119,8 +119,8 @@ export default {
       this.articleTotal = res.data.totalSize;
     },
 
-    goEdit(id) {
-      this.$router.push(`/article/ArticleUpdate/${id}`);
+    goEdit(row) {
+      this.$router.push(`/article/ArticleUpdate/${row._id}`);
     },
 
     toDelete(row) {

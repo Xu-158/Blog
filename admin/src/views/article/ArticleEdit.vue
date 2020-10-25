@@ -125,13 +125,18 @@ export default {
   methods: {
     async getTag() {
       const res = await getTagList({ page: 1, pageSize: 999 });
-      this.tagList = res.data.tagList;
+      this.tagList = res.data.tagList || 0;
     },
 
     async getArticle() {
-      const res = await getArticleInfo({ id: this.id });
-      this.articleForm = res.data;
-      this.text = res.data.contentMd;
+      const role = sessionStorage.getItem("role") || "";
+      const res = await getArticleInfo({ id: this.id, role });
+      if (res.status === 1) {
+        this.$message.error(res.msg);
+      } else {
+        this.articleForm = res.data;
+        this.text = res.data.contentMd;
+      }
     },
 
     saveArticle() {
