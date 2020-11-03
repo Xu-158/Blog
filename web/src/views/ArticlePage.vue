@@ -13,7 +13,9 @@
           >&#128064;{{ article.hitCount }}</span
         >
       </h4>
-      <div class="logo"><img :src="article.thumbnail" alt="" /></div>
+      <div class="logo">
+        <img :src="article.thumbnail" alt="" />
+      </div>
     </div>
     <v-md-preview
       class="previewMd"
@@ -130,6 +132,12 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    .logo {
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
   .content {
     line-height: 2rem;

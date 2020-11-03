@@ -21,9 +21,9 @@
       </div>
     </article>
     <footer class="m-t-8">
-      <div class="footerContent d-flex jc-start ai-center">
+      <div class="footerContent d-flex jc-around ai-center">
         <div class="friend" v-if="friendList">
-          <div class="m-b-6 text-title">友情链接：</div>
+          <div class="m-b-7 text-title">友情链接：</div>
           <div class="m-b-5 friendLinkItems">
             <a
               class="text-title fs-xxs"
@@ -160,7 +160,7 @@ export default {
     .footerContent {
       width: 60%;
       margin: 0 auto;
-      text-align: center;
+      text-align: left;
       .friend {
         flex: 1;
         padding: 2rem;
@@ -172,7 +172,6 @@ export default {
         }
       }
       .data {
-        flex: 1;
         padding: 2rem;
       }
     }
