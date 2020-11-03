@@ -19,6 +19,9 @@ export default {
     // 在 捕获 中，外部元素的事件会先被触发，然后才会触发内部元素的事件，即： <div> 元素的点击事件先触发 ，然后再触发 <p> 元素的点击事件。
     // addEventListener('',()=>{},false) false- 默认值。事件句柄在冒泡阶段执行
     window.addEventListener("scroll", this.handleScroll, true);
+    this.$once("hook:destroyed", () => {
+      window.removeEventListener("scroll", this.handleScroll, true);
+    });
   },
   methods: {
     handleScroll() {
@@ -36,9 +39,6 @@ export default {
         }
       }, 10);
     }
-  },
-  destroyed() {
-    window.removeEventListener("scroll", this.handleScroll, true);
   }
 };
 </script>

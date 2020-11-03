@@ -40,6 +40,9 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", debounce(this.calcActiveIndex, 10));
+    this.$once("hook:destroyed", () => {
+      window.removeEventListener("scroll", debounce(this.calcActiveIndex, 10));
+    });
   },
   watch: {
     directoryList(newVal, oldVal) {
@@ -146,9 +149,6 @@ export default {
         }
       }, speed / 10);
     }
-  },
-  destroyed() {
-    window.removeEventListener("scroll", debounce(this.calcActiveIndex, 10));
   }
 };
 </script>

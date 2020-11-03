@@ -162,7 +162,7 @@ import mixins_upload from "@/utils/mixins_upload";
 import uploadToQiniu from "@/api/qiniuUpload";
 import byteConversion from "@/utils/byteConversion";
 export default {
-  name:'sourceList',
+  name: "sourceList",
   mixins: [mixins_upload],
   data() {
     return {
@@ -182,11 +182,11 @@ export default {
     this.getImagesSource();
     this.getMp3Source();
   },
-  activated(){
-    console.log('activated: ', activated);
+  activated() {
+    console.log("activated: ", activated);
   },
-  deactivated(){
-    console.log('deactivated: ', deactivated);
+  deactivated() {
+    console.log("deactivated: ", deactivated);
   },
   computed: {
     regName() {

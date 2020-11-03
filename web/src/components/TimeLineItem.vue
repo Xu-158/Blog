@@ -74,14 +74,14 @@ export default {
   mounted() {
     this._isMobile();
     window.addEventListener("resize", debounce(this._isMobile, 200));
+    this.$once("hook:destroyed", () => {
+      window.removeEventListener("resize", debounce(this._isMobile, 200));
+    });
   },
   methods: {
     _isMobile() {
       this.isMobile = window.innerWidth < 800 ? true : false;
     }
-  },
-  destroyed() {
-    window.removeEventListener("resize", debounce(this._isMobile, 200));
   }
 };
 </script>

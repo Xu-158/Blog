@@ -60,6 +60,9 @@ export default {
     this.getHTag();
     this.initDirectory();
     window.addEventListener("resize", debounce(this.initDirectory, 200));
+    this.$once("hook:destroyed", () => {
+      window.removeEventListener("resize", debounce(this.initDirectory, 200));
+    });
   },
   methods: {
     initDirectory() {
@@ -111,9 +114,6 @@ export default {
         hljs.highlightBlock(block);
       });
     }
-  },
-  destroyed() {
-    window.removeEventListener("resize", debounce(this.initDirectory, 200));
   }
 };
 </script>

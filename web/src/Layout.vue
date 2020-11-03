@@ -13,11 +13,11 @@
       <div class="content bg-white">
         <!-- <keep-alive>是Vue的内置组件，能在组件切换过程中将状态保留在内存中，防止重复渲染DOM。 -->
         <!-- 一可以减少服务器请求次数，二则可以在用户返回上一页后记忆到上次浏览位置（ios端微信浏览器不适用) -->
-        <keep-alive max="6" exclude="articlePage">
-          <transition :name="transitionName">
+        <transition :name="transitionName">
+          <keep-alive max="6" exclude="articlePage">
             <router-view></router-view>
-          </transition>
-        </keep-alive>
+          </keep-alive>
+        </transition>
       </div>
     </article>
     <footer class="m-t-8">
@@ -99,6 +99,9 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.showToTopBtn);
+    this.$once("hook:destroyed", () => {
+      window.removeEventListener("scroll", this.showToTopBtn);
+    });
   },
   methods: {
     async getFriendList() {
@@ -115,9 +118,6 @@ export default {
       let top = document.documentElement.scrollTop || document.body.scrollTop;
       this.showBackTopBtn = top > 1000 ? true : false;
     }
-  },
-  destroyed() {
-    window.removeEventListener("scroll", this.showToTopBtn);
   },
   components: {
     navbar,
