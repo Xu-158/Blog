@@ -16,38 +16,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 离开上移 , 进入下降
 .scale-ent-enter-active,
-.scale-ent-leave-active,
-.scale-out-enter-active,
-.scale-out-leave-active {
+.scale-ent-leave-active {
   will-change: transform;
   transition: all 400ms;
 }
-
-// out 进入低 level 路由
-// 进入前
-.scale-out-leave-active {
-  opacity: 0;
-  transform: scale(0.5);
-}
-// 进入后
-.scale-out-enter {
-  opacity: 0;
-  transform: scale(1.2);
-}
-
-// ent 进入高 level 路由
-// 进入前
-.scale-ent-leave-active {
-  opacity: 0;
-  transform: translate3d(0, -100%, 0);
-}
-//进入后
+.scale-ent-leave-active,
 .scale-ent-enter {
   opacity: 0;
   transform: translate3d(0, -100%, 0);
 }
 
+// 淡入淡出
 .fade-enter-active,
 .fade-leave-active,
 .fade-enter-active,
@@ -56,18 +37,18 @@ export default {
   transition: all 200ms;
 }
 .fade-enter {
-  opacity: 0.3;
+  opacity: 1;
 }
 
 .fade-enter-active {
-  opacity: 0.4;
+  opacity: 0.1;
 }
 
 .fade-leave {
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .fade-leave-active {
-  opacity: 0.7;
+  opacity: 0.1;
 }
 </style>

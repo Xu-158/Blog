@@ -13,11 +13,11 @@
       <div class="content bg-white">
         <!-- <keep-alive>是Vue的内置组件，能在组件切换过程中将状态保留在内存中，防止重复渲染DOM。 -->
         <!-- 一可以减少服务器请求次数，二则可以在用户返回上一页后记忆到上次浏览位置（ios端微信浏览器不适用) -->
-        <transition :name="transitionName">
+        <mytransition transitionName="scale-ent">
           <keep-alive max="6" exclude="articlePage">
             <router-view></router-view>
           </keep-alive>
-        </transition>
+        </mytransition>
       </div>
     </article>
     <footer class="m-t-8">
@@ -51,7 +51,7 @@
 <script>
 import navbar from "@c/NavBar";
 import BackTop from "@c/BackTop";
-import Transition from "@c/Transition";
+import mytransition from "@c/MyTransition";
 import { getFriendList } from "@api";
 export default {
   name: "Home",
@@ -82,20 +82,10 @@ export default {
       friendList: [],
       showMobileNavItem: false, // 控制移动端菜单展开
       showBackTopBtn: false,
-      transitionName: ""
     };
   },
   created() {
     this.getFriendList();
-  },
-  watch: {
-    $route(to, from) {
-      if (to.meta.level > from.meta.level) {
-        this.transitionName = "scale-ent";
-      } else {
-        this.transitionName = "scale-out";
-      }
-    }
   },
   mounted() {
     window.addEventListener("scroll", this.showToTopBtn);
@@ -122,7 +112,7 @@ export default {
   components: {
     navbar,
     BackTop,
-    Transition
+    mytransition
   }
 };
 </script>
