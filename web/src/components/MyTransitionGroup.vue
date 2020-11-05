@@ -15,7 +15,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
 /* 右到左水平移动 rightToLeft */
 .rightToLeft-enter-active,
 .rightToLeft-leave-active {

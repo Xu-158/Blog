@@ -1,10 +1,10 @@
 <template>
   <div v-if="articleList">
-    <mytransitiongroup name="horizontalRotation">
+    <mytransitiongroup name="rightToLeft">
       <div
         v-for="articleObj in articleList"
         :key="articleObj._id"
-        class="horizontalRotation"
+        class="rightToLeft"
       >
         <div class="articleBox" @click="boxClick(articleObj._id)">
           <div class="article">
