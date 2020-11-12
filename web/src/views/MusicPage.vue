@@ -1,40 +1,35 @@
 <template>
   <div class="about">
-    <h1 class="text-font">This is MusicPage</h1>
-    <test name="xjf"></test>
+    <debounce-comp name="xjf" :Switch="true" :delay="400">
+      <span>防抖测试</span><input type="text" @input="test" />
+    </debounce-comp>
+    <iframe
+      frameborder="no"
+      border="0"
+      marginwidth="0"
+      marginheight="0"
+      width="330"
+      height="86"
+      src="//music.163.com/outchain/player?type=2&id=1449782341&auto=1&height=66"
+    ></iframe>
   </div>
 </template>
 
 <script>
-import Test from "@c/Test.js";
+import DebounceComp from "@c/DebounceComp.js";
 export default {
   components: {
-    Test
+    DebounceComp
   },
   data() {
     return {
       timer: null
     };
   },
-  activated() {
-    console.log("activated: ");
-    this.timer = setInterval(() => {
-      console.log("timer");
-    }, 1000);
-
-    //hook来监听 beforeDestory 生命周期。因为只要监听一次就够了，所以用$once来注册监听。
-    this.$once("hook:deactivated", () => {
-      console.log("deactivated: ");
-      clearInterval(this.timer);
-      this.timer = null;
-    });
+  methods: {
+    test(event) {
+      console.log(event.target.value);
+    }
   }
-
-  // 创建的定时器代码和销毁定时器的代码没有放在一起，通常很容易忘记去清理这个定时器，不容易维护;
-  // deactivated() {
-  //   console.log("deactivated: ");
-  //   clearInterval(this.timer);
-  //   this.timer = null;
-  // }
 };
 </script>

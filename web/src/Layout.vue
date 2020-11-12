@@ -13,11 +13,11 @@
       <div class="content bg-white">
         <!-- <keep-alive>是Vue的内置组件，能在组件切换过程中将状态保留在内存中，防止重复渲染DOM。 -->
         <!-- 一可以减少服务器请求次数，二则可以在用户返回上一页后记忆到上次浏览位置（ios端微信浏览器不适用) -->
-        <mytransition transitionName="scale-ent">
+        <my-transition transitionName="scale-ent">
           <keep-alive max="6" exclude="articlePage">
             <router-view></router-view>
           </keep-alive>
-        </mytransition>
+        </my-transition>
       </div>
     </article>
     <footer class="m-t-8">
@@ -44,14 +44,14 @@
         </div>
       </div>
     </footer>
-    <backTop class="topBtn" v-show="showBackTopBtn"></backTop>
+    <back-top class="topBtn" v-show="showBackTopBtn"></back-top>
   </div>
 </template>
 
 <script>
-import navbar from "@c/NavBar";
+import Navbar from "@c/NavBar";
 import BackTop from "@c/BackTop";
-import mytransition from "@c/MyTransition";
+import MyTransition from "@c/MyTransition";
 import { getFriendList } from "@api";
 export default {
   name: "Home",
@@ -110,9 +110,9 @@ export default {
     }
   },
   components: {
-    navbar,
+    Navbar,
     BackTop,
-    mytransition
+    MyTransition
   }
 };
 </script>

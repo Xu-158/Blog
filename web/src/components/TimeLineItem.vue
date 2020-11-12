@@ -1,7 +1,7 @@
 <template>
   <div class="timeLineItem d-flex m-b-3" v-if="timeLineObj && !isMobile">
     <div class="card">
-      <div v-if="index % 2 == 0" class=" TimeLinecontent p-x-8 m-r-3">
+      <div v-if="index % 2 == 0" class="TimeLinecontent p-x-8 m-r-3">
         <div class="title text-timeLineTitle p-t-8 p-x-8">
           {{ timeLineObj.title }}
         </div>
@@ -11,7 +11,9 @@
       </div>
     </div>
     <div class="middleLine">
-      <div class="time fs-xs text-articleBoxActive">{{ timeLineObj.time }}</div>
+      <div class="time fs-xs text-articleBoxActive">
+        {{ timeLineObj.time | dateFormatFilters }}
+      </div>
       <div class="line">
         <div class="point"></div>
       </div>
@@ -29,7 +31,7 @@
   </div>
   <div class="timeLineItem d-flex m-b-3" v-else-if="timeLineObj && isMobile">
     <div class="card">
-      <div class=" TimeLinecontent p-x-8 m-r-3 m-b-8">
+      <div class="TimeLinecontent p-x-8 m-r-3 m-b-8">
         <div class="title text-timeLineTitle p-t-8 p-x-8">
           {{ timeLineObj.title }}
         </div>
@@ -48,28 +50,23 @@
 </template>
 
 <script>
-import dateFormat from "@u/dateFormat.js";
+import { dateFormatFilters } from "@u/dateFormatFilters.js";
 import debounce from "@u/debounce";
 export default {
+  mixins: [dateFormatFilters],
   props: {
     timeLineObj: {
       type: Object,
-      required: true
+      required: true,
     },
     index: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   data() {
     return {
-      isMobile: false
+      isMobile: false,
     };
-  },
-  created() {
-    this.timeLineObj.time = dateFormat(
-      "YYYY-mm-dd",
-      new Date(this.timeLineObj.time)
-    );
   },
   mounted() {
     this._isMobile();
@@ -81,8 +78,8 @@ export default {
   methods: {
     _isMobile() {
       this.isMobile = window.innerWidth < 800 ? true : false;
-    }
-  }
+    },
+  },
 };
 </script>
 

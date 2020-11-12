@@ -1,9 +1,9 @@
 <template>
   <div class="categoryPage">
     <div class="cateBox">
-      <categoryItem :tagList="tagList" @tagClick="tagItemClick"></categoryItem>
+      <category-item :tagList="tagList" @tagClick="tagItemClick"></category-item>
     </div>
-    <articleList v-if="articleList" :articleList="articleList"></articleList>
+    <article-list v-if="articleList" :articleList="articleList"></article-list>
     <pagination
       :totalSize="totalSize"
       :currentPage="currentPage"
@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import categoryItem from "@c/CategoryItem.vue";
-import articleList from "@c/ArticleList.vue";
-import pagination from "@c/Pagination.vue";
+import CategoryItem from "@c/CategoryItem.vue";
+import ArticleList from "@c/ArticleList.vue";
+import Pagination from "@c/Pagination.vue";
 import { getTagList, getTagArticle } from "@api";
 export default {
   data() {
@@ -56,7 +56,7 @@ export default {
       this.tagItemClick(this.id);
     }
   },
-  components: { categoryItem, articleList, pagination }
+  components: { CategoryItem, ArticleList, Pagination }
 };
 </script>
 

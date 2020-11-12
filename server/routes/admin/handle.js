@@ -134,7 +134,7 @@ module.exports = {
                 }
               }
 
-              response(res, error ? 0 : 1, error ? "登陆成功" : "登录失败", { data, role }, token);
+              response(res, !error ? 0 : 1, !error ? "登陆成功" : "登录失败", { data, role, error }, token);
             }
           );
         }

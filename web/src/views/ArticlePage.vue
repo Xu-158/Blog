@@ -1,14 +1,14 @@
 <template>
   <div class="article">
-    <articleDirectory
+    <article-directory
       :directoryList="directoryList"
       class="directory"
       v-show="showDirectory"
-    ></articleDirectory>
+    ></article-directory>
     <div class="articleHeader">
       <h2>{{ article.title }}</h2>
       <h4>
-        {{ article.createdAt }}
+        {{ article.createdAt | dateFormatFilters("YYYY-mm-dd HH:MM:SS") }}
         <span class="m-l-8 fs-lg text-footer fs-xs"
           >&#128064;{{ article.hitCount }}</span
         >
@@ -34,7 +34,7 @@
 
 <script>
 import { getArticleInfo, likeCountAdd } from "@api";
-import dateFormat from "@u/dateFormat.js";
+import { dateFormatFilters } from "@u/dateFormatFilters.js";
 import ArticleDirectory from "@c/ArticleDirectory";
 // import hljs from "highlight.js";
 import "highlight.js/styles/hybrid.css";
@@ -43,16 +43,17 @@ import debounce from "@u/debounce";
 
 export default {
   name: "articlePage",
+  mixins: [dateFormatFilters],
   components: { ArticleDirectory },
   props: {
-    id: { type: String }
+    id: { type: String },
   },
   data() {
     return {
       article: {},
       likeFlag: false,
       directoryList: [],
-      showDirectory: false
+      showDirectory: false,
     };
   },
   created() {
@@ -71,16 +72,16 @@ export default {
       this.showDirectory = window.innerWidth < 1024 ? false : true;
     },
     getHTag() {
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         setTimeout(() => {
           let hTagList = document
             .querySelector(".previewMd")
             .querySelectorAll("h1,h2,h3,h4");
-          hTagList.forEach(e => {
+          hTagList.forEach((e) => {
             let obj = {
               offsetTop: e.offsetTop,
               title: e.innerHTML,
-              level: parseInt(e.tagName.slice(1))
+              level: parseInt(e.tagName.slice(1)),
             };
             this.directoryList.push(obj);
           });
@@ -93,17 +94,13 @@ export default {
         this.$router.push("/notFound");
       }
       this.article = res.data;
-      this.article.createdAt = dateFormat(
-        "YYYY-mm-dd HH:MM:SS",
-        new Date(this.article.createdAt)
-      );
       this.highlighthandle();
     },
     async likeClick() {
       if (this.article && !this.likeFlag) {
         const res = await likeCountAdd({
           id: this.article._id,
-          likeCount: this.article.likeCount
+          likeCount: this.article.likeCount,
         });
         this.article.likeCount = res.data.likeCount;
         this.likeFlag = true;
@@ -112,11 +109,11 @@ export default {
     async highlighthandle() {
       await hljs;
       let highlight = document.querySelectorAll("code,pre");
-      highlight.forEach(block => {
+      highlight.forEach((block) => {
         hljs.highlightBlock(block);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -170,7 +167,7 @@ export default {
     70%: 0.4,
     80%: 0.7,
     90%: 0.8,
-    100%: 1.2
+    100%: 1.2,
   );
 
   @keyframes active {

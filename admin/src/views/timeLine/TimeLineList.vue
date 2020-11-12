@@ -10,7 +10,7 @@
       <el-timeline-item
         v-for="item in timeLineList"
         :key="item._id"
-        :timestamp="item.time | Time"
+        :timestamp="item.time | dateFormatFilters('YYYY-mm-dd')"
         color="#409eff"
         placement="bottom"
       >
@@ -27,12 +27,13 @@
 
 <script>
 import { getTimeLineList } from "@/api/timeLine";
-import dateFormat from "@/utils/dateFormat";
+import dateFormatFilters from "@/utils/dateFormatFilters.js";
 export default {
+  mixins: [dateFormatFilters],
   data() {
     return {
       showEdit: false,
-      timeLineList: []
+      timeLineList: [],
     };
   },
   mounted() {
@@ -42,16 +43,11 @@ export default {
     }
     this.initTimeLine();
   },
-  filters: {
-    Time(time) {
-      return dateFormat("YYYY-mm-dd", new Date(time));
-    }
-  },
   methods: {
     createTimeLine() {
       this.$router.push({
         path: "/timeLine/timeLineList/timeLineEdit",
-        query: { showEdit: "true" }
+        query: { showEdit: "true" },
       });
     },
     changeShowEdit() {
@@ -64,10 +60,10 @@ export default {
     editTimeLine(item) {
       this.$router.push({
         path: "/timeLine/timeLineList/timeLineEdit",
-        query: { showEdit: "true", timeLine: item }
+        query: { showEdit: "true", timeLine: item },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

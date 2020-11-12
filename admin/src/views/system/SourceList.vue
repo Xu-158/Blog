@@ -6,7 +6,7 @@
           <el-table-column label="预览">
             <template slot-scope="scope">
               <a
-                style="color:black"
+                style="color: black"
                 :href="baseUrl + scope.row.key"
                 target="block"
               >
@@ -34,7 +34,9 @@
 
           <el-table-column label="上传时间">
             <template slot-scope="scope">
-              <el-tag size="medium">{{ regDate(scope.row.putTime) }}</el-tag>
+              <el-tag size="medium">{{
+                scope.row.putTime/ 1e4 | dateFormatFilters("YYYY-mm-dd HH:MM:SS")
+              }}</el-tag>
             </template>
           </el-table-column>
 
@@ -91,7 +93,7 @@
           <el-table-column label="name">
             <template slot-scope="scope">
               <a
-                style="color:black"
+                style="color: black"
                 :href="baseUrl + scope.row.key"
                 target="block"
                 >{{ regName(scope.row.key) }}</a
@@ -114,7 +116,9 @@
 
           <el-table-column label="上传时间">
             <template slot-scope="scope">
-              <el-tag size="medium">{{ regDate(scope.row.putTime) }}</el-tag>
+              <el-tag size="medium">{{
+                scope.row.putTime/ 1e4 | dateFormatFilters("YYYY-mm-dd HH:MM:SS")
+              }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column label="播放">
@@ -157,13 +161,13 @@
 
 <script>
 import { getQiniuSource, qiniuDelete } from "@/api/qiniu";
-import dateFormat from "@/utils/dateFormat";
+import dateFormatFilters from "@/utils/dateFormatFilters.js";
 import mixins_upload from "@/utils/mixins_upload";
 import uploadToQiniu from "@/api/qiniuUpload";
 import byteConversion from "@/utils/byteConversion";
 export default {
   name: "sourceList",
-  mixins: [mixins_upload],
+  mixins: [mixins_upload, dateFormatFilters],
   data() {
     return {
       baseUrl: "http://img.xujinfeng.top/",
@@ -175,7 +179,7 @@ export default {
       imagesData: [],
       imagesViews: [],
       mp3Data: [],
-      mp3Views: []
+      mp3Views: [],
     };
   },
   created() {
@@ -190,23 +194,18 @@ export default {
   },
   computed: {
     regName() {
-      return name => {
+      return (name) => {
         return name
           .match(/\/.*\.mp3/)[0]
           .split(".")[0]
           .replace("/", "");
       };
     },
-    regDate() {
-      return date => {
-        return dateFormat("YYYY-mm-dd HH:MM", new Date(date / 1e4));
-      };
-    },
     sizeConversion() {
-      return fileSize => {
+      return (fileSize) => {
         return byteConversion(fileSize);
       };
-    }
+    },
   },
   methods: {
     // 获取图片资源
@@ -215,7 +214,7 @@ export default {
         this.imagesData = (
           await getQiniuSource({
             limit: 9999,
-            prefix: "image"
+            prefix: "image",
           })
         ).data.items.reverse();
       }
@@ -280,8 +279,8 @@ export default {
       console.log("result: ", result);
       console.log("result.url: ", result.url);
       this.getMp3Source();
-    }
-  }
+    },
+  },
 };
 </script>
 

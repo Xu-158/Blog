@@ -13,31 +13,34 @@
 </template>
 
 <script>
+import { animateTopMixin } from "@u/animateTopMixin";
 export default {
+  mixins: [animateTopMixin],
   props: {
     totalSize: {
       required: true,
-      type: Number
+      type: Number,
     },
     currentPage: {
       required: true,
-      type: Number
+      type: Number,
     },
     onePageSize: {
       required: true,
-      type: Number
-    }
+      type: Number,
+    },
   },
   computed: {
     pageCount() {
       return Math.ceil(this.totalSize / this.onePageSize);
-    }
+    },
   },
   methods: {
     btnClick(index) {
+      this.animateTop();
       this.$emit("pageChange", index);
-    }
-  }
+    },
+  },
 };
 </script>
 

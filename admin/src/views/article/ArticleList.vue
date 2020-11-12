@@ -12,7 +12,7 @@
           <el-tag
             v-for="item in scope.row.tags"
             :key="item._id"
-            style="margin:3px 3px"
+            style="margin: 3px 3px"
             >{{ item.title }}</el-tag
           >
         </template>
@@ -20,7 +20,7 @@
       <el-table-column prop="createdAt" label="创建日期" width="180"
         ><template slot-scope="scope">
           <div>
-            {{ regData(scope.row.createdAt) }}
+            {{ scope.row.createdAt | dateFormatFilters("YYYY-mm-dd HH:MM:SS") }}
           </div>
         </template>
       </el-table-column>
@@ -30,12 +30,12 @@
             <i
               v-if="scope.row.isTop"
               class="el-icon-success"
-              style="color:#67c23A;font-size: 26px;"
+              style="color: #67c23A; font-size: 26px"
             ></i>
             <i
               v-else
               class="el-icon-error"
-              style="color:#ff0000;font-size: 26px;"
+              style="color: #ff0000; font-size: 26px"
             ></i>
           </div>
         </template>
@@ -46,12 +46,12 @@
             <i
               v-if="scope.row.isShow"
               class="el-icon-success"
-              style="color:#67c23A;font-size: 26px;"
+              style="color: #67c23A; font-size: 26px"
             ></i>
             <i
               v-else
               class="el-icon-error"
-              style="color:#ff0000;font-size: 26px;"
+              style="color: #ff0000; font-size: 26px"
             ></i>
           </div>
         </template>
@@ -91,25 +91,19 @@
 
 <script>
 import { getArticleList, deleteArticle } from "@/api/article";
-import dateFormat from "@/utils/dateFormat";
+import dateFormatFilters from "@/utils/dateFormatFilters.js";
 export default {
+  mixins: [dateFormatFilters],
   data() {
     return {
       tableData: [],
       page: 1,
       pageSize: 8,
-      articleTotal: 1 // 总数量
+      articleTotal: 1, // 总数量
     };
   },
   created() {
     this.initData();
-  },
-  computed: {
-    regData() {
-      return data => {
-        return dateFormat("YYYY-mm-dd HH:MM", new Date(data));
-      };
-    }
   },
   methods: {
     async initData() {
@@ -128,7 +122,7 @@ export default {
       this.$confirm(`此操作将永久删除 "${row.title}", 是否继续?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           const res = await deleteArticle({ id: row._id });
@@ -143,7 +137,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -152,8 +146,8 @@ export default {
     pageChange(currentPage) {
       this.page = currentPage;
       this.initData();
-    }
-  }
+    },
+  },
 };
 </script>
 

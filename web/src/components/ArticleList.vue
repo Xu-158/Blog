@@ -1,6 +1,6 @@
 <template>
   <div v-if="articleList">
-    <mytransitiongroup name="rightToLeft">
+    <my-transition-group name="rightToLeft">
       <div
         v-for="articleObj in articleList"
         :key="articleObj._id"
@@ -30,12 +30,12 @@
           <img :src="articleObj.thumbnail" alt="图裂开了" width="100%" />
         </div>
       </div>
-    </mytransitiongroup>
+    </my-transition-group>
   </div>
 </template>
 
 <script>
-import mytransitiongroup from "@c/MyTransitionGroup";
+import MyTransitionGroup from "@c/MyTransitionGroup";
 export default {
   props: {
     articleList: {
@@ -48,7 +48,7 @@ export default {
       this.$router.push(`/article/${id}`);
     }
   },
-  components: { mytransitiongroup }
+  components: { MyTransitionGroup }
 };
 </script>
 

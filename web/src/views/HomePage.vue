@@ -1,6 +1,6 @@
 <template>
   <div>
-    <articleList :articleList="articleList"></articleList>
+    <article-list :articleList="articleList"></article-list>
     <pagination
       :totalSize="totalSize"
       :currentPage="currentPage"
@@ -12,8 +12,8 @@
 
 <script>
 import { getArticleList } from "@api";
-import articleList from "@c/ArticleList.vue";
-import pagination from "@c/Pagination.vue";
+import ArticleList from "@c/ArticleList.vue";
+import Pagination from "@c/Pagination.vue";
 export default {
   data() {
     return {
@@ -41,8 +41,8 @@ export default {
     }
   },
   components: {
-    articleList,
-    pagination
+    ArticleList,
+    Pagination
   }
 };
 </script>
