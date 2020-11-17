@@ -17,7 +17,7 @@ const routes = [
         path: "home",
         name: "home",
         component: () => import("@/views/Home"),
-        meta: { title: "首页" }
+        meta: { title: "首页", keepAlive: false }
       }
     ]
   },
@@ -25,7 +25,7 @@ const routes = [
     path: "/login",
     name: "login",
     component: () => import("@/views/Login"),
-    meta: { title: "登录" }
+    meta: { title: "登录", keepAlive: false }
   },
   {
     path: "*",
@@ -36,7 +36,7 @@ const routes = [
       {
         path: "404",
         component: () => import("@/views/404"),
-        meta: { title: "失踪了啊！" }
+        meta: { title: "失踪了啊！" ,keepAlive: false}
       }
     ]
   },
@@ -51,40 +51,40 @@ const routes = [
         path: "articleTag",
         component: () => import("@/views/article/ArticleTag"),
         name: "articleTag",
-        meta: { title: "标签管理" }
+        meta: { title: "标签管理" ,keepAlive: true}
       },
       {
         path: "ArticleAdd",
         props: true,
         component: () => import("@/views/article/ArticleEdit"),
         name: "articleAdd",
-        meta: { title: "新建文章" }
+        meta: { title: "新建文章" ,keepAlive: true}
       },
       {
         path: "ArticleUpdate/:id",
         props: true,
         component: () => import("@/views/article/ArticleEdit"),
         name: "articleUpdate",
-        meta: { title: "编辑文章" }
+        meta: { title: "编辑文章" ,keepAlive: true}
       },
       {
         path: "ArticleList",
         component: () => import("@/views/article/ArticleList"),
         name: "articleList",
-        meta: { title: "文章列表" }
+        meta: { title: "文章列表" ,keepAlive: true}
       },
       {
         path: "/timeLine/timeLineList",
         component: () => import("../views/timeLine/TimeLineList.vue"),
         name: "timeLineList",
-        meta: { title: "时间线管理" },
+        meta: { title: "时间线管理" ,keepAlive: false},
         children: [
           {
             path: "/timeLine/timeLineList/timeLineEdit",
             component: () => import("../views/timeLine/TimeLineEdit.vue"),
             name: "timeLineEdit",
             props: true,
-            meta: { title: "编辑时间线" }
+            meta: { title: "编辑时间线" ,keepAlive: false}
           }
         ]
       }
@@ -95,13 +95,13 @@ const routes = [
     component: Layout,
     redirect: "/link/friendLink",
     name: "link",
-    meta: { title: "链接管理" },
+    meta: { title: "链接管理"},
     children: [
       {
         path: "friendLink",
         component: () => import("@/views/link/FriendLink"),
         name: "friendLink",
-        meta: { title: "查看友情链接" }
+        meta: { title: "查看友情链接" ,keepAlive: true}
       }
     ]
   },
@@ -116,19 +116,19 @@ const routes = [
         path: "adminList",
         component: () => import("../views/system/AdminList.vue"),
         name: "adminList",
-        meta: { title: "管理员列表" }
+        meta: { title: "管理员列表" ,keepAlive: true}
       },
       {
         path: "aboutMe",
         component: () => import("../views/system/AboutMe.vue"),
         name: "aboutMe",
-        meta: { title: "关于我" }
+        meta: { title: "关于我" ,keepAlive: true}
       },
       {
         path: "sourceList",
         component: () => import("../views/system/SourceList.vue"),
         name: "sourceList",
-        meta: { title: "系统资源" }
+        meta: { title: "系统资源" ,keepAlive: false}
       }
     ]
   },

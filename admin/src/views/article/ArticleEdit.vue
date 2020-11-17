@@ -32,7 +32,7 @@
           active-color="#13ce66"
           inactive-color="#666"
         ></el-switch>
-        <span style="padding-left:40px;color:#606266">设置可见 :&nbsp;</span>
+        <span style="padding-left: 40px; color: #606266">设置可见 :&nbsp;</span>
         <el-switch
           v-model="articleForm.isShow"
           active-color="#13ce66"
@@ -42,6 +42,7 @@
       <el-form-item label="封 面 :">
         <el-upload
           class="avatar-uploader"
+          drag
           :action="uploadUrl"
           :http-request="uploadImg"
           :show-file-list="false"
@@ -52,7 +53,8 @@
             :src="articleForm.thumbnail"
             class="avatar"
           />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         </el-upload>
       </el-form-item>
       <el-form-item label="文章内容 :" prop="contentMd">
@@ -78,7 +80,7 @@ import {
   getTagList,
   addArticle,
   getArticleInfo,
-  updateArticle
+  updateArticle,
 } from "@/api/article";
 import mixins_upload from "@/utils/mixins_upload";
 import uploadToQiniu from "@/api/qiniuUpload";
@@ -86,7 +88,7 @@ import uploadToQiniu from "@/api/qiniuUpload";
 export default {
   mixins: [mixins_upload],
   props: {
-    id: { type: String }
+    id: { type: String },
   },
   data() {
     return {
@@ -98,7 +100,7 @@ export default {
         isTop: false,
         isShow: false,
         contentMd: "",
-        contentHtml: ""
+        contentHtml: "",
       },
       text: "", //
       mode: "editable", //可选值：edit(纯编辑模式) editable(编辑与预览模式) preview(纯预览模式)。
@@ -107,15 +109,20 @@ export default {
       rules: {
         title: [
           { required: true, message: "请输入文章标题", trigger: "blur" },
-          { min: 3, max: 25, message: "长度在 3 到 25 个字符", trigger: "blur" }
+          {
+            min: 3,
+            max: 25,
+            message: "长度在 3 到 25 个字符",
+            trigger: "blur",
+          },
         ],
         tags: [
-          { required: true, message: "请选择文章标签", trigger: "change" }
+          { required: true, message: "请选择文章标签", trigger: "change" },
         ],
         contentMd: [
-          { required: true, message: "请输入文章内容", trigger: "blur" }
-        ]
-      }
+          { required: true, message: "请输入文章内容", trigger: "blur" },
+        ],
+      },
     };
   },
   created() {
@@ -142,7 +149,7 @@ export default {
     saveArticle() {
       let id, res;
       id = this.id;
-      this.$refs.articleForm.validate(async valid => {
+      this.$refs.articleForm.validate(async (valid) => {
         if (!valid) {
           this.$message.error("填写错误，请检查!");
           return;
@@ -150,7 +157,7 @@ export default {
           if (id) {
             res = await updateArticle({
               id: this.id,
-              article: this.articleForm
+              article: this.articleForm,
             });
           } else {
             res = await addArticle({ article: this.articleForm });
@@ -179,15 +186,15 @@ export default {
       const result = await uploadToQiniu(files[0]);
       insertImage({
         url: `${result.url}`,
-        desc: "图片哦"
+        desc: "图片哦",
       });
     },
     change(text, html) {
       // 内容变化时触发的事件。text 为输入的内容，html 为解析之后的 html 字符串。
       this.articleForm.contentMd = text;
       this.articleForm.contentHtml = html;
-    }
-  }
+    },
+  },
 };
 </script>
 

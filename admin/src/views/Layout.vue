@@ -76,11 +76,12 @@
         </el-menu>
       </el-aside>
 
-      <el-container class="el-container" style="width:100%">
+      <el-container class="el-container" style="width: 100%">
         <el-header style="text-align: right; font-size: 12px">
           <breadcrumb class="breadcrumb" />
+          <music-box class="music-box"></music-box>
           <div class="info">
-            <span style="margin-right: 15px">{{ account }}</span>
+            <span style="margin-right: 15px;color:white">{{ account }}</span>
             <el-avatar
               v-if="info"
               shape="square"
@@ -101,8 +102,9 @@
         </el-header>
 
         <el-main>
-          <keep-alive>
-            <router-view />
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
+          <keep-alive max="6">
+            <router-view v-if="$route.meta.keepAlive"></router-view>
           </keep-alive>
         </el-main>
       </el-container>
@@ -112,13 +114,15 @@
 
 <script>
 import Breadcrumb from "@/components/Breadcrumb";
+import MusicBox from "@/components/MusicBox.vue";
 export default {
+  name: "Layout",
   data() {
     return {
       list: ["0"],
       account: "",
       isCollapse: false,
-      info: {}
+      info: {},
     };
   },
   created() {
@@ -128,7 +132,7 @@ export default {
   computed: {
     asideWidth() {
       return this.isCollapse ? "70px" : "200px";
-    }
+    },
   },
   methods: {
     initInfo() {
@@ -155,17 +159,19 @@ export default {
         default:
           break;
       }
-    }
+    },
   },
   components: {
-    Breadcrumb
-  }
+    Breadcrumb,
+    MusicBox,
+  },
 };
 </script>
 
 <style lang="scss">
 @import "../assets/style/style.scss";
 .layout {
+  position: relative;
   .layout-container {
     height: 100vh;
     .changeBtnGroup {

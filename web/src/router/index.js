@@ -14,38 +14,38 @@ const routes = [
       {
         path: "/home",
         name: "home",
-        meta: { title: "首页" ,level: 2},
+        meta: { title: "首页", level: 2 },
         component: () => import("@/views/HomePage.vue")
       },
       {
         path: "/article/:id",
         name: "articlePage",
-        meta: { title: "文章" ,level: 3},
+        meta: { title: "文章", level: 3 },
         props: true,
         component: () => import("@/views/ArticlePage.vue")
       },
       {
         path: "/category",
         name: "category",
-        meta: { title: "分类" ,level: 2},
+        meta: { title: "分类", level: 2 },
         component: () => import("@/views/CategoryPage.vue")
       },
       {
         path: "/timeLine",
         name: "timeLine",
-        meta: { title: "时光机" ,level: 2},
+        meta: { title: "时光机", level: 2 },
         component: () => import("@/views/TimeLinePage.vue")
       },
       {
         path: "/music",
         name: "music",
-        meta: { title: "音乐盒" ,level: 2},
+        meta: { title: "音乐盒", level: 2 },
         component: () => import("@/views/MusicPage.vue")
       },
       {
         path: "/about",
         name: "about",
-        meta: { title: "关于" ,level: 2},
+        meta: { title: "关于", level: 2 },
         component: () => import("@/views/AboutPage")
       },
     ]
@@ -53,13 +53,13 @@ const routes = [
   {
     path: "*",
     name: "404",
-    meta:{level: 1},
+    meta: { level: 1 },
     component: () => import("@/Layout"),
     children: [
       {
         path: "*",
         name: "404 NotFound!",
-        meta: { title: "失踪了哦！" ,level: 2},
+        meta: { title: "失踪了哦！", level: 2 },
         component: () => import("@/views/404")
       }
     ]

@@ -16,6 +16,7 @@
     "save-dev": "0.0.1-security",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuex": "^3.5.1",
     "webpack-bundle-analyzer": "^3.9.0"
   },
   "devDependencies": {

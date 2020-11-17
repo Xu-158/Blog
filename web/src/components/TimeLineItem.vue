@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="middleLine">
-      <div class="time fs-xs text-articleBoxActive">{{ timeLineObj.time }}</div>
+      <div class="time fs-xs text-articleBoxActive">{{ timeLineObj.time | dateFormatFilters }}</div>
       <div class="line">
         <div class="point"></div>
       </div>
@@ -97,7 +97,7 @@ export default {
     .line {
       margin: 0rem auto;
       width: 1px;
-      height: 90%;
+      height: 85%;
       background-color: rgb(0, 98, 122);
       position: relative;
       .point {

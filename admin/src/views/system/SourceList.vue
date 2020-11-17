@@ -1,7 +1,7 @@
 <template>
   <div class="source">
-    <el-tabs type="border-card">
-      <el-tab-pane label="图片资源">
+    <el-tabs type="border-card" v-model="activeName">
+      <el-tab-pane label="图片资源" name="picture">
         <el-table :data="imagesViews" style="width: 100%">
           <el-table-column label="预览">
             <template slot-scope="scope">
@@ -35,7 +35,8 @@
           <el-table-column label="上传时间">
             <template slot-scope="scope">
               <el-tag size="medium">{{
-                scope.row.putTime/ 1e4 | dateFormatFilters("YYYY-mm-dd HH:MM:SS")
+                (scope.row.putTime / 1e4)
+                  | dateFormatFilters("YYYY-mm-dd HH:MM:SS")
               }}</el-tag>
             </template>
           </el-table-column>
@@ -64,10 +65,15 @@
           ></el-pagination>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="音频资源">
-        <el-row :gutter="10" type="flex" align="middle">
-          <el-col :xs="12" :sm="14" :md="16" :lg="12" :xl="12">
-            <div>
+      <el-tab-pane label="音频资源" name="music">
+        <div class="upload">
+          <el-row
+            type="flex"
+            class="row-bg"
+            justify="space-around"
+            align="middle"
+          >
+            <el-col :span="4">
               <el-upload
                 class="upload-demo"
                 drag
@@ -80,15 +86,15 @@
                 <div class="el-upload__text">
                   将文件拖到此处，或<em>点击上传</em>
                 </div>
-              </el-upload>
-            </div>
-          </el-col>
-          <el-col :xs="12" :sm="10" :md="8" :lg="12" :xl="12">
-            <el-button>
-              <div><audio controls ref="audio"></audio></div>
-            </el-button>
-          </el-col>
-        </el-row>
+              </el-upload></el-col
+            >
+            <el-col :span="6">
+              <el-input v-model="inputID" placeholder="请输入ID"></el-input>
+              <el-button @click="findID">查找</el-button>
+            </el-col>
+          </el-row>
+        </div>
+
         <el-table :data="mp3Views" style="width: 100%">
           <el-table-column label="name">
             <template slot-scope="scope">
@@ -117,7 +123,8 @@
           <el-table-column label="上传时间">
             <template slot-scope="scope">
               <el-tag size="medium">{{
-                scope.row.putTime/ 1e4 | dateFormatFilters("YYYY-mm-dd HH:MM:SS")
+                (scope.row.putTime / 1e4)
+                  | dateFormatFilters("YYYY-mm-dd HH:MM:SS")
               }}</el-tag>
             </template>
           </el-table-column>
@@ -173,24 +180,21 @@ export default {
       baseUrl: "http://img.xujinfeng.top/",
       imagesPage: 1,
       mp3Page: 1,
-      pageSize: 5,
+      pageSize: 8,
       mp3Total: 1,
       imagesTotal: 1,
       imagesData: [],
       imagesViews: [],
       mp3Data: [],
       mp3Views: [],
+      activeName: "picture", //tabs 激活名字
+      inputID: "",
     };
   },
-  created() {
+  mounted() {
+    this.showTabs();
     this.getImagesSource();
     this.getMp3Source();
-  },
-  activated() {
-    console.log("activated: ", activated);
-  },
-  deactivated() {
-    console.log("deactivated: ", deactivated);
   },
   computed: {
     regName() {
@@ -208,6 +212,12 @@ export default {
     },
   },
   methods: {
+    //跳转到指定的Tabs
+    showTabs() {
+      if (this.$route.query.activeName != null) {
+        this.activeName = this.$route.query.activeName;
+      }
+    },
     // 获取图片资源
     async getImagesSource(skip) {
       if (!skip) {
@@ -256,9 +266,9 @@ export default {
     },
 
     play(url) {
-      this.$refs.audio.src = url;
-      this.$refs.audio.play();
-      console.log(this.$refs.audio);
+      this.$store.commit("setPlay", {
+        url: url,
+      });
     },
 
     async deleteAction(key) {
@@ -280,9 +290,20 @@ export default {
       console.log("result.url: ", result.url);
       this.getMp3Source();
     },
+
+    findID() {
+      if (!this.inputID) {
+        this.$message.error("请先输入ID");
+        return;
+      }
+      window.open(
+        `http://music.163.com/song/media/outer/url?id=${this.inputID}.mp3`,
+        "_blank"
+      );
+    },
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>

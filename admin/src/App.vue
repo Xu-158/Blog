@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <router-view :key="$route.path" />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  // // todo: 手机测试不成功
+  // todo: 手机测试不成功
   // created() {
   //   if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
   //     this.$loading.show()
@@ -15,6 +15,3 @@ export default {
   // }
 };
 </script>
-
-<style lang="scss">
-</style>
