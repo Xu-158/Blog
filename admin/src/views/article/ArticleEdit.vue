@@ -202,4 +202,8 @@ export default {
 .title {
   text-align: center;
 }
+.avatar {
+  width: 100%;
+  object-fit: cover;
+}
 </style>

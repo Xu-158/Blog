@@ -4,7 +4,9 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "serve": "nodemon app.js"
+    "serve": "nodemon app.js",
+    "setup": "pm2 deploy production setup",
+    "update": "pm2 deploy production update"
   },
   "keywords": [],
   "author": "",

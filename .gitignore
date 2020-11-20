@@ -44,6 +44,7 @@ uploads/
 dump/
 server/utils/qiniuConfig.js
 server/utils/secret.js
+server/ecosystem.config.js
 
 # TypeScript v1 declaration files
 typings/

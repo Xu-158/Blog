@@ -117,7 +117,6 @@ export default {
 .articleTag {
   .table {
     padding: 20px;
-    height: 70vh;
   }
   .option-1 {
     margin-right: 10px;
