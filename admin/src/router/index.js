@@ -51,27 +51,27 @@ const routes = [
         path: "articleTag",
         component: () => import("@/views/article/ArticleTag"),
         name: "articleTag",
-        meta: { title: "标签管理" ,keepAlive: true}
+        meta: { title: "标签管理" ,keepAlive: false}
       },
       {
         path: "ArticleAdd",
         props: true,
         component: () => import("@/views/article/ArticleEdit"),
         name: "articleAdd",
-        meta: { title: "新建文章" ,keepAlive: true}
+        meta: { title: "新建文章" ,keepAlive: false}
       },
       {
         path: "ArticleUpdate/:id",
         props: true,
         component: () => import("@/views/article/ArticleEdit"),
         name: "articleUpdate",
-        meta: { title: "编辑文章" ,keepAlive: true}
+        meta: { title: "编辑文章" ,keepAlive: false}
       },
       {
         path: "ArticleList",
         component: () => import("@/views/article/ArticleList"),
         name: "articleList",
-        meta: { title: "文章列表" ,keepAlive: true}
+        meta: { title: "文章列表" ,keepAlive: false}
       },
       {
         path: "/timeLine/timeLineList",
