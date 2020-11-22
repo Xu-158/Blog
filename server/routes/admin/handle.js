@@ -109,6 +109,8 @@ module.exports = {
           },
             function (error, resp, body) {
               let token, data, role;
+              console.log('error: ', error);
+              console.log('body: ', body);
               if (body) data = JSON.parse(body);
               if (!error && resp.statusCode == 200) {
                 if (data.login === loginAccount) {
