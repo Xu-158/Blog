@@ -6,7 +6,7 @@
     <ul
       :class="{
         hiddNavItem: isMobile,
-        showMobileNavItem: showMobileNavItem
+        showMobileNavItem: showMobileNavItem,
       }"
     >
       <li
@@ -43,25 +43,25 @@ export default {
     return {
       isMobile: false,
       currIndex: 0,
-      name: "破旧笔记"
+      name: "破旧笔记",
     };
   },
   props: {
     navItemObj: {
       type: Array,
-      required: true
+      required: true,
     },
     showMobileNavItem: {
       // 控制移动端菜单展开
       type: Boolean,
       default: false,
-      required: true
-    }
+      required: true,
+    },
   },
   created() {
     // 保证页面刷新后 navItem 任然是 active 状态
     let navRouteList = [];
-    this.navItemObj.filter(curr => navRouteList.push(Object.values(curr)[1]));
+    this.navItemObj.filter((curr) => navRouteList.push(Object.values(curr)[1]));
     let index = navRouteList.indexOf(this.$route.fullPath);
     this.currIndex = index == -1 ? 0 : index;
   },
@@ -86,8 +86,8 @@ export default {
     },
     showNavItem() {
       this.$emit("update:showMobileNavItem", !this.showMobileNavItem);
-    }
-  }
+    },
+  },
 };
 </script>
 

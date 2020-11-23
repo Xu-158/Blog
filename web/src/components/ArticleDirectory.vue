@@ -1,5 +1,5 @@
 <template>
-  <div class="directory-btn" v-if="directoryList.length != 0">
+  <div class="directory" v-if="directoryList.length != 0">
     <div class="directory-card p-5">
       <ul class="p-x-1 text-white menu">
         <p class="fs-lg p-l-8">目录：</p>
@@ -7,10 +7,10 @@
           class="menu-item"
           :style="{
             fontSize: itemFontSize(item.level),
-            marginLeft: itemMarginLeft(item.level)
+            marginLeft: itemMarginLeft(item.level),
           }"
           :class="{
-            activeItem: activeItemIndex === index
+            activeItem: activeItemIndex === index,
           }"
           v-for="(item, index) in directoryList"
           :key="item.offsetTop"
@@ -29,13 +29,13 @@ export default {
   props: {
     directoryList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       activeItemIndex: 0,
-      itemOffsetTopList: []
+      itemOffsetTopList: [],
     };
   },
   mounted() {
@@ -47,12 +47,12 @@ export default {
   watch: {
     directoryList(newVal, oldVal) {
       this.initDirectoryList();
-    }
+    },
   },
   computed: {
     //根据level 计算 fontSize
     itemFontSize() {
-      return level => {
+      return (level) => {
         switch (level) {
           case 1:
             return "1.5rem";
@@ -74,7 +74,7 @@ export default {
     },
     //根据level 计算 marginLeft
     itemMarginLeft() {
-      return level => {
+      return (level) => {
         switch (level) {
           case 1:
             return "1rem";
@@ -83,7 +83,7 @@ export default {
             return "2rem";
             break;
           case 3:
-            return "3rem";
+            return "2.5rem";
             break;
           case 4:
             return "3.5rem";
@@ -93,7 +93,7 @@ export default {
             break;
         }
       };
-    }
+    },
   },
   methods: {
     menuItemClick(offsetTop, index) {
@@ -105,7 +105,7 @@ export default {
 
     // 初始化 h标签 距离顶部数组
     initDirectoryList() {
-      this.directoryList.forEach(item => {
+      this.directoryList.forEach((item) => {
         this.itemOffsetTopList.push(item.offsetTop);
       });
     },
@@ -148,17 +148,17 @@ export default {
           clearInterval(scrollTimer);
         }
       }, speed / 10);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.directory-btn {
+.directory {
   overflow: hidden;
   background-color: rgba(255, 255, 255, 0.144);
   .directory-card {
-    width: 17vw;
+    width: 15vw;
     overflow: scroll;
     .menu-item {
       list-style: none;
@@ -166,16 +166,15 @@ export default {
       span {
         display: inline-block;
         overflow: hidden;
-        width: 11vw;
         line-height: 2rem;
         word-break: keep-all;
         white-space: nowrap;
       }
       &::before {
         content: "";
-        background-color: rgb(202, 187, 187);
+        background-color: rgb(252, 252, 252);
         position: absolute;
-        border: 0.2rem solid rgb(202, 187, 187);
+        border: 0.2rem solid rgb(166, 184, 100);
         border-radius: 50%;
         font-size: 3rem;
         top: 0.8rem;
@@ -183,6 +182,9 @@ export default {
       }
       &::after {
         content: "···";
+        position: absolute;
+        bottom: 7px;
+        padding-left: 2px;
       }
     }
     .activeItem {

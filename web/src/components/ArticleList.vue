@@ -7,16 +7,14 @@
         class="rightToLeft"
       >
         <div class="articleBox" @click="boxClick(articleObj._id)">
+          <div class="itemTop" v-if="articleObj.isTop">TOP</div>
           <div class="article">
-            <div class="title fs-xl p-7 m-b-3 text-title">
-              <span class="itemTop text-red fs-xxs p-2" v-if="articleObj.isTop"
-                >TOP</span
-              ><span v-else>∵</span>
+            <div class="title fs-xll p-7 m-b-3 text-title">
               {{ articleObj.title }}
             </div>
             <div
               class="articleContnet text-font"
-              v-html="articleObj.contentHtml.slice(0, 90)"
+              v-html="articleObj.contentHtml"
             ></div>
           </div>
           <div class="m-l-7 p-t-8 fs-lg articleAction">
@@ -27,7 +25,12 @@
               &#10084; &nbsp;&nbsp;&nbsp;{{ articleObj.likeCount }}
             </div>
           </div>
-          <img :src="articleObj.thumbnail" alt="图裂开了" width="100%" />
+          <img
+            v-if="!isMobile"
+            :src="articleObj.thumbnail"
+            alt="图裂开了"
+            width="100%"
+          />
         </div>
       </div>
     </my-transition-group>
@@ -36,19 +39,36 @@
 
 <script>
 import MyTransitionGroup from "@c/MyTransitionGroup";
+import debounce from "@u/debounce";
 export default {
   props: {
     articleList: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
+  },
+  data() {
+    return {
+      isMobile: false,
+    };
+  },
+  mounted() {
+    this._isMobile();
+    window.addEventListener("resize", debounce(this._isMobile, 200));
+    this.$once("hook:destroyed", () => {
+      window.removeEventListener("resize", debounce(this._isMobile, 200));
+    });
   },
   methods: {
     boxClick(id) {
       this.$router.push(`/article/${id}`);
-    }
+    },
+    _isMobile() {
+      this.isMobile = window.innerWidth < 800 ? true : false;
+      if (this.isMobile) this.showMobileNavItem = false;
+    },
   },
-  components: { MyTransitionGroup }
+  components: { MyTransitionGroup },
 };
 </script>
 
@@ -67,6 +87,7 @@ export default {
 }
 
 .articleBox {
+  position: relative;
   padding: 2rem;
   margin-bottom: 1rem;
   display: flex;
@@ -74,26 +95,39 @@ export default {
   justify-content: space-around;
   border-radius: 1rem;
   background-color: map-get($colors, "articleBox");
+  overflow: hidden;
   &:hover {
     background-color: map-get($colors, "articleBoxActive");
     box-shadow: 4px 4px 4px #666;
   }
+  .itemTop {
+    position: absolute;
+    top: 1rem;
+    left: -1.6rem;
+    height: 1.2rem;
+    width: 7rem;
+    transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -moz-transform: rotate(-45deg); /* Firefox */
+    -webkit-transform: rotate(-45deg); /* Safari 和 Chrome */
+    -o-transform: rotate(-45deg);
+    background-color: map-get($colors, "red");
+    text-align: center;
+    box-shadow: -2px 2px 5px #666;
+    color: #fff;
+    font-weight: 600;
+  }
   .article {
-    flex: 8;
+    flex: 7;
     height: 20vh;
     overflow: hidden;
     .title {
+      display: inline-block;
+      padding-left: 1.5rem;
       font-weight: 600;
       letter-spacing: 0.3rem;
       line-height: 2rem;
       font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-      .itemTop {
-        vertical-align: middle;
-        border: 2px solid map-get($colors, "red");
-        letter-spacing: 0.1rem;
-        line-height: 1.5rem;
-        border-radius: 1rem;
-      }
     }
     .articleContnet {
       /* 多行超出省略的必备条件 */
@@ -112,7 +146,7 @@ export default {
     max-height: 25vh;
   }
   .articleAction {
-    flex: 1;
+    flex: 2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,7 +154,7 @@ export default {
   }
   @media (max-width: 1024px) {
     img {
-      width: 20vw;
+      width: 30vw;
       height: auto;
     }
     .articleAction {
