@@ -20,7 +20,7 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
-    background: url("./assets/images/bgImage.png") center 0 no-repeat;
+    background: url("./assets/images/bgImage.jpg") center 0 no-repeat;
     background-size: cover;
   }
   min-height: 100vh;

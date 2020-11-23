@@ -6,10 +6,10 @@ const productionGzipExtensions = ["js", "css"];
 const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
-  lintOnSave: false,
+  lintOnSave: false,//是否开启eslint保存检测，有效值：ture | false | 'error'
   outputDir: __dirname + "/../server/web", //执行 npm run build 命令将文件输出到 server/web
   publicPath: isProduction ? "/" : "/",
-  // productionSourceMap: false,//打包后不会生成.map文件（运行时报错，输出的错误信息无法准确得知是哪里的代码报错）
+  productionSourceMap: false,//打包后不会生成.map文件（运行时报错，输出的错误信息无法准确得知是哪里的代码报错）false将提高构建速度
   devServer: {
     open: true, //配置自动启动浏览器
     //如果你的前端应用和后端 API 服务器没有运行在同一个主机上，你需要在开发环境下将 API 请求代理到 API 服务器。
@@ -54,7 +54,7 @@ module.exports = {
         minRatio: 0.8
       }),
       new webpack.optimize.LimitChunkCountPlugin({
-        maxChunks: 5,
+        maxChunks: 6,
         minChunkSize: 100
       }),
       new BundleAnalyzerPlugin({
