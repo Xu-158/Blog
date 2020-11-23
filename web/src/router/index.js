@@ -1,5 +1,5 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+// import Vue from "vue";
+// import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
@@ -77,9 +77,9 @@ router.beforeEach((to, from, next) => {
 });
 
 // vue报错：Avoided redundant navigation to current location: "/"的解决方法
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err);
-};
+// const originalPush = VueRouter.prototype.push;
+// VueRouter.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err);
+// };
 
 export default router;

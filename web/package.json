@@ -5,17 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
     "@kangc/v-md-editor": "^1.5.3",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "highlight.js": "^10.2.1",
-    "save-dev": "0.0.1-security",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "webpack-bundle-analyzer": "^3.9.0"
+    "vue-router": "^3.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -31,6 +30,7 @@
     "prettier": "^1.19.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.1.0"
   }
 }

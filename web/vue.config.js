@@ -58,12 +58,16 @@ module.exports = {
         minChunkSize: 100
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: 'disabled'//关闭分析
+        analyzerMode: 'disabled',//关闭分析
+        openAnalyzer: true,
       }),
     ],
     // 用cdn方式引入
     externals: {
-      'highlight.js': 'hljs'
+      "highlight.js": "hljs",
+      "vue": "Vue",
+      "vue-router": "VueRouter",
+      "axios": "axios"
     }
   }
 };
