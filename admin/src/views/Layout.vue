@@ -77,21 +77,21 @@
       </el-aside>
 
       <el-container class="el-container" style="width: 100%">
-        <el-header style="text-align: right; font-size: 12px">
-          <breadcrumb class="breadcrumb" />
+        <el-header
+          style="font-size: 12px; display: flex; justify-content: space-between"
+        >
           <music-box class="music-box"></music-box>
-          <div class="info">
-            <span style="margin-right: 15px;color:white">{{ account }}</span>
-            <el-avatar
-              v-if="info"
-              shape="square"
-              size="small"
-              :src="info.avatar_url"
-              class="avatar"
-            ></el-avatar>
-          </div>
           <el-dropdown @command="handleCommand">
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
+            <div class="info">
+              <span style="color: white">{{ account }}</span>
+              <i class="el-icon-setting" style="margin-left: 5px"></i>
+              <el-avatar
+                shape="square"
+                size="small"
+                src="http://img.xujinfeng.top/image/16059263951119685kbck63i.jpg"
+                class="avatar"
+              ></el-avatar>
+            </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="homepage">首页</el-dropdown-item>
               <el-dropdown-item :divided="true" command="logout"
@@ -113,7 +113,6 @@
 </template>
 
 <script>
-import Breadcrumb from "@/components/Breadcrumb";
 import MusicBox from "@/components/MusicBox.vue";
 export default {
   name: "Layout",
@@ -162,7 +161,6 @@ export default {
     },
   },
   components: {
-    Breadcrumb,
     MusicBox,
   },
 };

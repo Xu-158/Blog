@@ -44,8 +44,8 @@ export default {
       timeLine: {
         title: "",
         time: "",
-        content: ""
-      }
+        content: "",
+      },
     };
   },
   mounted() {
@@ -69,8 +69,8 @@ export default {
     },
     back(res) {
       this.$router.go(-1);
-    }
-  }
+    },
+  },
 };
 </script>
 
