@@ -15,7 +15,7 @@ import "nprogress/nprogress.css";
 Vue.use(loading);
 
 import '@kangc/v-md-editor/lib/style/base-editor.css';
-import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress';
 VMdEditor.use(vuepressTheme);
 
 Vue.config.productionTip = false;

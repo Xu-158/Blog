@@ -8,6 +8,7 @@ Vue.use(Loading)
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import '@kangc/v-md-editor/lib/style/preview.css';
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress';
+
 VMdPreview.use(vuepressTheme);
 Vue.use(VMdPreview);
 
