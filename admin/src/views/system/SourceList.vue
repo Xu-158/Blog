@@ -45,7 +45,7 @@
             <template slot-scope="scope">
               <el-popconfirm
                 title="确定删除这个标签吗？"
-                @onConfirm="deleteAction(scope.row.key)"
+                @confirm="deleteAction(scope.row.key)"
               >
                 <el-button slot="reference" size="mini" type="danger"
                   >删除</el-button
@@ -142,7 +142,7 @@
             <template slot-scope="scope">
               <el-popconfirm
                 title="确定删除这个标签吗？"
-                @onConfirm="deleteAction(scope.row.key)"
+                @confirm="deleteAction(scope.row.key)"
               >
                 <el-button slot="reference" size="mini" type="danger"
                   >删除</el-button

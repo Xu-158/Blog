@@ -17,7 +17,7 @@
         <template slot-scope="scope">
           <div>
             <el-button class="option-1" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-popconfirm title="确定删除这个标签吗？" @onConfirm="handleDelete(scope.row._id)">
+            <el-popconfirm title="确定删除这个标签吗？" @confirm="handleDelete(scope.row._id)">
               <el-button slot="reference" size="mini" type="danger">删除</el-button>
             </el-popconfirm>
           </div>

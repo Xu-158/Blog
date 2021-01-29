@@ -42,8 +42,7 @@ module.exports = {
 
     const isAdmin = await Admin.findOne({ account }).select("+password") || ""
     const user = require("bcryptjs").compareSync(password, isAdmin && isAdmin.password);
-
-    if (!isAdmin && !user) {
+    if (!user) {
       response(res, 1, "账号或密码不正确！");
       return;
     }

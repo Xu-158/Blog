@@ -30,7 +30,7 @@
               <div>
                 <el-popconfirm
                   title="确定删除该管理员吗?"
-                  @onConfirm="handleDelete(scope.row._id)"
+                  @confirm="handleDelete(scope.row._id)"
                 >
                   <el-button slot="reference" size="mini" type="danger">
                     <div>删除</div>

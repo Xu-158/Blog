@@ -81,7 +81,7 @@
                 </el-button>
                 <el-popconfirm
                   title="确定删除这个标签吗？"
-                  @onConfirm="handleDelete(scope.row._id)"
+                  @confirm="handleDelete(scope.row._id)"
                 >
                   <el-button slot="reference" size="mini" type="danger">
                     <div>删除</div>
