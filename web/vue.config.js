@@ -74,8 +74,8 @@ module.exports = {
         minChunkSize: 100
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: 'disabled',//关闭分析
-        openAnalyzer: true,
+        analyzerMode: process.env.use_analyzer ? 'server' : 'disabled',
+        analyzerPort: 9999,
       }),
     ],
     // 用cdn方式引入

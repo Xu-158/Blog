@@ -16,7 +16,7 @@
               <el-radio-button :label="true">收起</el-radio-button>
             </el-radio-group>
           </div>
-          <el-submenu index="1">
+          <!-- <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-s-grid"></i>
               <span>首页</span>
@@ -24,7 +24,7 @@
             <el-menu-item-group>
               <template slot="title">首页内容</template>
             </el-menu-item-group>
-          </el-submenu>
+          </el-submenu> -->
 
           <el-submenu index="2">
             <template slot="title">
@@ -84,13 +84,13 @@
           <el-dropdown @command="handleCommand">
             <div class="info">
               <span style="color: white">{{ account }}</span>
-              <i class="el-icon-setting" style="margin-left: 5px"></i>
               <el-avatar
                 shape="square"
                 size="small"
                 src="http://img.xujinfeng.top/image/16059263951119685kbck63i.jpg"
                 class="avatar"
               ></el-avatar>
+              <i class="el-icon-setting" style="margin-left: 5px"></i>
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="homepage">首页</el-dropdown-item>

@@ -70,10 +70,10 @@ export default {
           navName: "时光机",
           navRoute: "/timeLine"
         },
-        {
-          navName: "音乐盒",
-          navRoute: "/music"
-        },
+        // {
+        //   navName: "音乐盒",
+        //   navRoute: "/music"
+        // },
         {
           navName: "关于我",
           navRoute: "/about"

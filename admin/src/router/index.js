@@ -11,7 +11,8 @@ const routes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/home",
+    // redirect: "/home",
+    redirect: "/system/aboutMe",
     children: [
       {
         path: "home",

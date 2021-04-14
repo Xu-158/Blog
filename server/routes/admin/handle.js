@@ -17,7 +17,7 @@ module.exports = {
 
     const { role } = await jwt.verify(token, req.app.get("secret"), async (err, token) => {
       if (err) {
-        console.log(err.message);
+        console.log('error' + err.message);
         return { role: null };
       }
       return token
@@ -50,7 +50,8 @@ module.exports = {
     // 查询账号角色类型
     let role = await Role.findById(isAdmin.role)
 
-    const token = jwt.sign({ role: `${role.type}`, id: String(isAdmin.id), }, req.app.get("secret"));
+    const token = jwt.sign({ role: `${role.type}`, id: String(isAdmin.id), }, req.app.get("secret"),
+      { expiresIn: 60 * 60 * 24 });
     account += `(${role.type})`
     response(res, 0, "登陆成功", { account, role: URole.github }, token);
   },
@@ -70,7 +71,10 @@ module.exports = {
       account: `${canLogin.account}`,
     };
 
-    const token = jwt.sign({ role: String(tourist.role), account: String(`${canLogin.account}`) }, req.app.get("secret"));
+    const token = jwt.sign({ role: String(tourist.role), account: String(`${canLogin.account}`) }, req.app.get("secret"), {
+      // 过期时间120秒自动失效
+      expiresIn: 60 * 2
+    });
 
     response(res, 0, "登陆成功", { account: `${canLogin.name}(${TouristId.type})`, role: URole.tourist }, token);
   },
@@ -78,6 +82,8 @@ module.exports = {
   // GitHub登陆
   async githubLogin(req, res) {
     const { client_id, client_secret, url, headers, redirect_uri } = req.app.get("githubClient");
+    console.log('client_id, client_secret, url, headers, redirect_uri: ', client_id, client_secret, url, headers, redirect_uri);
+
     const code = req.query.code;
 
     if (!code) {
@@ -95,7 +101,9 @@ module.exports = {
     // 向github发送请求
     request({ url, method: "POST", json: true, headers, body, },
       function (error, resp, body) {
-        if (!error && resp.statusCode == 200) {
+        console.log('error ', error);
+        console.log(body.access_token);
+        if (resp.statusCode === 200) {
           const { url, userAgent, loginAccount } = req.app.get("githubInfo");
           // 获取github用户信息
           request({
@@ -107,6 +115,7 @@ module.exports = {
             },
           },
             function (error, resp, body) {
+              console.log('resp.statusCode: ', resp.statusCode);
               let token, data, role;
               console.log('error: ', error);
               console.log('body: ', body);
@@ -129,7 +138,7 @@ module.exports = {
                       role: URole.tourist,
                     },
                     req.app.get("secret"),
-                    { expiresIn: 60 * 60 * 24 }
+                    { expiresIn: 60 * 2 }
                   );
                   role = URole.tourist;
                 }
